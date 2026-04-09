@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LTF — Platform Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #f5f0e8;
+      color: #1a2e35;
+    }
+
+    /* Nav */
+    nav {
+      background: #0d4a52;
+      padding: 0 40px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: white;
+      line-height: 1;
+    }
+
+    .nav-logo span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.3px;
+    }
+
+    .nav-search {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      width: 220px;
+    }
+
+    .nav-topics {
+      font-size: 13px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* Hero */
+    .hero {
+      background: #0d4a52;
+      padding: 28px 40px 36px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: 'Lora', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    /* Main */
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 40px;
+    }
+
+    /* Layer blocks */
+    .layer {
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 0;
+    }
+
+    .layer-1 { background: #dff0ed; }
+    .layer-2 { background: #ede8f5; }
+    .layer-3 { background: #dff0ed; }
+
+    .layer-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #2a8a7a;
+      margin-bottom: 16px;
+    }
+
+    .layer-2 .layer-label { color: #7a5ab0; }
+
+    /* Flow row for Layer 1 */
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .flow-card {
+      flex: 1;
+      background: white;
+      border-radius: 10px;
+      padding: 18px 16px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .flow-card .fc-icon { font-size: 28px; margin-bottom: 8px; }
+    .flow-card .fc-title { font-size: 13px; font-weight: 600; color: #1a2e35; margin-bottom: 4px; }
+    .flow-card .fc-sub { font-size: 11px; color: #888; line-height: 1.4; }
+
+    /* Pipeline card (special) */
+    .pipeline-card {
+      flex: 1;
+      background: white;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .pipeline-card .pc-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1a2e35;
+      margin-bottom: 10px;
+    }
+
+    .pipeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 11px;
+      color: #555;
+      padding: 4px 0;
+      border-bottom: 1px solid #f5f5f5;
+      line-height: 1.4;
+    }
+
+    .pipeline-item:last-child { border-bottom: none; }
+    .pipeline-item::before { content: "◆"; font-size: 7px; color: #2a8a7a; margin-top: 3px; flex-shrink: 0; }
+
+    /* Arrow between flow cards */
+    .flow-arrow {
+      font-size: 18px;
+      color: #aaa;
+      padding: 0 10px;
+      flex-shrink: 0;
+    }
+
+    /* Vertical connector between layers */
+    .layer-connector {
+      display: flex;
+      justify-content: center;
+      padding: 8px 0;
+    }
+
+    .layer-connector::after {
+      content: '';
+      display: block;
+      width: 2px;
+      height: 24px;
+      background: #bbb;
+    }
+
+    /* Platform row (Layer 2) */
+    .platform-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .platform-card {
+      flex: 1;
+      background: white;
+      border-radius: 10px;
+      padding: 18px 16px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .platform-card .pc-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a2e35;
+      margin-bottom: 6px;
+    }
+
+    .platform-card .pc-desc {
+      font-size: 11px;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-top: 6px;
+      letter-spacing: 0.4px;
+    }
+
+    .pill-free { background: #d4eee9; color: #1a6a5a; }
+    .pill-paid { background: #fdecd8; color: #a05010; }
+
+    /* Output row (Layer 3) */
+    .output-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .output-card {
+      background: white;
+      border-radius: 10px;
+      padding: 18px 16px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .output-card .oc-icon { font-size: 28px; margin-bottom: 8px; }
+    .output-card .oc-title { font-size: 13px; font-weight: 600; color: #1a2e35; margin-bottom: 4px; }
+    .output-card .oc-desc { font-size: 11px; color: #888; line-height: 1.4; }
+
+    /* Costs */
+    .costs {
+      margin-top: 40px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .costs-header {
+      background: #0d4a52;
+      padding: 16px 24px;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .costs-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .costs-total {
+      font-family: 'Lora', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .costs-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-left: auto;
+    }
+
+    .costs-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 24px;
+      background: white;
+      border-top: 1px solid #f0ece4;
+      font-size: 13px;
+    }
+
+    .costs-row .svc { color: #444; }
+    .costs-row .amt { font-weight: 600; color: #1a2e35; }
+    .costs-row .amt.free { color: #2a8a7a; }
+    .costs-row.total { background: #f9f6f0; font-weight: 700; }
+
+    .setup-note {
+      font-size: 11px;
+      color: #aaa;
+      font-style: italic;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">LTF <span>Listening to Families</span></div>
+    <div class="nav-search">Search topics...</div>
+    <div class="nav-topics">Topics ∨</div>
+  </nav>
+
+  <div class="hero">
+    <h1>How the New Platform Works</h1>
+    <p>A simple, sustainable architecture for Listening to Families</p>
+  </div>
+
+  <div class="main">
+
+    <!-- Layer 1: Content In -->
+    <div class="layer layer-1">
+      <div class="layer-label">Layer 1 — Content In</div>
+      <div class="flow-row">
+
+        <div class="flow-card">
+          <div class="fc-icon">🎬</div>
+          <div class="fc-title">Specialists record video</div>
+          <div class="fc-sub">Files go to Google Drive</div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="flow-card">
+          <div class="fc-icon">⚙️</div>
+          <div class="fc-title">Will manages the pipeline</div>
+          <div class="fc-sub">Uploads, configures, reviews, and maintains</div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="pipeline-card">
+          <div class="pc-title">Automated Pipeline</div>
+          <div class="pipeline-item">AI transcription (Whisper)</div>
+          <div class="pipeline-item">Audio extraction for podcasts</div>
+          <div class="pipeline-item">Written content generation (Claude)</div>
+          <div class="pipeline-item">Human review before publishing</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="layer-connector"></div>
+
+    <!-- Layer 2: Platform -->
+    <div class="layer layer-2">
+      <div class="layer-label" style="color:#7a5ab0;">Layer 2 — Platform</div>
+      <div class="platform-row">
+
+        <div class="platform-card">
+          <div class="pc-name">Sanity CMS</div>
+          <div class="pc-desc">Content management &amp; editing<br>Topics, videos, specialists as first-class types</div>
+          <span class="pill pill-free">free at LTF scale</span>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="platform-card">
+          <div class="pc-name">Astro + Pagefind</div>
+          <div class="pc-desc">Builds the website<br>Fast, secure, content-first<br>Client-side search built in</div>
+          <span class="pill pill-free">free</span>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="platform-card">
+          <div class="pc-name">Vercel</div>
+          <div class="pc-desc">Hosts the site<br>Automatic deploys, free SSL and CDN</div>
+          <span class="pill pill-free">free</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="layer-connector"></div>
+
+    <!-- Layer 3: Content Out -->
+    <div class="layer layer-3">
+      <div class="layer-label">Layer 3 — Content Out</div>
+      <div class="output-row">
+
+        <div class="output-card">
+          <div class="oc-icon">🌐</div>
+          <div class="oc-title">Website</div>
+          <div class="oc-desc">Topics, search, written content, specialist profiles</div>
+        </div>
+
+        <div class="output-card">
+          <div class="oc-icon">▶️</div>
+          <div class="oc-title">YouTube</div>
+          <div class="oc-desc">Single channel, organised playlists, all 275+ videos</div>
+        </div>
+
+        <div class="output-card">
+          <div class="oc-icon">🎧</div>
+          <div class="oc-title">Podcasts</div>
+          <div class="oc-desc">Spotify, Apple Podcasts — audio auto-extracted</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Costs -->
+    <div class="costs">
+      <div class="costs-header">
+        <div>
+          <div class="costs-label">Running Costs</div>
+          <div class="costs-total">~$26–30 NZD / month</div>
+        </div>
+        <div class="costs-sub">Covered by Listening to Families from go-live</div>
+      </div>
+      <div class="costs-row">
+        <span class="svc">Plausible Analytics</span>
+        <span class="amt">~$15 NZD</span>
+      </div>
+      <div class="costs-row">
+        <span class="svc">Google Drive (200GB)</span>
+        <span class="amt">~$5 NZD</span>
+      </div>
+      <div class="costs-row">
+        <span class="svc">Whisper API (transcription)</span>
+        <span class="amt">~$2–4 NZD</span>
+      </div>
+      <div class="costs-row">
+        <span class="svc">Claude API (content generation)</span>
+        <span class="amt">~$2–4 NZD</span>
+      </div>
+      <div class="costs-row">
+        <span class="svc">Astro, Sanity CMS, Vercel, Pagefind, GitHub</span>
+        <span class="amt free">free</span>
+      </div>
+      <div class="costs-row total">
+        <span class="svc">Total</span>
+        <span class="amt">~$26–30 NZD / month</span>
+      </div>
+    </div>
+
+    <p class="setup-note">* One-off setup costs of ~$65 NZD (API calls during initial content migration) covered by Will under Stage 1.</p>
+
+  </div>
+
+</body>
+</html>

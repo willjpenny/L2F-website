@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADHD — Listening to Families</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: #1a2c2e; background: #fff; -webkit-font-smoothing: antialiased; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ── NAV ── */
+  .nav {
+    background: #0c525e;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(24px, 4vw, 56px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .nav-logo { display: flex; flex-direction: column; line-height: 1.1; }
+  .nav-logo .top { font-family: 'Lora', serif; font-style: italic; font-size: 11px; color: rgba(255,255,255,0.55); }
+  .nav-logo .bottom { font-family: 'Lora', serif; font-weight: 700; font-size: 20px; color: #fff; }
+  .nav-links { display: flex; gap: 2px; }
+  .nav-links a { color: rgba(255,255,255,0.75); font-size: 13.5px; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: all 0.15s; }
+  .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+  .nav-links a.active { color: #fff; background: rgba(255,255,255,0.15); }
+
+  /* ── NAV SEARCH + HAMBURGER ── */
+  .nav-search-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 8px; border-radius: 6px;
+    color: rgba(255,255,255,0.75);
+    display: flex; align-items: center;
+    transition: all 0.15s;
+  }
+  .nav-search-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .nav-hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer;
+    padding: 8px; border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .nav-hamburger:hover { background: rgba(255,255,255,0.1); }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; }
+  *:focus-visible { outline: 3px solid #82d4e0; outline-offset: 2px; }
+
+  /* ── BACK TO TOP ── */
+  .back-to-top {
+    position: fixed; bottom: 28px; right: 28px;
+    background: #0c525e; color: #fff;
+    border: none; border-radius: 50%;
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.2s, transform 0.2s, background 0.15s;
+    pointer-events: none; z-index: 200;
+  }
+  .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-to-top:hover { background: #0a4550; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      display: none; position: absolute; top: 64px; left: 0; right: 0;
+      background: #0c525e; flex-direction: column;
+      padding: 8px 16px 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 10px 14px; border-radius: 6px; }
+    .start-here { grid-template-columns: 1fr; }
+    .start-here-video { width: 100%; height: 180px; }
+    .video-grid { grid-template-columns: 1fr; }
+    .page-body { padding: 32px 20px 60px; }
+    .back-to-top { bottom: 16px; right: 16px; }
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: #0c525e;
+    padding: 36px clamp(24px, 4vw, 56px) 40px;
+  }
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 16px;
+  }
+  .breadcrumb a { color: rgba(255,255,255,0.5); transition: color 0.15s; }
+  .breadcrumb a:hover { color: rgba(255,255,255,0.8); }
+  .breadcrumb span { color: rgba(255,255,255,0.3); }
+  .breadcrumb .current { color: rgba(255,255,255,0.8); }
+  .page-header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .page-header .tag {
+    display: inline-block;
+    background: rgba(130,212,224,0.2);
+    color: #82d4e0;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    border: 1px solid rgba(130,212,224,0.3);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .page-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 56px clamp(24px, 4vw, 56px) 80px;
+  }
+
+  /* ── WRITTEN INTRO ── */
+  .intro { margin-bottom: 56px; }
+  .intro h2 {
+    font-family: 'Lora', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a2c2e;
+    margin-bottom: 20px;
+  }
+  .intro p {
+    font-size: 15.5px;
+    line-height: 1.8;
+    color: #3a5052;
+    margin-bottom: 16px;
+  }
+  .intro p:last-child { margin-bottom: 0; }
+
+  /* ── START HERE ── */
+  .start-here {
+    background: linear-gradient(135deg, #0c525e 0%, #0e6070 100%);
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-bottom: 56px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+  }
+  .start-here-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(245,200,66,0.2);
+    color: #f5c842;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(245,200,66,0.3);
+  }
+  .start-here h3 {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .start-here p { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+  .start-here-video {
+    background: rgba(0,0,0,0.25);
+    border-radius: 10px;
+    width: 180px;
+    height: 102px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .start-here-video:hover { background: rgba(0,0,0,0.35); }
+  .play-btn {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── SUBTOPIC NAV ── */
+  .subtopic-nav {
+    position: sticky;
+    top: 64px;
+    background: #fff;
+    z-index: 50;
+    border-bottom: 2px solid #e4eff1;
+    margin: 0 calc(-1 * clamp(24px, 4vw, 56px));
+    padding: 0 clamp(24px, 4vw, 56px);
+    margin-bottom: 56px;
+  }
+  .subtopic-nav-inner {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .subtopic-nav-inner::-webkit-scrollbar { display: none; }
+  .subtopic-nav a {
+    display: block;
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #3d6063;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s;
+  }
+  .subtopic-nav a:hover { color: #0c525e; border-bottom-color: rgba(12,82,94,0.3); }
+  .subtopic-nav a.active { color: #0c525e; border-bottom-color: #0c525e; }
+
+  /* ── PODCAST STRIP ── */
+  .podcast-strip {
+    background: #f5f0e8;
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+  }
+  .podcast-strip-text { flex: 1; min-width: 160px; }
+  .podcast-strip-text strong { display: block; font-size: 14px; color: #1a2c2e; margin-bottom: 2px; }
+  .podcast-strip-text span { font-size: 12.5px; color: #6a8a8e; }
+  .podcast-strip-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-sm {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 100px;
+    font-size: 12.5px; font-weight: 700;
+    transition: opacity 0.15s;
+  }
+  .btn-sm:hover { opacity: 0.85; }
+  .btn-sm-spotify { background: #1db954; color: #fff; }
+  .btn-sm-apple { background: #000; color: #fff; }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(to right, #e4eff1, transparent);
+    margin: 56px 0;
+  }
+
+  /* ── SUBTOPIC SECTION ── */
+  .subtopic-section { margin-bottom: 64px; scroll-margin-top: 130px; }
+  .subtopic-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e4eff1;
+  }
+  .subtopic-heading h3 {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a2c2e;
+  }
+  .subtopic-count {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #0c525e;
+    background: #e4eff1;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  /* ── VIDEO GRID ── */
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .video-card {
+    background: #fff;
+    border: 1.5px solid #e4eff1;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .video-card:hover {
+    border-color: #0c525e;
+    box-shadow: 0 4px 16px rgba(12,82,94,0.1);
+    transform: translateY(-2px);
+  }
+  .video-thumb {
+    background: linear-gradient(135deg, #1a7080, #2d9aab);
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .video-thumb .play {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .video-duration {
+    position: absolute;
+    bottom: 8px; right: 8px;
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .video-info { padding: 14px 16px; }
+  .video-info h4 { font-size: 13.5px; font-weight: 600; color: #1a2c2e; line-height: 1.4; margin-bottom: 6px; }
+  .video-info .meta { font-size: 11.5px; color: #8aadae; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="homepage-mockup.html" class="nav-logo" aria-label="Listening to Families home">
+    <span class="top">Listening to</span>
+    <span class="bottom">Families</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#" class="active" aria-current="page">Topics</a>
+    <a href="#">Specialists</a>
+    <a href="#">Resources</a>
+    <a href="#">Summaries</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+  <button class="nav-search-btn" aria-label="Search topics and videos">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 12l3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  </button>
+  <button class="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks" onclick="toggleNav(this)">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="breadcrumb">
+    <a href="homepage-mockup.html">Home</a>
+    <span>›</span>
+    <a href="#">Topics</a>
+    <span>›</span>
+    <span class="current">ADHD</span>
+  </div>
+  <h1>ADHD</h1>
+  <span class="tag">7 sub-topics &middot; 12 videos</span>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+
+  <!-- 1. WRITTEN INTRODUCTION -->
+  <div class="intro">
+    <h2>Understanding ADHD</h2>
+    <p>Attention Deficit Hyperactivity Disorder (ADHD) is one of the most common neurodevelopmental conditions affecting children and young people in New Zealand. It affects the way the brain develops and works, making it harder to focus, control impulses, and manage activity levels. ADHD is not a result of poor parenting or lack of effort — it is a recognised medical condition with effective, evidence-based supports.</p>
+    <p>ADHD looks different in every child. Some children are hyperactive and impulsive; others are primarily inattentive and may go undiagnosed for years, particularly girls. Many children experience a mix of both. With the right understanding and support at home and school, children with ADHD can thrive.</p>
+    <p>The videos and resources on this page have been created by specialist clinicians and families with lived experience of ADHD. Whether you are newly diagnosed, supporting a child at school, or looking for guidance on medication, you will find expert advice here — in plain language, at no cost.</p>
+  </div>
+
+  <!-- 2. START HERE -->
+  <div class="start-here">
+    <div>
+      <div class="start-here-label">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="#f5c842"><polygon points="5,0 6.2,3.8 10,3.8 7,6.1 8.1,10 5,7.6 1.9,10 3,6.1 0,3.8 3.8,3.8"/></svg>
+        New here? Start with this
+      </div>
+      <h3>ADHD: Answering Questions from Families</h3>
+      <p>The best starting point for anyone new to ADHD. Specialists answer the questions families ask most, in plain language.</p>
+    </div>
+    <div class="start-here-video">
+      <div class="play-btn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="#0c525e"><polygon points="4,2 14,8 4,14"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. SUBTOPIC JUMP NAV -->
+  <div class="subtopic-nav">
+    <div class="subtopic-nav-inner">
+      <a href="#adhd-schools" class="active">ADHD and Schools</a>
+      <a href="#adhd-families">Answering Family Questions</a>
+      <a href="#adhd-young-person">A Young Person's Questions</a>
+      <a href="#adhd-girls">ADHD in Girls</a>
+      <a href="#adhd-medication">Medication</a>
+      <a href="#adhd-parenting">Parenting Course</a>
+      <a href="#adhd-teachers">Teacher Questions</a>
+    </div>
+  </div>
+
+  <!-- 4. PODCAST CROSS-LINK -->
+  <div class="podcast-strip">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <circle cx="14" cy="14" r="5" stroke="#0c525e" stroke-width="2"/>
+      <circle cx="14" cy="14" r="9.5" stroke="#0c525e" stroke-width="1.5" stroke-dasharray="2.5 2.5"/>
+      <circle cx="14" cy="14" r="2" fill="#0c525e"/>
+    </svg>
+    <div class="podcast-strip-text">
+      <strong>ADHD is also covered in our podcast</strong>
+      <span>Listen to specialist conversations about ADHD on the go</span>
+    </div>
+    <div class="podcast-strip-btns">
+      <a href="#" class="btn-sm btn-sm-spotify">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="7" fill="white"/><path d="M10 9.2c-1.6-1-3.5-1.1-5.7-.6-.2 0-.3-.1-.3-.3 0-.2.1-.3.3-.3 2.4-.5 4.5-.4 6.2.7.2.1.2.4 0 .5h-.5z" fill="#1db954"/><path d="M10.7 7.7c-1.8-1.1-4.5-1.5-6.7-.8-.2.1-.4-.1-.4-.3 0-.2.1-.4.3-.4 2.4-.7 5.3-.4 7.4 1 .2.1.3.3.2.5-.2.2-.5.2-.8 0z" fill="#1db954"/><path d="M10.8 6.1C8.7 4.9 5.3 4.7 3.4 5.3c-.3.1-.5-.1-.6-.4-.1-.3.1-.5.4-.6 2.3-.7 5.8-.5 8.2.9.3.2.3.5.1.7-.2.2-.5.3-.7.2z" fill="#1db954"/></svg>
+        Spotify
+      </a>
+      <a href="#" class="btn-sm btn-sm-apple">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><path d="M9.8 7.3c0-1.4 1.1-2.1 1.2-2.1-.7-1-1.7-1-2.1-1-.9-.1-1.7.5-2.2.5s-1.1-.5-1.9-.5c-1 0-1.9.6-2.4 1.5-1 1.7-.3 4.3.7 5.8.5.7 1.1 1.5 1.9 1.5.7 0 1-.5 1.9-.5s1.1.5 1.9.5c.8 0 1.3-.7 1.8-1.5.4-.5.6-1.1.7-1.4-.1-.1-1.5-.5-1.5-1.8zM8.5 3.1c.4-.5.7-1.2.6-1.9-.6 0-1.3.4-1.7.9-.4.4-.8 1.1-.6 1.8.6 0 1.3-.3 1.7-.8z"/></svg>
+        Apple Podcasts
+      </a>
+    </div>
+  </div>
+
+  <!-- 5. VIDEOS BY SUBTOPIC -->
+
+  <div class="subtopic-section" id="adhd-schools">
+    <div class="subtopic-heading">
+      <h3>ADHD and Schools</h3>
+      <span class="subtopic-count">3 videos</span>
+    </div>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">18:42</span>
+        </div>
+        <div class="video-info">
+          <h4>Supporting children with ADHD in the classroom</h4>
+          <div class="meta">Dr Sarah Mitchell &middot; Paediatrician</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">22:15</span>
+        </div>
+        <div class="video-info">
+          <h4>Working with teachers — a guide for parents</h4>
+          <div class="meta">Kate Wilson &middot; Educational Psychologist</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">14:08</span>
+        </div>
+        <div class="video-info">
+          <h4>ADHD and learning support — what schools can do</h4>
+          <div class="meta">Panel discussion</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="subtopic-section" id="adhd-families">
+    <div class="subtopic-heading">
+      <h3>Answering Questions from Families</h3>
+      <span class="subtopic-count">2 videos</span>
+    </div>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">31:22</span>
+        </div>
+        <div class="video-info">
+          <h4>The most common questions families ask about ADHD</h4>
+          <div class="meta">Dr James Tan &middot; Child Psychiatrist</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">19:55</span>
+        </div>
+        <div class="video-info">
+          <h4>Is it ADHD? How to know and what to do next</h4>
+          <div class="meta">Dr James Tan &middot; Child Psychiatrist</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="subtopic-section" id="adhd-young-person">
+    <div class="subtopic-heading">
+      <h3>A Young Person's Questions</h3>
+      <span class="subtopic-count">1 video</span>
+    </div>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">24:10</span>
+        </div>
+        <div class="video-info">
+          <h4>ADHD — questions from young people answered</h4>
+          <div class="meta">Youth panel with specialist</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="subtopic-section" id="adhd-girls">
+    <div class="subtopic-heading">
+      <h3>ADHD in Girls</h3>
+      <span class="subtopic-count">2 videos</span>
+    </div>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">27:38</span>
+        </div>
+        <div class="video-info">
+          <h4>Why ADHD is so often missed in girls</h4>
+          <div class="meta">Dr Lisa Chen &middot; Paediatrician</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">16:44</span>
+        </div>
+        <div class="video-info">
+          <h4>Supporting your daughter with ADHD</h4>
+          <div class="meta">Dr Lisa Chen &middot; Paediatrician</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="subtopic-section" id="adhd-medication">
+    <div class="subtopic-heading">
+      <h3>Medication</h3>
+      <span class="subtopic-count">2 videos</span>
+    </div>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">35:20</span>
+        </div>
+        <div class="video-info">
+          <h4>ADHD medication — what families need to know</h4>
+          <div class="meta">Dr Mark Evans &middot; Child Psychiatrist</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">21:05</span>
+        </div>
+        <div class="video-info">
+          <h4>Common questions about Ritalin and Concerta</h4>
+          <div class="meta">Dr Mark Evans &middot; Child Psychiatrist</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="subtopic-section" id="adhd-parenting">
+    <div class="subtopic-heading">
+      <h3>Parenting Course</h3>
+      <span class="subtopic-count">1 video</span>
+    </div>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">42:15</span>
+        </div>
+        <div class="video-info">
+          <h4>Parenting a child with ADHD — a practical course</h4>
+          <div class="meta">Family therapist panel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="subtopic-section" id="adhd-teachers">
+    <div class="subtopic-heading">
+      <h3>Teacher Questions</h3>
+      <span class="subtopic-count">1 video</span>
+    </div>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play"><svg width="14" height="14" viewBox="0 0 14 14" fill="#0c525e"><polygon points="3,2 12,7 3,12"/></svg></div>
+          <span class="video-duration">29:33</span>
+        </div>
+        <div class="video-info">
+          <h4>ADHD in the classroom — answers for teachers</h4>
+          <div class="meta">Dr Sarah Mitchell &middot; Paediatrician</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="background:#0c525e;color:rgba(255,255,255,0.7);padding:56px clamp(24px,4vw,56px) 32px;">
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px;">
+    <div>
+      <div style="font-family:'Lora',serif;font-weight:700;font-size:18px;color:#fff;margin-bottom:12px;">Listening to Families</div>
+      <p style="font-size:13px;line-height:1.7;max-width:280px;">Free specialist-led health content for New Zealand families. Funded by Māia Health Foundation.</p>
+    </div>
+    <div>
+      <h4 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.45);margin-bottom:16px;">Explore</h4>
+      <a href="#" style="display:block;font-size:13.5px;color:rgba(255,255,255,0.65);margin-bottom:10px;">Topics</a>
+      <a href="#" style="display:block;font-size:13.5px;color:rgba(255,255,255,0.65);margin-bottom:10px;">Specialists</a>
+      <a href="#" style="display:block;font-size:13.5px;color:rgba(255,255,255,0.65);margin-bottom:10px;">Resources</a>
+      <a href="#" style="display:block;font-size:13.5px;color:rgba(255,255,255,0.65);">Summaries</a>
+    </div>
+    <div>
+      <h4 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.45);margin-bottom:16px;">About</h4>
+      <a href="#" style="display:block;font-size:13.5px;color:rgba(255,255,255,0.65);margin-bottom:10px;">About Us</a>
+      <a href="#" style="display:block;font-size:13.5px;color:rgba(255,255,255,0.65);">Contact</a>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;font-size:12px;color:rgba(255,255,255,0.35);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+    <span>© 2026 Listening to Families. All rights reserved.</span>
+    <span><a href="#" style="color:rgba(255,255,255,0.35);text-decoration:underline;">Privacy Policy</a> &nbsp;&middot;&nbsp; listeningtofamilies.co.nz</span>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4 11l5-5 5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+  function toggleNav(btn) {
+    const links = document.getElementById('navLinks');
+    const open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  }
+
+  const sections = document.querySelectorAll('.subtopic-section');
+  const navLinks = document.querySelectorAll('.subtopic-nav a');
+  const backToTop = document.querySelector('.back-to-top');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 140) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+    backToTop.classList.toggle('visible', window.scrollY > 400);
+  });
+</script>
+
+</body>
+</html>

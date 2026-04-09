@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listening to Families | Free specialist-led resources for NZ families</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    *:focus-visible {
+      outline: 3px solid #82d4e0;
+      outline-offset: 2px;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #1a2c2e;
+      background: #f5f0e8;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img, svg {
+      display: block;
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+      background: none;
+    }
+
+    /* =============================================
+       UTILITY
+    ============================================= */
+    .hl {
+      background: linear-gradient(transparent 60%, #f5c842 60%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: clamp(20px, 4vw, 56px);
+      padding-right: clamp(20px, 4vw, 56px);
+    }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #0c525e;
+      height: 64px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 56px);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-eyebrow {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 10.5px;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 2px;
+    }
+
+    .nav-logo-main {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.75);
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .nav-search-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: rgba(255, 255, 255, 0.7);
+      transition: color 0.15s, background 0.15s;
+      background: none;
+      border: none;
+    }
+
+    .nav-search-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      background: #f5c842;
+      color: #0c525e;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.88;
+    }
+
+    .nav-hamburger {
+      display: none;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      color: rgba(255, 255, 255, 0.8);
+      transition: color 0.15s, background 0.15s;
+      background: none;
+      border: none;
+    }
+
+    .nav-hamburger:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-mobile-menu {
+      display: none;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: #0c525e;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 12px 0 16px;
+      z-index: 99;
+    }
+
+    .nav-mobile-menu.open {
+      display: block;
+    }
+
+    .nav-mobile-menu a {
+      display: block;
+      padding: 11px clamp(20px, 4vw, 56px);
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.8);
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-mobile-menu a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* =============================================
+       SECTION 1: HERO
+    ============================================= */
+    .hero {
+      background: #f5f0e8;
+      padding: clamp(20px, 4vw, 56px) 0 clamp(48px, 8vw, 88px);
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 56px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 6vw, 80px);
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      border: 1.5px solid #0c525e;
+      color: #0c525e;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 52px);
+      line-height: 1.15;
+      color: #1a2c2e;
+      margin-bottom: 18px;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: #5a7a7e;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .hero-search {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 999px;
+      box-shadow: 0 2px 12px rgba(12, 82, 94, 0.1);
+      max-width: 440px;
+      padding: 4px 4px 4px 20px;
+    }
+
+    .hero-search input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #1a2c2e;
+      background: transparent;
+      min-width: 0;
+    }
+
+    .hero-search input::placeholder {
+      color: #8aacb0;
+    }
+
+    .hero-search button {
+      background: #0c525e;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 999px;
+      border: none;
+      transition: background 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .hero-search button:hover {
+      background: #0a3d47;
+    }
+
+    .hero-funded {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 14px;
+      font-size: 12px;
+      color: #8aacb0;
+    }
+
+    /* Mobile social proof (inside hero-left, hidden on desktop) */
+    .hero-mobile-social-proof {
+      display: none;
+      border: 1.5px solid rgba(12, 82, 94, 0.12);
+      border-radius: 12px;
+      padding: 18px 20px;
+      background: #fff;
+      max-width: 440px;
+      margin-top: 20px;
+    }
+
+    .hero-mobile-social-proof .tc-quote {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #1a2c2e;
+      margin-bottom: 14px;
+    }
+
+    /* Hero right */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-right: 28px;
+    }
+
+    /* Testimonial cards */
+    .tc {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px 22px;
+      box-shadow: 0 2px 14px rgba(12, 82, 94, 0.09);
+    }
+
+    .tc.tc-dark {
+      background: #0c525e;
+    }
+
+    .tc-quote {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #1a2c2e;
+      margin-bottom: 14px;
+    }
+
+    .tc.tc-dark .tc-quote {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .tc-footer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tc-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e0eff1;
+      color: #0c525e;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tc.tc-dark .tc-avatar {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+    }
+
+    .tc-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .tc-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a2c2e;
+    }
+
+    .tc.tc-dark .tc-name {
+      color: #fff;
+    }
+
+    .tc-location {
+      font-size: 12px;
+      color: #5a7a7e;
+    }
+
+    .tc.tc-dark .tc-location {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .tc-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .tc-chip-adhd {
+      background: rgba(12, 82, 94, 0.1);
+      color: #0c525e;
+    }
+
+    .tc-chip-anxiety {
+      background: rgba(123, 94, 167, 0.2);
+      color: #d4b8ff;
+    }
+
+    .tc-chip-eczema {
+      background: rgba(58, 144, 128, 0.1);
+      color: #3a9080;
+    }
+
+    .tc-stagger-left {
+      transform: translateX(-24px);
+    }
+
+    .tc-stagger-right {
+      transform: translateX(24px);
+    }
+
+    /* =============================================
+       SECTION 2: TRUST BAND
+    ============================================= */
+    .trust-band {
+      background: #0c525e;
+      padding: 28px 0;
+    }
+
+    .trust-band-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 56px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(32px, 6vw, 80px);
+      flex-wrap: wrap;
+    }
+
+    .trust-stat {
+      text-align: center;
+    }
+
+    .trust-stat .num {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(28px, 4vw, 40px);
+      color: #82d4e0;
+      line-height: 1.1;
+    }
+
+    .trust-stat .label {
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.65);
+      margin-top: 4px;
+    }
+
+    /* =============================================
+       SECTION 3: TOPICS
+    ============================================= */
+    .topics-section {
+      background: #f5f0e8;
+      padding: clamp(56px, 8vw, 96px) 0;
+    }
+
+    .topics-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 56px);
+    }
+
+    .section-header {
+      margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(26px, 4vw, 34px);
+      color: #1a2c2e;
+      margin-bottom: 10px;
+    }
+
+    .section-header p {
+      font-size: 15.5px;
+      color: #5a7a7e;
+      line-height: 1.6;
+    }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .topic-card {
+      display: block;
+      background: #fff;
+      border-radius: 12px;
+      padding: 22px 20px;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      border-left: 4px solid currentColor;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(12, 82, 94, 0.12);
+    }
+
+    .topic-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .topic-card h3 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: #1a2c2e;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .topic-card p {
+      font-size: 13.5px;
+      color: #5a7a7e;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .topic-count {
+      font-size: 12px;
+      font-weight: 600;
+      color: currentColor;
+      opacity: 0.75;
+    }
+
+    .topics-cta-wrap {
+      text-align: center;
+    }
+
+    .topics-cta {
+      display: inline-block;
+      background: #0c525e;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .topics-cta:hover {
+      background: #0a3d47;
+    }
+
+    /* =============================================
+       SECTION 4: PODCAST
+    ============================================= */
+    .podcast-section {
+      background: #fff;
+      padding: clamp(56px, 8vw, 96px) 0;
+    }
+
+    .podcast-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 56px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 6vw, 80px);
+      align-items: center;
+    }
+
+    .podcast-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(12, 82, 94, 0.07);
+      color: #0c525e;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+
+    .podcast-left h2 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(26px, 4vw, 34px);
+      color: #1a2c2e;
+      margin-bottom: 16px;
+    }
+
+    .podcast-left p {
+      font-size: 15px;
+      color: #5a7a7e;
+      line-height: 1.7;
+    }
+
+    .podcast-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .podcast-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      max-width: 260px;
+      width: 100%;
+    }
+
+    .podcast-btn:hover {
+      opacity: 0.88;
+    }
+
+    .podcast-btn-spotify {
+      background: #1DB954;
+      color: #fff;
+    }
+
+    .podcast-btn-apple {
+      background: #000;
+      color: #fff;
+    }
+
+    .podcast-free-note {
+      font-size: 12.5px;
+      color: #8aacb0;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+
+    /* =============================================
+       SECTION 5: CLOSING CTA
+    ============================================= */
+    .closing-cta {
+      background: #0c525e;
+      padding: clamp(56px, 8vw, 96px) 0;
+      text-align: center;
+    }
+
+    .closing-cta-inner {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 56px);
+    }
+
+    .closing-cta h2 {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(28px, 5vw, 42px);
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .closing-cta p {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.68);
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    .closing-search {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 999px;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.18);
+      max-width: 520px;
+      margin: 0 auto 20px;
+      padding: 4px 4px 4px 20px;
+    }
+
+    .closing-search input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #1a2c2e;
+      background: transparent;
+      min-width: 0;
+    }
+
+    .closing-search input::placeholder {
+      color: #8aacb0;
+    }
+
+    .closing-search button {
+      background: #0c525e;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 999px;
+      border: none;
+      transition: background 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .closing-search button:hover {
+      background: #0a3d47;
+    }
+
+    .closing-browse-link {
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.15s;
+    }
+
+    .closing-browse-link:hover {
+      color: #fff;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .footer {
+      background: #0a3d47;
+      padding-top: clamp(48px, 6vw, 72px);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 56px);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: clamp(32px, 5vw, 64px);
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .footer-logo-eyebrow {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 10.5px;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 2px;
+    }
+
+    .footer-logo-main {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .footer-desc {
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, 0.68);
+      line-height: 1.65;
+    }
+
+    .footer-funded {
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.45);
+      margin-top: 14px;
+    }
+
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col ul a {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-col ul a:hover {
+      color: #fff;
+    }
+
+    .footer-bar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px clamp(20px, 4vw, 56px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.4);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* =============================================
+       RESPONSIVE — 900px
+    ============================================= */
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-right {
+        display: none;
+      }
+
+      .hero-mobile-social-proof {
+        display: block;
+      }
+
+      .topics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .podcast-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-grid > .footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* =============================================
+       RESPONSIVE — 600px
+    ============================================= */
+    @media (max-width: 600px) {
+      .topics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* =============================================
+       RESPONSIVE — 480px
+    ============================================= */
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .trust-band-inner {
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       NAVIGATION
+  ============================================= -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Listening to Families, home">
+        <span class="nav-logo-eyebrow">Listening to</span>
+        <span class="nav-logo-main">Families</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="topics-v6.html">Topics</a></li>
+        <li><a href="#">Specialists</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <button class="nav-search-btn" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <circle cx="7.5" cy="7.5" r="5.25" stroke="currentColor" stroke-width="1.75"/>
+            <path d="M11.25 11.25L15.75 15.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <a href="topics-v6.html" class="nav-cta">Browse Topics</a>
+        <button
+          class="nav-hamburger"
+          id="nav-hamburger"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="nav-mobile-menu"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-mobile-menu" id="nav-mobile-menu" role="menu">
+      <a href="topics-v6.html" role="menuitem">Topics</a>
+      <a href="#" role="menuitem">Specialists</a>
+      <a href="#" role="menuitem">Resources</a>
+      <a href="#" role="menuitem">About</a>
+      <a href="#" role="menuitem">Contact</a>
+    </div>
+  </nav>
+
+
+  <!-- =============================================
+       SECTION 1: HERO
+  ============================================= -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-inner">
+
+      <!-- Left column -->
+      <div class="hero-left">
+        <div class="hero-eyebrow" aria-label="Free, specialist-backed, New Zealand">
+          Free &middot; Specialist-backed &middot; New Zealand
+        </div>
+
+        <h1 id="hero-heading">
+          The answers you need, from <span class="hl">specialists</span> you can trust
+        </h1>
+
+        <p class="hero-subtitle">
+          Free videos and resources across 30+ health and development topics - made for real families, by the people who work with them.
+        </p>
+
+        <div class="hero-search" role="search">
+          <input
+            type="search"
+            placeholder="Search topics, conditions&hellip;"
+            aria-label="Search topics and conditions"
+          />
+          <button type="submit">Search</button>
+        </div>
+
+        <div class="hero-funded">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M7 1L2 3.5V7c0 2.8 2.1 5.1 5 5.9 2.9-.8 5-3.1 5-5.9V3.5L7 1Z" stroke="#8aacb0" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <span>Funded by M&#x101;ia Health Foundation &middot; Always free</span>
+        </div>
+
+        <!-- Mobile social proof (hidden on desktop) -->
+        <div class="hero-mobile-social-proof" aria-label="Parent testimonial">
+          <p class="tc-quote">&ldquo;I&rsquo;d been googling for weeks and getting more confused. For the first time I actually understood what was going on with my son.&rdquo;</p>
+          <div class="tc-footer">
+            <div class="tc-avatar" aria-hidden="true">KT</div>
+            <div class="tc-meta">
+              <div class="tc-name">Kate T.</div>
+              <div class="tc-location">Auckland</div>
+            </div>
+            <span class="tc-chip tc-chip-adhd">ADHD</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column (hidden on mobile) -->
+      <div class="hero-right" aria-label="Parent testimonials">
+
+        <!-- Card 1 -->
+        <article class="tc" aria-label="Testimonial from Kate T.">
+          <p class="tc-quote">&ldquo;I&rsquo;d been googling for weeks and getting more confused and anxious. Then I found this site and watched three videos in one evening. For the first time I actually understood what was going on with my son.&rdquo;</p>
+          <div class="tc-footer">
+            <div class="tc-avatar" aria-hidden="true">KT</div>
+            <div class="tc-meta">
+              <div class="tc-name">Kate T.</div>
+              <div class="tc-location">Auckland</div>
+            </div>
+            <span class="tc-chip tc-chip-adhd">ADHD</span>
+          </div>
+        </article>
+
+        <!-- Card 2 (dark, staggered left) -->
+        <article class="tc tc-dark tc-stagger-left" aria-label="Testimonial from Mark R.">
+          <p class="tc-quote">&ldquo;The specialist videos are clear, calm, and don&rsquo;t talk down to you. I&rsquo;ve shared them with our school SENCO and they&rsquo;ve started recommending them to other parents too.&rdquo;</p>
+          <div class="tc-footer">
+            <div class="tc-avatar" aria-hidden="true">MR</div>
+            <div class="tc-meta">
+              <div class="tc-name">Mark R.</div>
+              <div class="tc-location">Wellington</div>
+            </div>
+            <span class="tc-chip tc-chip-anxiety">Anxiety</span>
+          </div>
+        </article>
+
+        <!-- Card 3 (staggered right) -->
+        <article class="tc tc-stagger-right" aria-label="Testimonial from Aroha H.">
+          <p class="tc-quote">&ldquo;As a M&#x101;ori mum trying to navigate the health system for my daughter, it was refreshing to find something that felt made for us &mdash; not just translated from overseas content.&rdquo;</p>
+          <div class="tc-footer">
+            <div class="tc-avatar" aria-hidden="true">AH</div>
+            <div class="tc-meta">
+              <div class="tc-name">Aroha H.</div>
+              <div class="tc-location">Rotorua</div>
+            </div>
+            <span class="tc-chip tc-chip-eczema">Eczema</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       SECTION 2: TRUST BAND
+  ============================================= -->
+  <section class="trust-band" aria-label="Key statistics">
+    <div class="trust-band-inner">
+      <div class="trust-stat">
+        <div class="num">275</div>
+        <div class="label">free videos</div>
+      </div>
+      <div class="trust-stat">
+        <div class="num">30+</div>
+        <div class="label">topics</div>
+      </div>
+      <div class="trust-stat">
+        <div class="num">17</div>
+        <div class="label">NZ specialists</div>
+      </div>
+      <div class="trust-stat">
+        <div class="num">100%</div>
+        <div class="label">free, always</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       SECTION 3: TOPICS
+  ============================================= -->
+  <section class="topics-section" aria-labelledby="topics-heading">
+    <div class="topics-inner">
+
+      <div class="section-header">
+        <h2 id="topics-heading">Browse by topic</h2>
+        <p>Find honest, specialist-led information on the things families face most.</p>
+      </div>
+
+      <div class="topics-grid">
+
+        <!-- Cat 1: How they think & learn -->
+        <a href="topics-v6.html" class="topic-card" style="color: #0c525e;" aria-label="How they think and learn, 4 topics">
+          <div class="topic-icon-wrap" style="background: rgba(12,82,94,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 3C7.2 3 5 5.2 5 8c0 1.8.9 3.4 2.3 4.4V14h5v-1.6C13.8 11.4 15 9.8 15 8c0-2.8-2.2-5-5-5Z" stroke="#0c525e" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M7.5 14v1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5V14" stroke="#0c525e" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M8.5 8.5c0-1 .7-1.5 1.5-1.5s1.5.5 1.5 1.5" stroke="#0c525e" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>How they think &amp; learn</h3>
+          <p>ADHD, autism, sensory processing and executive functioning.</p>
+          <div class="topic-count">4 topics</div>
+        </a>
+
+        <!-- Cat 2: Mind & emotions -->
+        <a href="topics-v6.html" class="topic-card" style="color: #7b5ea7;" aria-label="Mind and emotions, 6 topics">
+          <div class="topic-icon-wrap" style="background: rgba(123,94,167,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 16.5S3 12 3 7.5C3 5.6 4.6 4 6.5 4c1.1 0 2 .5 2.7 1.3L10 6.2l.8-.9C11.5 4.5 12.4 4 13.5 4 15.4 4 17 5.6 17 7.5c0 4.5-7 9-7 9Z" stroke="#7b5ea7" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Mind &amp; emotions</h3>
+          <p>Anxiety, trauma, emotion regulation, gender diversity and more.</p>
+          <div class="topic-count">6 topics</div>
+        </a>
+
+        <!-- Cat 3: Body & health -->
+        <a href="topics-v6.html" class="topic-card" style="color: #3a9080;" aria-label="Body and health, 10 topics">
+          <div class="topic-icon-wrap" style="background: rgba(58,144,128,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 3v14M3 10h14" stroke="#3a9080" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Body &amp; health</h3>
+          <p>Eczema, allergies, IBD, chronic fatigue, cancer and more.</p>
+          <div class="topic-count">10 topics</div>
+        </a>
+
+        <!-- Cat 4: School & growing up -->
+        <a href="topics-v6.html" class="topic-card" style="color: #c4722a;" aria-label="School and growing up, 4 topics">
+          <div class="topic-icon-wrap" style="background: rgba(196,114,42,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <rect x="3" y="4" width="14" height="12" rx="1.5" stroke="#c4722a" stroke-width="1.8"/>
+              <path d="M7 4V3M13 4V3" stroke="#c4722a" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M6.5 10h7M6.5 13h4.5" stroke="#c4722a" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>School &amp; growing up</h3>
+          <p>School attendance, online safety and parenting programmes.</p>
+          <div class="topic-count">4 topics</div>
+        </a>
+
+        <!-- Cat 5: Getting support -->
+        <a href="topics-v6.html" class="topic-card" style="color: #4a7ab5;" aria-label="Getting support, 4 topics">
+          <div class="topic-icon-wrap" style="background: rgba(74,122,181,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M4 14c0-2.8 2.7-5 6-5s6 2.2 6 5" stroke="#4a7ab5" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="10" cy="6.5" r="2.5" stroke="#4a7ab5" stroke-width="1.8"/>
+            </svg>
+          </div>
+          <h3>Getting support</h3>
+          <p>GPs, pharmacies, mental health services and medication.</p>
+          <div class="topic-count">4 topics</div>
+        </a>
+
+        <!-- Cat 6: Keeping children safe -->
+        <a href="topics-v6.html" class="topic-card" style="color: #8a4f54;" aria-label="Keeping children safe, 2 topics">
+          <div class="topic-icon-wrap" style="background: rgba(138,79,84,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 2L3 5v5c0 3.9 2.9 7.4 7 8.5 4.1-1.1 7-4.6 7-8.5V5L10 2Z" stroke="#8a4f54" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M7 10l2 2 4-4" stroke="#8a4f54" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Keeping children safe</h3>
+          <p>Sexual abuse, sexualised behaviour and child protection.</p>
+          <div class="topic-count">2 topics</div>
+        </a>
+
+      </div>
+
+      <div class="topics-cta-wrap">
+        <a href="topics-v6.html" class="topics-cta">Browse all 30 topics &rarr;</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       SECTION 4: PODCAST
+  ============================================= -->
+  <section class="podcast-section" aria-labelledby="podcast-heading">
+    <div class="podcast-inner">
+
+      <div class="podcast-left">
+        <div class="podcast-label">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <circle cx="7" cy="7" r="2.5" stroke="#0c525e" stroke-width="1.5"/>
+            <path d="M3.5 10.5A5 5 0 1 1 10.5 3.5" stroke="#0c525e" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M7 12v1.5" stroke="#0c525e" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Podcast
+        </div>
+        <h2 id="podcast-heading">Also available as a podcast</h2>
+        <p>All of our specialist conversations are available as audio. Listen during your commute, after the kids are in bed, or whenever suits you. 58 episodes across 30+ topics.</p>
+      </div>
+
+      <div class="podcast-right">
+        <div class="podcast-buttons">
+
+          <a href="#" class="podcast-btn podcast-btn-spotify" aria-label="Listen on Spotify">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="10" cy="10" r="9.25" fill="#1DB954"/>
+              <path d="M5.5 12.5c2.2-1.3 5.8-1.5 8 .3" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M6.2 10.2c2.6-1.5 6.6-1.7 9.1.3" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M7 7.8C10 6 14.5 5.8 17.5 8" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            Listen on Spotify
+          </a>
+
+          <a href="#" class="podcast-btn podcast-btn-apple" aria-label="Listen on Apple Podcasts">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <rect width="20" height="20" rx="5" fill="#000"/>
+              <circle cx="10" cy="8.5" r="3" stroke="#fff" stroke-width="1.3"/>
+              <path d="M8.5 12.5C8.5 14 9.2 16 10 16s1.5-2 1.5-3.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M10 11.5v1" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Apple Podcasts
+          </a>
+
+        </div>
+        <p class="podcast-free-note">Free on all podcast apps</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       SECTION 5: CLOSING CTA
+  ============================================= -->
+  <section class="closing-cta" aria-labelledby="closing-heading">
+    <div class="closing-cta-inner">
+      <h2 id="closing-heading">Find what you&rsquo;re looking for.</h2>
+      <p>Search our full library of specialist videos and podcasts - free, whenever you need them.</p>
+
+      <div class="closing-search" role="search">
+        <input
+          type="search"
+          placeholder="Search topics, conditions&hellip;"
+          aria-label="Search topics and conditions"
+        />
+        <button type="submit">Search</button>
+      </div>
+
+      <a href="topics-v6.html" class="closing-browse-link">Or browse all topics &rarr;</a>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-grid">
+
+        <!-- Brand column -->
+        <div class="footer-brand">
+          <div class="footer-logo" aria-label="Listening to Families">
+            <span class="footer-logo-eyebrow">Listening to</span>
+            <span class="footer-logo-main">Families</span>
+          </div>
+          <p class="footer-desc">Free specialist-led resources for New Zealand families. Covering 30+ topics in child and adolescent health and development.</p>
+          <p class="footer-funded">Funded by M&#x101;ia Health Foundation</p>
+        </div>
+
+        <!-- Explore column -->
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul role="list">
+            <li><a href="topics-v6.html">Topics</a></li>
+            <li><a href="#">Specialists</a></li>
+            <li><a href="#">Resources</a></li>
+          </ul>
+        </div>
+
+        <!-- About column -->
+        <div class="footer-col">
+          <h4>About</h4>
+          <ul role="list">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>&copy; 2024 Listening to Families</span>
+      <span>listeningtofamilies.nz</span>
+    </div>
+  </footer>
+
+
+  <!-- =============================================
+       JS: HAMBURGER TOGGLE
+  ============================================= -->
+  <script>
+    const btn = document.getElementById('nav-hamburger');
+    const menu = document.getElementById('nav-mobile-menu');
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      menu.classList.toggle('open');
+    });
+  </script>
+
+</body>
+</html>

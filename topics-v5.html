@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topics — Listening to Families</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #0c525e;
+      --cream: #f5f0e8;
+      --yellow: #f5c842;
+      --light-teal: #82d4e0;
+      --body-text: #1a2c2e;
+      --cat1: #0c525e;
+      --cat2: #7b5ea7;
+      --cat3: #3a9080;
+      --cat4: #c4722a;
+      --cat5: #4a7ab5;
+      --cat6: #8a4f54;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--body-text);
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    *:focus-visible {
+      outline: 3px solid #82d4e0;
+      outline-offset: 2px;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid #f0ebe2;
+      height: 64px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 40px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .nav-logo {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+      flex-shrink: 0;
+    }
+
+    .logo-top {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 12px;
+      color: rgba(12,82,94,0.45);
+      letter-spacing: 0.02em;
+    }
+
+    .logo-bottom {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--teal);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: #5a7a7e;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: color 0.18s, background 0.18s;
+    }
+
+    .nav-links a:hover {
+      color: var(--teal);
+      background: rgba(12,82,94,0.06);
+    }
+
+    .nav-links a.active {
+      color: #0c525e;
+      background: rgba(12,82,94,0.08);
+      font-weight: 600;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--teal);
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: #fff;
+      padding: clamp(48px, 6vw, 72px) clamp(24px, 4vw, 56px);
+    }
+
+    .page-header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: #8aacb0;
+      margin-bottom: 20px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .breadcrumb a {
+      color: #8aacb0;
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+
+    .breadcrumb a:hover { color: var(--teal); }
+
+    .breadcrumb span { margin: 0 6px; opacity: 0.6; }
+
+    .page-header h1 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(40px, 5.5vw, 64px);
+      color: var(--body-text);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .highlight-word {
+      position: relative;
+      display: inline-block;
+    }
+
+    .highlight-word::after {
+      content: '';
+      position: absolute;
+      left: -2px;
+      right: -2px;
+      bottom: 4px;
+      height: 8px;
+      background: var(--yellow);
+      border-radius: 3px;
+      z-index: -1;
+    }
+
+    .page-header p {
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: #6a8a8e;
+      max-width: 640px;
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .search-wrap {
+      max-width: 540px;
+      margin-bottom: 16px;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: var(--cream);
+      border: 2px solid rgba(12,82,94,0.12);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+
+    .search-bar:focus-within {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(130,212,224,0.3);
+      outline: none;
+    }
+
+    .search-bar input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: var(--body-text);
+      outline: none;
+    }
+
+    .search-bar input::placeholder { color: #9ab0b4; }
+
+    .search-bar button {
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      padding: 14px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s;
+      white-space: nowrap;
+    }
+
+    .search-bar button:hover { background: #0a4550; }
+
+    .stats-hint {
+      font-size: 13px;
+      color: #9ab0b4;
+      font-weight: 500;
+    }
+
+    /* ── CATEGORY STRIP ── */
+    .cat-strip {
+      border-bottom: 1px solid #f0ebe2;
+      background: #fff;
+    }
+
+    .cat-strip-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 40px);
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .cat-strip-inner::-webkit-scrollbar { display: none; }
+
+    .cat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 16px 24px;
+      cursor: pointer;
+      transition: background 0.18s;
+      border-right: 1px solid #f0ebe2;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+
+    .cat-item:last-child { border-right: none; }
+
+    .cat-item:hover { background: #faf8f4; }
+
+    .cat-item.active { background: #faf8f4; }
+
+    .cat-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .cat-item-name {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--body-text);
+      text-align: center;
+      max-width: 90px;
+      line-height: 1.3;
+    }
+
+    .cat-item-count {
+      font-size: 11px;
+      color: #9ab0b4;
+      font-weight: 500;
+    }
+
+    /* ── BODY / TOPICS ── */
+    .topics-body {
+      background: var(--cream);
+      padding: clamp(40px, 5vw, 80px) clamp(16px, 4vw, 40px);
+    }
+
+    .topics-body-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Filter pills */
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+      align-items: center;
+    }
+
+    .filter-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #8aacb0;
+      margin-right: 4px;
+    }
+
+    .filter-pill {
+      background: #fff;
+      border: 1.5px solid rgba(12,82,94,0.12);
+      color: #5a7a7e;
+      padding: 7px 16px;
+      border-radius: 100px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.18s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .filter-pill:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    .filter-pill.active {
+      background: var(--teal);
+      color: #fff;
+      border-color: var(--teal);
+    }
+
+    /* Category sections */
+    .cat-section {
+      margin-bottom: 52px;
+    }
+
+    .cat-section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .cat-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .cat-section-title {
+      font-family: 'Lora', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--body-text);
+      letter-spacing: -0.01em;
+    }
+
+    .cat-section-count {
+      font-size: 13px;
+      color: #9ab0b4;
+      font-weight: 500;
+      margin-left: auto;
+    }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .topic-card {
+      background: #fff;
+      border-radius: 12px;
+      border-left: 4px solid var(--cat-color, var(--teal));
+      padding: 20px 20px 18px;
+      text-decoration: none;
+      display: block;
+      transition: transform 0.18s, box-shadow 0.18s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .topic-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    }
+
+    .topic-card-name {
+      font-family: 'Lora', serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--body-text);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .topic-card-meta {
+      font-size: 12.5px;
+      color: #9ab0b4;
+      font-weight: 500;
+    }
+
+    .topic-card-arrow {
+      margin-top: 12px;
+      font-size: 18px;
+      color: var(--cat-color, var(--teal));
+      opacity: 0.6;
+      transition: opacity 0.18s, transform 0.18s;
+      display: inline-block;
+    }
+
+    .topic-card:hover .topic-card-arrow {
+      opacity: 1;
+      transform: translateX(3px);
+    }
+
+    /* ── NO RESULTS ── */
+    .no-results {
+      text-align: center;
+      padding: 48px 24px;
+      color: #8aacb0;
+      font-size: 16px;
+      display: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0a3d47;
+      color: rgba(255,255,255,0.75);
+      padding: clamp(48px, 6vw, 72px) clamp(16px, 4vw, 40px) clamp(24px, 3vw, 36px);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 28px;
+    }
+
+    .footer-logo-text {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .footer-logo-main {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: #fff;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .footer-about p {
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 14px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 9px;
+    }
+
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.18s;
+    }
+
+    .footer-col ul li a:hover { color: var(--light-teal); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .footer-bottom a {
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover { color: var(--light-teal); }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 44px;
+      height: 44px;
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 16px rgba(12,82,94,0.35);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.25s, transform 0.25s, background 0.18s;
+      z-index: 90;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover { background: #0a4550; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0; right: 0;
+        background: #fff;
+        border-bottom: 1px solid #f0ebe2;
+        padding: 12px 16px;
+        gap: 4px;
+        z-index: 99;
+      }
+      .nav-toggle { display: flex; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .cat-item { padding: 14px 16px; }
+      .cat-item-name { max-width: 72px; font-size: 11px; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .topics-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="homepage-v5.html" class="nav-logo" aria-label="Listening to Families — home">
+      <span class="logo-top">Listening to</span>
+      <span class="logo-bottom">Families</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav(this)">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+        <rect y="4" width="22" height="2" rx="1" fill="currentColor"/>
+        <rect y="10" width="22" height="2" rx="1" fill="currentColor"/>
+        <rect y="16" width="22" height="2" rx="1" fill="currentColor"/>
+      </svg>
+    </button>
+    <ul class="nav-links" id="navLinks" role="list">
+      <li><a href="topics-v5.html" class="active" aria-current="page">Topics</a></li>
+      <li><a href="#">Specialists</a></li>
+      <li><a href="#">Resources</a></li>
+      <li><a href="#">Summaries</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-inner">
+    <p class="breadcrumb">
+      <a href="homepage-v5.html">Home</a>
+      <span>/</span>
+      Topics
+    </p>
+    <h1>Browse <span class="highlight-word">Topics</span></h1>
+    <p>Free, specialist-backed videos and resources covering over 30 health and development topics — organised by what your family is facing.</p>
+    <div class="search-wrap">
+      <div class="search-bar" role="search">
+        <input
+          type="search"
+          id="topicSearch"
+          placeholder="Search topics, e.g. ADHD, anxiety…"
+          aria-label="Search topics"
+          oninput="filterTopics(this.value)"
+        >
+        <button type="button" aria-label="Search">Search</button>
+      </div>
+    </div>
+    <p class="stats-hint">275 free videos &middot; 17 specialists</p>
+  </div>
+</header>
+
+<!-- CATEGORY ICON STRIP -->
+<div class="cat-strip" role="navigation" aria-label="Browse by category">
+  <div class="cat-strip-inner">
+    <a href="#cat1" class="cat-item" aria-label="How they think &amp; learn — 4 topics">
+      <div class="cat-icon-wrap" style="background: rgba(12,82,94,0.1);">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z" fill="#0c525e"/>
+        </svg>
+      </div>
+      <span class="cat-item-name">How they think &amp; learn</span>
+      <span class="cat-item-count">4 topics</span>
+    </a>
+    <a href="#cat2" class="cat-item" aria-label="Mind &amp; emotions — 6 topics">
+      <div class="cat-icon-wrap" style="background: rgba(123,94,167,0.1);">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="8" stroke="#7b5ea7" stroke-width="2"/>
+          <path d="M7 11.5c0 1.1 1.3 2 3 2s3-.9 3-2" stroke="#7b5ea7" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="7.5" cy="8.5" r="1" fill="#7b5ea7"/>
+          <circle cx="12.5" cy="8.5" r="1" fill="#7b5ea7"/>
+        </svg>
+      </div>
+      <span class="cat-item-name">Mind &amp; emotions</span>
+      <span class="cat-item-count">6 topics</span>
+    </a>
+    <a href="#cat3" class="cat-item" aria-label="Body &amp; health — 10 topics">
+      <div class="cat-icon-wrap" style="background: rgba(58,144,128,0.1);">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M2 10h3l2-5 3 10 2-7 2 3 1-1h3" stroke="#3a9080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="cat-item-name">Body &amp; health</span>
+      <span class="cat-item-count">10 topics</span>
+    </a>
+    <a href="#cat4" class="cat-item" aria-label="School &amp; growing up — 4 topics">
+      <div class="cat-icon-wrap" style="background: rgba(196,114,42,0.1);">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M3 9l7-5 7 5v8H3V9z" stroke="#c4722a" stroke-width="1.8" stroke-linejoin="round"/>
+          <rect x="7.5" y="12" width="5" height="5" rx="0.5" stroke="#c4722a" stroke-width="1.5"/>
+          <path d="M1 9l9-7 9 7" stroke="#c4722a" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="cat-item-name">School &amp; growing up</span>
+      <span class="cat-item-count">4 topics</span>
+    </a>
+    <a href="#cat5" class="cat-item" aria-label="Getting support — 4 topics">
+      <div class="cat-icon-wrap" style="background: rgba(74,122,181,0.1);">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M6 3h8a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2z" stroke="#4a7ab5" stroke-width="1.8"/>
+          <path d="M7.5 7.5c.5-1.5 2-1.5 2.5 0s2 1.5 2.5 0" stroke="#4a7ab5" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M7 12h6M7 14.5h4" stroke="#4a7ab5" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="cat-item-name">Getting support</span>
+      <span class="cat-item-count">4 topics</span>
+    </a>
+    <a href="#cat6" class="cat-item" aria-label="Keeping children safe — 2 topics">
+      <div class="cat-icon-wrap" style="background: rgba(138,79,84,0.1);">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M10 2l7 3v5c0 4-3 7-7 8C7 17 4 14 3 10V5l7-3z" stroke="#8a4f54" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M7.5 10l2 2 3-3" stroke="#8a4f54" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="cat-item-name">Keeping children safe</span>
+      <span class="cat-item-count">2 topics</span>
+    </a>
+  </div>
+</div>
+
+<!-- TOPICS BODY -->
+<main class="topics-body" id="main-content">
+  <div class="topics-body-inner">
+
+    <!-- Filter pills -->
+    <div class="filter-row" role="group" aria-label="Filter by category">
+      <span class="filter-label">Show:</span>
+      <button class="filter-pill active" onclick="setFilter('all', this)" aria-pressed="true">All topics</button>
+      <button class="filter-pill" onclick="setFilter('cat1', this)" aria-pressed="false">How they think &amp; learn</button>
+      <button class="filter-pill" onclick="setFilter('cat2', this)" aria-pressed="false">Mind &amp; emotions</button>
+      <button class="filter-pill" onclick="setFilter('cat3', this)" aria-pressed="false">Body &amp; health</button>
+      <button class="filter-pill" onclick="setFilter('cat4', this)" aria-pressed="false">School &amp; growing up</button>
+      <button class="filter-pill" onclick="setFilter('cat5', this)" aria-pressed="false">Getting support</button>
+      <button class="filter-pill" onclick="setFilter('cat6', this)" aria-pressed="false">Keeping children safe</button>
+    </div>
+
+    <!-- CAT 1 -->
+    <section class="cat-section" id="cat1" data-cat="cat1">
+      <div class="cat-section-header">
+        <div class="cat-dot" style="background:var(--cat1);"></div>
+        <h2 class="cat-section-title">How they think &amp; learn</h2>
+        <span class="cat-section-count">4 topics</span>
+      </div>
+      <div class="topics-grid">
+        <a href="adhd-v5.html" class="topic-card" style="--cat-color:var(--cat1)">
+          <div class="topic-card-name">ADHD</div>
+          <div class="topic-card-meta">7 sub-topics &middot; 12 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat1)">
+          <div class="topic-card-name">Autism</div>
+          <div class="topic-card-meta">5 sub-topics &middot; 9 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat1)">
+          <div class="topic-card-name">Sensory Processing</div>
+          <div class="topic-card-meta">3 sub-topics &middot; 6 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat1)">
+          <div class="topic-card-name">Executive Functioning</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- CAT 2 -->
+    <section class="cat-section" id="cat2" data-cat="cat2">
+      <div class="cat-section-header">
+        <div class="cat-dot" style="background:var(--cat2);"></div>
+        <h2 class="cat-section-title">Mind &amp; emotions</h2>
+        <span class="cat-section-count">6 topics</span>
+      </div>
+      <div class="topics-grid">
+        <a href="#" class="topic-card" style="--cat-color:var(--cat2)">
+          <div class="topic-card-name">Anxiety</div>
+          <div class="topic-card-meta">4 sub-topics &middot; 8 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat2)">
+          <div class="topic-card-name">Emotion Regulation</div>
+          <div class="topic-card-meta">3 sub-topics &middot; 5 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat2)">
+          <div class="topic-card-name">Family Stress &amp; Wellbeing</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat2)">
+          <div class="topic-card-name">Trauma</div>
+          <div class="topic-card-meta">3 sub-topics &middot; 6 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat2)">
+          <div class="topic-card-name">Suicide &amp; Self-harm</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 5 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat2)">
+          <div class="topic-card-name">Gender Diversity</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- CAT 3 -->
+    <section class="cat-section" id="cat3" data-cat="cat3">
+      <div class="cat-section-header">
+        <div class="cat-dot" style="background:var(--cat3);"></div>
+        <h2 class="cat-section-title">Body &amp; health</h2>
+        <span class="cat-section-count">10 topics</span>
+      </div>
+      <div class="topics-grid">
+        <a href="#" class="topic-card" style="--cat-color:var(--cat3)">
+          <div class="topic-card-name">Eczema</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 5 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat3)">
+          <div class="topic-card-name">Allergies &amp; Anaphylaxis</div>
+          <div class="topic-card-meta">3 sub-topics &middot; 6 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat3)">
+          <div class="topic-card-name">Coeliac Disease</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat3)">
+          <div class="topic-card-name">IBD</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat3)">
+          <div class="topic-card-name">Chronic Fatigue Syndrome</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 3 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat3)">
+          <div class="topic-card-name">AYA Cancer</div>
+          <div class="topic-card-meta">3 sub-topics &middot; 7 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat3)">
+          <div class="topic-card-name">Eating Challenges</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat3)">
+          <div class="topic-card-name">Toileting</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 3 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat3)">
+          <div class="topic-card-name">Vision</div>
+          <div class="topic-card-meta">1 sub-topic &middot; 2 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat3)">
+          <div class="topic-card-name">Dental &amp; Oral Health</div>
+          <div class="topic-card-meta">1 sub-topic &middot; 2 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- CAT 4 -->
+    <section class="cat-section" id="cat4" data-cat="cat4">
+      <div class="cat-section-header">
+        <div class="cat-dot" style="background:var(--cat4);"></div>
+        <h2 class="cat-section-title">School &amp; growing up</h2>
+        <span class="cat-section-count">4 topics</span>
+      </div>
+      <div class="topics-grid">
+        <a href="#" class="topic-card" style="--cat-color:var(--cat4)">
+          <div class="topic-card-name">School Attendance</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 5 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat4)">
+          <div class="topic-card-name">Online Safety &amp; Wellbeing</div>
+          <div class="topic-card-meta">3 sub-topics &middot; 6 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat4)">
+          <div class="topic-card-name">Parent Education Programs</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat4)">
+          <div class="topic-card-name">Supporting Families</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- CAT 5 -->
+    <section class="cat-section" id="cat5" data-cat="cat5">
+      <div class="cat-section-header">
+        <div class="cat-dot" style="background:var(--cat5);"></div>
+        <h2 class="cat-section-title">Getting support</h2>
+        <span class="cat-section-count">4 topics</span>
+      </div>
+      <div class="topics-grid">
+        <a href="#" class="topic-card" style="--cat-color:var(--cat5)">
+          <div class="topic-card-name">General Practice</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat5)">
+          <div class="topic-card-name">Pharmacies</div>
+          <div class="topic-card-meta">1 sub-topic &middot; 3 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat5)">
+          <div class="topic-card-name">CAF Mental Health Services</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat5)">
+          <div class="topic-card-name">Medication for Mental Health</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- CAT 6 -->
+    <section class="cat-section" id="cat6" data-cat="cat6">
+      <div class="cat-section-header">
+        <div class="cat-dot" style="background:var(--cat6);"></div>
+        <h2 class="cat-section-title">Keeping children safe</h2>
+        <span class="cat-section-count">2 topics</span>
+      </div>
+      <div class="topics-grid">
+        <a href="#" class="topic-card" style="--cat-color:var(--cat6)">
+          <div class="topic-card-name">Sexual Abuse</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 4 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+        <a href="#" class="topic-card" style="--cat-color:var(--cat6)">
+          <div class="topic-card-name">Sexualised Behaviour in Children</div>
+          <div class="topic-card-meta">2 sub-topics &middot; 3 videos</div>
+          <div class="topic-card-arrow" aria-hidden="true">&#8594;</div>
+        </a>
+      </div>
+    </section>
+
+    <div class="no-results" id="noResults" role="status" aria-live="polite">
+      No topics match your search. Try a different term.
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-about">
+        <span class="footer-logo-text">Listening to</span>
+        <span class="footer-logo-main">Families</span>
+        <p>Free, specialist-backed video resources for New Zealand families navigating health and development challenges.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="topics-v5.html">All Topics</a></li>
+          <li><a href="#">Specialists</a></li>
+          <li><a href="#">Resources</a></li>
+          <li><a href="#">Video Summaries</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Specialists</a></li>
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Listening to Families. All rights reserved.</span>
+      <span>Made in Aotearoa New Zealand</span>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+    <path d="M9 14V4M4 9l5-5 5 5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  // Nav toggle
+  function toggleNav(btn) {
+    const nav = document.getElementById('navLinks');
+    const isOpen = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+  }
+
+  // Back to top
+  const btt = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 320);
+  }, { passive: true });
+
+  // Filter pills
+  let currentFilter = 'all';
+
+  function setFilter(cat, btn) {
+    currentFilter = cat;
+    document.querySelectorAll('.filter-pill').forEach(p => {
+      p.classList.remove('active');
+      p.setAttribute('aria-pressed', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
+
+    document.querySelectorAll('.cat-section').forEach(section => {
+      if (cat === 'all' || section.dataset.cat === cat) {
+        section.style.display = '';
+      } else {
+        section.style.display = 'none';
+      }
+    });
+
+    // Re-run search if active
+    const q = document.getElementById('topicSearch').value.trim();
+    if (q) filterTopics(q);
+  }
+
+  // Search / filter
+  function filterTopics(query) {
+    const q = query.toLowerCase().trim();
+    let anyVisible = false;
+
+    document.querySelectorAll('.cat-section').forEach(section => {
+      // Skip sections hidden by category filter
+      if (currentFilter !== 'all' && section.dataset.cat !== currentFilter) return;
+
+      let sectionHasMatch = false;
+
+      section.querySelectorAll('.topic-card').forEach(card => {
+        const name = card.querySelector('.topic-card-name').textContent.toLowerCase();
+        const show = !q || name.includes(q);
+        card.style.display = show ? '' : 'none';
+        if (show) sectionHasMatch = true;
+      });
+
+      section.style.display = sectionHasMatch ? '' : 'none';
+      if (sectionHasMatch) anyVisible = true;
+    });
+
+    document.getElementById('noResults').style.display = anyVisible ? 'none' : 'block';
+  }
+</script>
+</body>
+</html>

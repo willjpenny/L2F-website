@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADHD — Listening to Families</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #0c525e;
+      --cream: #f5f0e8;
+      --yellow: #f5c842;
+      --light-teal: #82d4e0;
+      --body-text: #1a2c2e;
+      --cat1: #0c525e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--body-text);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+
+    *:focus-visible {
+      outline: 3px solid #82d4e0;
+      outline-offset: 2px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      background: var(--teal);
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      color: #fff;
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    .nav-links a[aria-current="page"] {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+    }
+
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: #fff;
+    }
+
+    .nav-mobile {
+      display: none;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: var(--teal);
+      padding: 12px 24px 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      list-style: none;
+      gap: 4px;
+    }
+
+    .nav-mobile.open { display: flex; flex-direction: column; }
+
+    .nav-mobile a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: block;
+      transition: background 0.18s;
+    }
+
+    .nav-mobile a:hover,
+    .nav-mobile a[aria-current="page"] {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: var(--teal);
+      padding: clamp(36px, 5vw, 56px) 24px clamp(48px, 6vw, 72px);
+    }
+
+    .page-header-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .header-kicker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .header-kicker-line {
+      width: 24px;
+      height: 2px;
+      background: var(--light-teal);
+      flex-shrink: 0;
+    }
+
+    .header-kicker-text {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* breadcrumb */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: color 0.18s;
+    }
+
+    .breadcrumb a:hover { color: rgba(255,255,255,0.85); }
+
+    .breadcrumb-sep {
+      color: rgba(255,255,255,0.3);
+      font-size: 0.82rem;
+    }
+
+    .breadcrumb-current {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.82rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Lora', serif;
+      font-size: clamp(2.4rem, 6vw, 3.4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .header-tag {
+      display: inline-block;
+      background: rgba(130,212,224,0.2);
+      color: var(--light-teal);
+      border: 1px solid rgba(130,212,224,0.3);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+
+    /* ── LAYOUT SHELL ── */
+    .page-layout {
+      display: flex;
+      align-items: flex-start;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px clamp(60px, 8vw, 100px);
+      gap: 0;
+    }
+
+    /* ── STICKY SIDE NAV (desktop) ── */
+    .subtopic-sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 80px;
+      padding-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: #9aacae;
+      margin-bottom: 10px;
+      padding-left: 12px;
+    }
+
+    .sidebar-link {
+      display: block;
+      font-size: 0.87rem;
+      color: #5a7578;
+      text-decoration: none;
+      padding: 7px 12px;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      line-height: 1.35;
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(12,82,94,0.07);
+      color: var(--teal);
+    }
+
+    .sidebar-link.active {
+      background: rgba(12,82,94,0.08);
+      color: var(--teal);
+      border-left-color: var(--teal);
+      font-weight: 600;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+      padding-top: 48px;
+      padding-left: 48px;
+    }
+
+    /* ── MOBILE SUBTOPIC NAV ── */
+    .subtopic-mobile-nav {
+      display: none;
+      background: #fff;
+      border-bottom: 2px solid var(--teal);
+      position: sticky;
+      top: 64px;
+      z-index: 100;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .subtopic-mobile-nav-inner {
+      display: flex;
+      gap: 0;
+      padding: 0 16px;
+      white-space: nowrap;
+    }
+
+    .subtopic-mobile-nav a {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #5a7578;
+      text-decoration: none;
+      padding: 13px 14px 11px;
+      border-bottom: 3px solid transparent;
+      transition: color 0.18s, border-color 0.18s;
+    }
+
+    .subtopic-mobile-nav a:hover { color: var(--teal); }
+    .subtopic-mobile-nav a.active {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+      font-weight: 600;
+    }
+
+    /* ── INTRO SECTION ── */
+    .intro-section {
+      margin-bottom: 40px;
+    }
+
+    .intro-section h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--body-text);
+      margin-bottom: 18px;
+      line-height: 1.25;
+    }
+
+    .intro-section p {
+      font-size: 1rem;
+      color: #3a5558;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .intro-section p:last-child { margin-bottom: 0; }
+
+    /* ── START HERE CARD ── */
+    .start-here-card {
+      background: linear-gradient(135deg, #0c525e 0%, #0e6b7a 100%);
+      border-radius: 16px;
+      padding: 28px 28px 28px 28px;
+      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .start-here-pill {
+      display: inline-block;
+      background: var(--yellow);
+      color: #1a2c2e;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    .start-here-card h3 {
+      font-family: 'Lora', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .start-here-card p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+    }
+
+    .start-here-thumb {
+      width: 130px;
+      height: 86px;
+      background: rgba(0,0,0,0.35);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .start-here-thumb::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(130,212,224,0.12), rgba(0,0,0,0.1));
+    }
+
+    .play-btn-lg {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .play-btn-lg svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal);
+      margin-left: 2px;
+    }
+
+    /* ── PODCAST STRIP ── */
+    .podcast-strip {
+      background: var(--cream);
+      border: 1.5px solid #d8cfc0;
+      border-radius: 12px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .podcast-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--teal);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .podcast-icon svg {
+      width: 22px;
+      height: 22px;
+      color: #fff;
+    }
+
+    .podcast-text {
+      flex: 1;
+      font-size: 0.9rem;
+      color: var(--body-text);
+      font-weight: 500;
+      min-width: 160px;
+    }
+
+    .podcast-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .podcast-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 1.5px solid #d8cfc0;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--body-text);
+      text-decoration: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+
+    .podcast-btn:hover {
+      border-color: var(--teal);
+      box-shadow: 0 2px 8px rgba(12,82,94,0.12);
+    }
+
+    .podcast-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ── SECTION DIVIDER ── */
+    .video-section {
+      margin-bottom: 52px;
+      scroll-margin-top: 80px;
+    }
+
+    .video-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid #e8e1d4;
+    }
+
+    .video-section-title {
+      font-family: 'Lora', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--body-text);
+    }
+
+    .section-count {
+      font-size: 0.8rem;
+      color: #9aacae;
+      font-weight: 500;
+    }
+
+    /* ── VIDEO CARDS ── */
+    .video-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .video-card {
+      background: #fff;
+      border-radius: 12px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      padding: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      transition: transform 0.18s, box-shadow 0.18s;
+      text-decoration: none;
+      color: var(--body-text);
+      cursor: pointer;
+    }
+
+    .video-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .video-thumb {
+      width: 110px;
+      height: 72px;
+      background: linear-gradient(135deg, #0c525e 0%, #0e6b7a 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .play-circle {
+      width: 32px;
+      height: 32px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-circle svg {
+      width: 13px;
+      height: 13px;
+      color: var(--teal);
+      margin-left: 2px;
+    }
+
+    .duration-badge {
+      position: absolute;
+      bottom: 5px;
+      right: 6px;
+      background: rgba(0,0,0,0.65);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .video-info { flex: 1; min-width: 0; }
+
+    .video-title {
+      font-family: 'Lora', serif;
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: var(--body-text);
+      line-height: 1.35;
+      margin-bottom: 5px;
+    }
+
+    .video-meta {
+      font-size: 0.8rem;
+      color: #7a9095;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-meta svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--teal);
+      color: rgba(255,255,255,0.75);
+      padding: clamp(40px, 6vw, 60px) 24px 0;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .footer-brand-name {
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.87rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.6);
+      max-width: 280px;
+    }
+
+    .footer-col-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 14px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.18s;
+    }
+
+    .footer-links a:hover { color: #fff; }
+
+    .footer-copy {
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      padding: 18px 0;
+    }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 46px;
+      height: 46px;
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(12,82,94,0.35);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 150;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover { background: #0a4450; }
+
+    .back-to-top svg { width: 20px; height: 20px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .subtopic-sidebar { display: none; }
+      .subtopic-mobile-nav { display: block; }
+      .main-content { padding-left: 0; }
+      .page-layout { padding-top: 0; }
+      .main-content { padding-top: 36px; }
+      .start-here-card {
+        grid-template-columns: 1fr;
+      }
+      .start-here-thumb {
+        width: 100%;
+        height: 160px;
+        order: -1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .video-card { flex-direction: column; align-items: flex-start; }
+      .video-thumb { width: 100%; height: 140px; }
+    }
+
+    @media (max-width: 480px) {
+      .start-here-card { padding: 20px; }
+      .podcast-strip { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="homepage-v4.html" class="nav-logo">Listening to Families</a>
+      <ul class="nav-links" role="list">
+        <li><a href="topics-v4.html" aria-current="page">Topics</a></li>
+        <li><a href="#">Specialists</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">Summaries</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" onclick="toggleNav(this)">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="2" y1="5" x2="20" y2="5"/>
+          <line x1="2" y1="11" x2="20" y2="11"/>
+          <line x1="2" y1="17" x2="20" y2="17"/>
+        </svg>
+      </button>
+    </div>
+    <ul class="nav-mobile" id="nav-mobile" role="list">
+      <li><a href="topics-v4.html" aria-current="page">Topics</a></li>
+      <li><a href="#">Specialists</a></li>
+      <li><a href="#">Resources</a></li>
+      <li><a href="#">Summaries</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- MOBILE SUBTOPIC NAV (below nav, sticky) -->
+  <div class="subtopic-mobile-nav" role="navigation" aria-label="Jump to section">
+    <div class="subtopic-mobile-nav-inner">
+      <a href="#section-schools" class="active">ADHD and Schools</a>
+      <a href="#section-family-questions">Answering Family Questions</a>
+      <a href="#section-young-person">A Young Person's Questions</a>
+      <a href="#section-girls">ADHD in Girls</a>
+      <a href="#section-medication">Medication</a>
+      <a href="#section-parenting">Parenting Course</a>
+      <a href="#section-teachers">Teacher Questions</a>
+    </div>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <div class="header-kicker">
+        <div class="header-kicker-line"></div>
+        <span class="header-kicker-text">How they think &amp; learn</span>
+      </div>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="homepage-v4.html">Home</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="topics-v4.html">Topics</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <span class="breadcrumb-current" aria-current="page">ADHD</span>
+      </nav>
+      <h1>ADHD</h1>
+      <span class="header-tag">7 sub-topics &middot; 12 videos</span>
+    </div>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="page-layout">
+
+    <!-- DESKTOP SIDEBAR NAV -->
+    <aside class="subtopic-sidebar" role="navigation" aria-label="Jump to section">
+      <div class="sidebar-label">On this page</div>
+      <a href="#section-schools" class="sidebar-link active">ADHD and Schools</a>
+      <a href="#section-family-questions" class="sidebar-link">Answering Family Questions</a>
+      <a href="#section-young-person" class="sidebar-link">A Young Person's Questions</a>
+      <a href="#section-girls" class="sidebar-link">ADHD in Girls</a>
+      <a href="#section-medication" class="sidebar-link">Medication</a>
+      <a href="#section-parenting" class="sidebar-link">Parenting Course</a>
+      <a href="#section-teachers" class="sidebar-link">Teacher Questions</a>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="main-content">
+
+      <!-- WRITTEN INTRO -->
+      <section class="intro-section" aria-labelledby="intro-heading">
+        <h2 id="intro-heading">Understanding ADHD</h2>
+        <p>Attention Deficit Hyperactivity Disorder (ADHD) is one of the most common neurodevelopmental conditions affecting children and young people in New Zealand. It affects the way the brain develops and works, making it harder to focus, control impulses, and manage activity levels. ADHD is not a result of poor parenting or lack of effort &mdash; it is a recognised medical condition with effective, evidence-based supports.</p>
+        <p>ADHD looks different in every child. Some children are hyperactive and impulsive; others are primarily inattentive and may go undiagnosed for years, particularly girls. Many children experience a mix of both. With the right understanding and support at home and school, children with ADHD can thrive.</p>
+        <p>The videos and resources on this page have been created by specialist clinicians and families with lived experience of ADHD. Whether you are newly diagnosed, supporting a child at school, or looking for guidance on medication, you will find expert advice here &mdash; in plain language, at no cost.</p>
+      </section>
+
+      <!-- START HERE CARD -->
+      <div class="start-here-card" role="region" aria-label="Recommended starting point">
+        <div class="start-here-body">
+          <span class="start-here-pill">&#9733; New here? Start with this</span>
+          <h3>ADHD: Answering Questions from Families</h3>
+          <p>The best starting point for anyone new to ADHD. Specialists answer the questions families ask most, in plain language.</p>
+        </div>
+        <div class="start-here-thumb" role="img" aria-label="Video thumbnail — play button">
+          <div class="play-btn-lg">
+            <svg viewBox="0 0 16 16" fill="currentColor">
+              <path d="M5 3l9 5-9 5V3z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- PODCAST STRIP -->
+      <div class="podcast-strip" role="complementary" aria-label="Podcast information">
+        <div class="podcast-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <div class="podcast-text">ADHD is also covered in our podcast</div>
+        <div class="podcast-buttons">
+          <a href="#" class="podcast-btn" aria-label="Listen on Spotify">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="color:#1db954;">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.516 17.317c-.214.354-.676.463-1.03.25-2.823-1.726-6.376-2.116-10.563-1.16-.403.093-.806-.16-.9-.563s.16-.806.563-.9c4.58-1.047 8.51-.596 11.68 1.34.354.214.463.676.25 1.03zm1.472-3.275c-.27.44-.84.578-1.278.31-3.232-1.987-8.159-2.563-11.984-1.402-.496.15-1.02-.132-1.17-.627-.15-.496.132-1.02.628-1.17 4.37-1.327 9.8-.684 13.496 1.6.438.27.578.84.308 1.29zm.127-3.41c-3.877-2.302-10.276-2.514-13.977-1.39-.595.18-1.223-.154-1.404-.748-.18-.595.154-1.224.748-1.405 4.248-1.29 11.31-1.04 15.776 1.608.537.318.714 1.01.396 1.547-.316.537-1.008.714-1.545.396l.006-.008z"/>
+            </svg>
+            Spotify
+          </a>
+          <a href="#" class="podcast-btn" aria-label="Listen on Apple Podcasts">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="color:#9c27b0;">
+              <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm0 4.32c4.24 0 7.68 3.44 7.68 7.68 0 3.2-1.96 5.97-4.8 7.2.03-.43.05-.87.05-1.31 0-1.5-.41-2.88-1.13-4.06.42-.84.66-1.8.66-2.83 0-3.56-2.88-6.44-6.44-6.44S1.58 7.44 1.58 11c0 1.03.24 1.99.66 2.83-.72 1.18-1.13 2.56-1.13 4.06 0 .44.02.88.05 1.31C-1.96 17.97 4.32 4.32 12 4.32z"/>
+            </svg>
+            Apple
+          </a>
+        </div>
+      </div>
+
+      <!-- VIDEO SECTIONS -->
+
+      <!-- 1. ADHD and Schools -->
+      <section class="video-section" id="section-schools" aria-labelledby="schools-heading">
+        <div class="video-section-header">
+          <h2 class="video-section-title" id="schools-heading">ADHD and Schools</h2>
+          <span class="section-count">3 videos</span>
+        </div>
+        <div class="video-cards">
+
+          <a href="#" class="video-card" aria-label="Watch: Supporting children with ADHD in the classroom — Dr Sarah Mitchell, 18 minutes 42 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">18:42</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">Supporting children with ADHD in the classroom</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Dr Sarah Mitchell
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: Working with teachers — Kate Wilson, 22 minutes 15 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">22:15</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">Working with teachers</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Kate Wilson
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: ADHD and learning support — Panel, 14 minutes 8 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">14:08</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">ADHD and learning support</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Panel
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 2. Answering Family Questions -->
+      <section class="video-section" id="section-family-questions" aria-labelledby="family-q-heading">
+        <div class="video-section-header">
+          <h2 class="video-section-title" id="family-q-heading">Answering Questions from Families</h2>
+          <span class="section-count">2 videos</span>
+        </div>
+        <div class="video-cards">
+
+          <a href="#" class="video-card" aria-label="Watch: The most common questions families ask about ADHD — Dr James Tan, 31 minutes 22 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">31:22</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">The most common questions families ask about ADHD</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Dr James Tan
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: Is it ADHD? — Dr James Tan, 19 minutes 55 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">19:55</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">Is it ADHD?</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Dr James Tan
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 3. A Young Person's Questions -->
+      <section class="video-section" id="section-young-person" aria-labelledby="young-q-heading">
+        <div class="video-section-header">
+          <h2 class="video-section-title" id="young-q-heading">A Young Person's Questions</h2>
+          <span class="section-count">1 video</span>
+        </div>
+        <div class="video-cards">
+
+          <a href="#" class="video-card" aria-label="Watch: ADHD — questions from young people answered — Youth panel, 24 minutes 10 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">24:10</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">ADHD &mdash; questions from young people answered</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Youth panel
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 4. ADHD in Girls -->
+      <section class="video-section" id="section-girls" aria-labelledby="girls-heading">
+        <div class="video-section-header">
+          <h2 class="video-section-title" id="girls-heading">ADHD in Girls</h2>
+          <span class="section-count">2 videos</span>
+        </div>
+        <div class="video-cards">
+
+          <a href="#" class="video-card" aria-label="Watch: Why ADHD is so often missed in girls — Dr Lisa Chen, 27 minutes 38 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">27:38</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">Why ADHD is so often missed in girls</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Dr Lisa Chen
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: Supporting your daughter with ADHD — Dr Lisa Chen, 16 minutes 44 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">16:44</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">Supporting your daughter with ADHD</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Dr Lisa Chen
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 5. Medication -->
+      <section class="video-section" id="section-medication" aria-labelledby="medication-heading">
+        <div class="video-section-header">
+          <h2 class="video-section-title" id="medication-heading">Medication</h2>
+          <span class="section-count">2 videos</span>
+        </div>
+        <div class="video-cards">
+
+          <a href="#" class="video-card" aria-label="Watch: ADHD medication — what families need to know — Dr Mark Evans, 35 minutes 20 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">35:20</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">ADHD medication &mdash; what families need to know</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Dr Mark Evans
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: Common questions about Ritalin and Concerta — Dr Mark Evans, 21 minutes 5 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">21:05</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">Common questions about Ritalin and Concerta</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Dr Mark Evans
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 6. Parenting Course -->
+      <section class="video-section" id="section-parenting" aria-labelledby="parenting-heading">
+        <div class="video-section-header">
+          <h2 class="video-section-title" id="parenting-heading">Parenting Course</h2>
+          <span class="section-count">1 video</span>
+        </div>
+        <div class="video-cards">
+
+          <a href="#" class="video-card" aria-label="Watch: Parenting a child with ADHD — Family therapist panel, 42 minutes 15 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">42:15</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">Parenting a child with ADHD</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Family therapist panel
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 7. Teacher Questions -->
+      <section class="video-section" id="section-teachers" aria-labelledby="teachers-heading">
+        <div class="video-section-header">
+          <h2 class="video-section-title" id="teachers-heading">Teacher Questions</h2>
+          <span class="section-count">1 video</span>
+        </div>
+        <div class="video-cards">
+
+          <a href="#" class="video-card" aria-label="Watch: ADHD — questions from classroom teachers answered — Panel, 17 minutes 30 seconds">
+            <div class="video-thumb" aria-hidden="true">
+              <div class="play-circle">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l9 5-9 5V3z"/></svg>
+              </div>
+              <span class="duration-badge">17:30</span>
+            </div>
+            <div class="video-info">
+              <div class="video-title">ADHD &mdash; questions from classroom teachers answered</div>
+              <div class="video-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Panel
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">Listening to Families</div>
+          <p class="footer-brand-desc">Free specialist-led health content for New Zealand families. Funded by M&#257;ia Health Foundation.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Explore</div>
+          <ul class="footer-links" role="list">
+            <li><a href="topics-v4.html">Topics</a></li>
+            <li><a href="#">Specialists</a></li>
+            <li><a href="#">Resources</a></li>
+            <li><a href="#">Summaries</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">About</div>
+          <ul class="footer-links" role="list">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-copy">&copy; 2026 Listening to Families. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+  </button>
+
+  <script>
+    // Mobile nav toggle
+    function toggleNav(btn) {
+      const menu = document.getElementById('nav-mobile');
+      const isOpen = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
+    }
+
+    // Back to top visibility
+    const btt = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 320) {
+        btt.classList.add('visible');
+      } else {
+        btt.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    // Active sidebar link on scroll (IntersectionObserver)
+    const sections = document.querySelectorAll('.video-section[id]');
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    const mobileLinks = document.querySelectorAll('.subtopic-mobile-nav a');
+
+    function setActiveLink(id) {
+      const allLinks = [...sidebarLinks, ...mobileLinks];
+      allLinks.forEach(link => {
+        if (link.getAttribute('href') === '#' + id) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActiveLink(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-80px 0px -60% 0px',
+        threshold: 0
+      }
+    );
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>

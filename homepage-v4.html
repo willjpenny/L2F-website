@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listening to Families — Homepage (V4: Community &amp; Voices)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: #1a2c2e; background: #fff; -webkit-font-smoothing: antialiased; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ── NAV ── */
+  .nav {
+    background: #0c525e;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(24px, 4vw, 56px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .nav-logo { display: flex; flex-direction: column; line-height: 1.1; }
+  .nav-logo .top { font-family: 'Lora', serif; font-style: italic; font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 0.3px; }
+  .nav-logo .bottom { font-family: 'Lora', serif; font-weight: 700; font-size: 20px; color: #fff; }
+  .nav-links { display: flex; gap: 2px; }
+  .nav-links a { color: rgba(255,255,255,0.75); font-size: 13.5px; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: all 0.15s; }
+  .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+  .nav-search-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 6px; color: rgba(255,255,255,0.75); display: flex; align-items: center; transition: all 0.15s; }
+  .nav-search-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; border-radius: 6px; transition: background 0.15s; }
+  .nav-hamburger:hover { background: rgba(255,255,255,0.1); }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; }
+  *:focus-visible { outline: 3px solid #82d4e0; outline-offset: 2px; }
+
+  /* ── HERO ── */
+  .hero {
+    background: #f5f0e8;
+    padding: clamp(52px, 7vw, 88px) clamp(24px, 4vw, 56px) clamp(52px, 7vw, 88px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+  }
+
+  .hero-left {}
+
+  .hero-kicker {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: #0c525e;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-kicker::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #0c525e;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .hero-heading {
+    font-family: 'Lora', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    color: #1a2c2e;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .hero-heading span {
+    color: #0c525e;
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: #6a8a8e;
+    line-height: 1.75;
+    max-width: 420px;
+    margin-bottom: 32px;
+  }
+
+  .hero-search {
+    display: flex;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+    max-width: 440px;
+    border: 1.5px solid rgba(12,82,94,0.1);
+    margin-bottom: 24px;
+  }
+  .hero-search input { flex: 1; padding: 14px 18px; font-size: 14px; border: none; outline: none; font-family: 'Inter', sans-serif; color: #1a2c2e; background: transparent; }
+  .hero-search input::placeholder { color: #b0c0c2; }
+  .hero-search button { background: #0c525e; border: none; padding: 14px 22px; cursor: pointer; color: #fff; font-size: 13px; font-weight: 600; font-family: 'Inter', sans-serif; transition: background 0.15s; }
+  .hero-search button:hover { background: #0a4550; }
+
+  .hero-funded {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: #8aadae;
+  }
+  .hero-funded svg { flex-shrink: 0; }
+
+  /* ── TESTIMONIAL CARDS ── */
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .testi-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.05);
+    position: relative;
+  }
+  .testi-card:nth-child(2) {
+    margin-left: 24px;
+    background: #0c525e;
+  }
+  .testi-card:nth-child(3) {
+    margin-right: 24px;
+  }
+
+  .testi-quote {
+    font-family: 'Lora', serif;
+    font-size: 14.5px;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    color: #1a2c2e;
+  }
+  .testi-card:nth-child(2) .testi-quote { color: #fff; }
+
+  .testi-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .testi-person {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .testi-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(12,82,94,0.1);
+    color: #0c525e;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 12px; font-weight: 700;
+  }
+  .testi-card:nth-child(2) .testi-avatar { background: rgba(130,212,224,0.2); color: #82d4e0; }
+  .testi-name { font-size: 12.5px; font-weight: 700; color: #2a4a4e; line-height: 1.3; }
+  .testi-card:nth-child(2) .testi-name { color: rgba(255,255,255,0.9); }
+  .testi-loc { font-size: 11.5px; color: #9ab8ba; }
+  .testi-card:nth-child(2) .testi-loc { color: rgba(255,255,255,0.45); }
+  .testi-topic-chip {
+    font-size: 10.5px; font-weight: 700;
+    padding: 3px 10px; border-radius: 100px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── TRUST BAND ── */
+  .trust-band {
+    background: #0c525e;
+    padding: 28px clamp(24px, 4vw, 56px);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 16px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .trust-item:last-child { border-right: none; }
+  .trust-num {
+    font-family: 'Lora', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #82d4e0;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .trust-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.4;
+  }
+
+  /* ── TOPICS ── */
+  :root {
+    --cat1: #0c525e; --cat1-bg: rgba(12,82,94,0.09);
+    --cat2: #7b5ea7; --cat2-bg: rgba(123,94,167,0.09);
+    --cat3: #3a9080; --cat3-bg: rgba(58,144,128,0.09);
+    --cat4: #c4722a; --cat4-bg: rgba(196,114,42,0.09);
+    --cat5: #4a7ab5; --cat5-bg: rgba(74,122,181,0.09);
+    --cat6: #8a4f54; --cat6-bg: rgba(138,79,84,0.09);
+  }
+  .topics { background: #f5f0e8; padding: 72px clamp(24px, 4vw, 56px) 80px; }
+  .topics-header { margin-bottom: 40px; }
+  .topics-header h2 { font-family: 'Lora', serif; font-size: 32px; font-weight: 700; color: #1a2c2e; margin-bottom: 8px; }
+  .topics-header p { font-size: 15px; color: #5a7a7e; max-width: 520px; }
+  .topic-cats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .topic-cat-card { background: #fff; border-radius: 14px; padding: 22px 20px; border-left: 4px solid var(--cat-color); box-shadow: 0 1px 5px rgba(0,0,0,0.05); text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; transition: transform 0.15s, box-shadow 0.15s; }
+  .topic-cat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+  .topic-cat-icon { width: 44px; height: 44px; border-radius: 11px; background: var(--cat-bg); color: var(--cat-color); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .topic-cat-name { font-family: 'Lora', serif; font-size: 16px; font-weight: 700; color: #1a2c2e; line-height: 1.3; }
+  .topic-cat-desc { font-size: 13px; color: #5a7a7e; line-height: 1.55; flex: 1; }
+  .topic-cat-count { font-size: 12px; font-weight: 600; color: var(--cat-color); margin-top: 4px; }
+  .topics-cta { text-align: center; margin-top: 44px; }
+  .topics-cta a { display: inline-flex; align-items: center; gap: 8px; background: #0c525e; color: #fff; font-size: 15px; font-weight: 600; padding: 13px 28px; border-radius: 100px; text-decoration: none; transition: background 0.15s; }
+  .topics-cta a:hover { background: #0a4550; }
+  .topics-cta a svg { transition: transform 0.15s; }
+  .topics-cta a:hover svg { transform: translateX(3px); }
+
+  /* ── PODCAST STRIP ── */
+  .podcast { background: #fff; border-top: 1px solid #eee; padding: 28px clamp(24px, 4vw, 56px); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .podcast-icon { color: #0c525e; flex-shrink: 0; }
+  .podcast-text { flex: 1; min-width: 200px; }
+  .podcast-text strong { display: block; font-size: 15px; color: #1a2c2e; margin-bottom: 2px; }
+  .podcast-text span { font-size: 13px; color: #6a8a8e; }
+  .podcast-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-spotify { display: flex; align-items: center; gap: 8px; background: #1db954; color: #fff; padding: 10px 20px; border-radius: 100px; font-size: 13px; font-weight: 700; transition: opacity 0.15s; }
+  .btn-spotify:hover { opacity: 0.88; }
+  .btn-apple { display: flex; align-items: center; gap: 8px; background: #000; color: #fff; padding: 10px 20px; border-radius: 100px; font-size: 13px; font-weight: 700; transition: opacity 0.15s; }
+  .btn-apple:hover { opacity: 0.82; }
+
+  /* ── FOOTER ── */
+  .footer { background: #0c525e; color: rgba(255,255,255,0.7); padding: 56px clamp(24px, 4vw, 56px) 32px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand .logo { font-family: 'Lora', serif; font-weight: 700; font-size: 18px; color: #fff; margin-bottom: 12px; }
+  .footer-brand p { font-size: 13px; line-height: 1.7; max-width: 280px; }
+  .footer-brand p a { color: rgba(255,255,255,0.5); }
+  .footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 13.5px; color: rgba(255,255,255,0.65); margin-bottom: 10px; transition: color 0.15s; }
+  .footer-col a:hover { color: #fff; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; font-size: 12px; color: rgba(255,255,255,0.35); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .nav-hamburger { display: flex; }
+    .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #0c525e; flex-direction: column; padding: 8px 16px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 99; }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 10px 14px; border-radius: 6px; }
+    .hero { grid-template-columns: 1fr; padding: 40px 20px; gap: 40px; }
+    .hero-right { display: none; }
+    .trust-band { grid-template-columns: repeat(2, 1fr); gap: 24px 0; padding: 24px 20px; }
+    .trust-item { border-right: none; }
+    .trust-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.1); }
+    .topics { padding: 36px 20px 44px; }
+    .topic-cats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .topic-cat-name { font-size: 14px; }
+    .topic-cat-desc { font-size: 12px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .podcast { flex-direction: column; align-items: flex-start; gap: 14px; }
+  }
+  @media (max-width: 480px) {
+    .topic-cats-grid { grid-template-columns: 1fr; }
+    .trust-band { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="#" class="nav-logo" aria-label="Listening to Families home">
+    <span class="top">Listening to</span>
+    <span class="bottom">Families</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#">Topics</a>
+    <a href="#">Specialists</a>
+    <a href="#">Resources</a>
+    <a href="#">Summaries</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+  <button class="nav-search-btn" aria-label="Search">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 12l3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  </button>
+  <button class="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks" onclick="toggleNav(this)">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" aria-label="Welcome">
+
+  <div class="hero-left">
+    <p class="hero-kicker">For New Zealand families</p>
+    <h1 class="hero-heading">
+      The answers you need,<br>from <span>specialists you can trust</span>
+    </h1>
+    <p class="hero-sub">
+      Free videos and resources covering over 30 health and development topics — made for real families, by the specialists who work with them.
+    </p>
+    <div class="hero-search" role="search">
+      <input type="text" placeholder="Search topics, videos…" aria-label="Search topics, videos">
+      <button type="submit" aria-label="Submit search">Search</button>
+    </div>
+    <div class="hero-funded">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Funded by Māia Health Foundation &middot; Always free
+    </div>
+  </div>
+
+  <div class="hero-right" aria-label="What families are saying">
+
+    <div class="testi-card">
+      <p class="testi-quote">"I'd been googling for weeks and getting more confused and anxious. Then I found this site and watched three videos in one evening. For the first time I actually understood what was going on with my son."</p>
+      <div class="testi-footer">
+        <div class="testi-person">
+          <div class="testi-avatar" aria-hidden="true">KT</div>
+          <div>
+            <div class="testi-name">Kate T.</div>
+            <div class="testi-loc">Auckland</div>
+          </div>
+        </div>
+        <span class="testi-topic-chip" style="background:rgba(12,82,94,0.1);color:#0c525e">ADHD</span>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <p class="testi-quote">"The specialist videos are clear, calm, and don't talk down to you. I've shared them with our school SENCO and they've started recommending them to other parents too."</p>
+      <div class="testi-footer">
+        <div class="testi-person">
+          <div class="testi-avatar" aria-hidden="true">MR</div>
+          <div>
+            <div class="testi-name">Mark R.</div>
+            <div class="testi-loc">Wellington</div>
+          </div>
+        </div>
+        <span class="testi-topic-chip" style="background:rgba(130,212,224,0.2);color:#82d4e0">Anxiety</span>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <p class="testi-quote">"As a Māori mum trying to navigate the health system for my daughter, it was refreshing to find something that felt made for us — not just translated from overseas content."</p>
+      <div class="testi-footer">
+        <div class="testi-person">
+          <div class="testi-avatar" aria-hidden="true">AH</div>
+          <div>
+            <div class="testi-name">Aroha H.</div>
+            <div class="testi-loc">Rotorua</div>
+          </div>
+        </div>
+        <span class="testi-topic-chip" style="background:rgba(58,144,128,0.1);color:#3a9080">Eczema</span>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- TRUST BAND -->
+<div class="trust-band" aria-label="Site statistics">
+  <div class="trust-item">
+    <span class="trust-num">275</span>
+    <span class="trust-label">free videos</span>
+  </div>
+  <div class="trust-item">
+    <span class="trust-num">30+</span>
+    <span class="trust-label">health &amp; development topics</span>
+  </div>
+  <div class="trust-item">
+    <span class="trust-num">17</span>
+    <span class="trust-label">NZ specialist contributors</span>
+  </div>
+  <div class="trust-item">
+    <span class="trust-num">100%</span>
+    <span class="trust-label">free, always</span>
+  </div>
+</div>
+
+<!-- TOPICS -->
+<section class="topics" aria-label="Browse topics">
+  <div class="topics-header">
+    <h2>Browse Topics</h2>
+    <p>Find clear, honest information on the things families face most.</p>
+  </div>
+
+  <div class="topic-cats-grid">
+
+    <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat1);--cat-bg:var(--cat1-bg)">
+      <div class="topic-cat-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <div class="topic-cat-name">How they think &amp; learn</div>
+      <div class="topic-cat-desc">ADHD, autism, sensory processing and executive functioning.</div>
+      <div class="topic-cat-count">4 topics</div>
+    </a>
+
+    <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat2);--cat-bg:var(--cat2-bg)">
+      <div class="topic-cat-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+      </div>
+      <div class="topic-cat-name">Mind &amp; emotions</div>
+      <div class="topic-cat-desc">Anxiety, trauma, emotion regulation, gender diversity and more.</div>
+      <div class="topic-cat-count">6 topics</div>
+    </a>
+
+    <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat3);--cat-bg:var(--cat3-bg)">
+      <div class="topic-cat-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <div class="topic-cat-name">Body &amp; health</div>
+      <div class="topic-cat-desc">Eczema, allergies, IBD, chronic fatigue, cancer and more.</div>
+      <div class="topic-cat-count">10 topics</div>
+    </a>
+
+    <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat4);--cat-bg:var(--cat4-bg)">
+      <div class="topic-cat-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      </div>
+      <div class="topic-cat-name">School &amp; growing up</div>
+      <div class="topic-cat-desc">School attendance, online safety and parenting programmes.</div>
+      <div class="topic-cat-count">4 topics</div>
+    </a>
+
+    <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat5);--cat-bg:var(--cat5-bg)">
+      <div class="topic-cat-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.46-1.46a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+      </div>
+      <div class="topic-cat-name">Getting support</div>
+      <div class="topic-cat-desc">GPs, pharmacies, mental health services and medication.</div>
+      <div class="topic-cat-count">4 topics</div>
+    </a>
+
+    <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat6);--cat-bg:var(--cat6-bg)">
+      <div class="topic-cat-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="topic-cat-name">Keeping children safe</div>
+      <div class="topic-cat-desc">Sexual abuse, sexualised behaviour and child protection.</div>
+      <div class="topic-cat-count">2 topics</div>
+    </a>
+
+  </div>
+
+  <div class="topics-cta">
+    <a href="topics.html">Browse all 30 topics <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+</section>
+
+<!-- PODCAST -->
+<div class="podcast" aria-label="Podcast">
+  <div class="podcast-icon" aria-hidden="true">
+    <svg width="40" height="40" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#0c525e" stroke-width="2"/><circle cx="16" cy="16" r="11" stroke="#0c525e" stroke-width="2" stroke-dasharray="3 3"/><circle cx="16" cy="16" r="2.5" fill="#0c525e"/></svg>
+  </div>
+  <div class="podcast-text">
+    <strong>Also available as a podcast</strong>
+    <span>Listen to Listening to Families on your favourite podcast app</span>
+  </div>
+  <div class="podcast-btns">
+    <a href="#" class="btn-spotify"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="white"/><path d="M11.5 10.5c-1.8-1.1-4-1.3-6.5-.7-.2.1-.4-.1-.3-.3.1-.2.3-.3.5-.3 2.7-.6 5.1-.4 7.1.8.2.1.2.4.1.5-.2.1-.4.1-.5 0z" fill="#1db954"/><path d="M12.3 8.8c-2.1-1.3-5.2-1.7-7.7-.9-.3.1-.5-.1-.5-.4 0-.2.1-.4.4-.5 2.8-.8 6.1-.4 8.5 1.1.2.1.3.4.2.7-.2.2-.5.2-.7.1z" fill="#1db954"/><path d="M12.4 7c-2.4-1.4-6.3-1.6-8.6-.9-.3.1-.6-.1-.7-.4-.1-.3.1-.6.4-.7 2.6-.8 6.7-.6 9.4 1 .3.2.4.5.2.8-.2.3-.5.4-.7.2z" fill="#1db954"/></svg>Spotify</a>
+    <a href="#" class="btn-apple"><svg width="16" height="16" viewBox="0 0 16 16" fill="white"><path d="M11.2 8.4c0-1.6 1.3-2.4 1.4-2.4-.8-1.1-2-1.2-2.4-1.2-1-.1-2 .6-2.5.6s-1.3-.6-2.2-.6c-1.1 0-2.2.7-2.7 1.7-1.2 2-.3 5 .8 6.6.6.8 1.2 1.7 2.1 1.7.8 0 1.1-.5 2.1-.5s1.2.5 2.1.5c.9 0 1.5-.8 2-1.7.4-.6.7-1.3.8-1.6-.1-.1-1.5-.6-1.5-2.1zM9.6 3.5c.5-.6.8-1.4.7-2.2-.7 0-1.5.5-2 1-.5.5-.9 1.3-.7 2.1.7 0 1.5-.4 2-1z"/></svg>Apple Podcasts</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Listening to Families</div>
+      <p>Free specialist-led health content for New Zealand families. Funded by <a href="#">Māia Health Foundation</a>.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="#">Topics</a><a href="#">Specialists</a><a href="#">Resources</a><a href="#">Summaries</a>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <a href="#">About Us</a><a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Listening to Families. All rights reserved.</span>
+    <span><a href="#" style="color:rgba(255,255,255,0.35);text-decoration:underline;">Privacy Policy</a> &nbsp;&middot;&nbsp; listeningtofamilies.co.nz</span>
+  </div>
+</footer>
+
+<script>
+  function toggleNav(btn) {
+    const links = document.getElementById('navLinks');
+    const open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  }
+</script>
+</body>
+</html>

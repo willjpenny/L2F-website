@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADHD | Listening to Families</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    *:focus-visible { outline: 3px solid #82d4e0; outline-offset: 2px; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #1a2c2e;
+      background: #f5f0e8;
+      line-height: 1.6;
+    }
+
+    /* Highlight utility */
+    .hl {
+      background: linear-gradient(transparent 60%, #f5c842 60%);
+    }
+    .hl-header {
+      background: linear-gradient(transparent 55%, rgba(245,200,66,0.55) 55%);
+    }
+
+    /* ===================== NAVIGATION ===================== */
+    .nav {
+      background: #0c525e;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 56px);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-logo {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-top {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 10.5px;
+      color: rgba(255,255,255,0.65);
+      font-weight: 400;
+    }
+
+    .nav-logo-bottom {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      flex: 1;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .nav-search-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255,255,255,0.75);
+      padding: 8px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-search-btn:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .nav-browse-btn {
+      background: #f5c842;
+      color: #0c525e;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+
+    .nav-browse-btn:hover {
+      opacity: 0.88;
+    }
+
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      padding: 8px;
+      border-radius: 6px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-mobile-menu {
+      display: none;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: #0a3d47;
+      z-index: 190;
+      padding: 8px 0 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .nav-mobile-menu.open {
+      display: block;
+    }
+
+    .nav-mobile-menu a {
+      display: block;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 12px clamp(20px,4vw,56px);
+      transition: background 0.15s;
+    }
+
+    .nav-mobile-menu a:hover {
+      background: rgba(255,255,255,0.06);
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    /* ===================== PAGE HEADER ===================== */
+    .page-header {
+      background: #0c525e;
+      padding: clamp(36px,5vw,60px) clamp(20px,4vw,56px);
+    }
+
+    .page-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .breadcrumb a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .breadcrumb a:hover {
+      color: rgba(255,255,255,0.8);
+    }
+
+    .breadcrumb-sep {
+      color: rgba(255,255,255,0.35);
+      font-size: 12px;
+    }
+
+    .breadcrumb [aria-current="page"] {
+      color: rgba(255,255,255,0.9);
+    }
+
+    .topic-category {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #82d4e0;
+      letter-spacing: 0.3px;
+      margin-bottom: 10px;
+    }
+
+    .page-header h1 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(32px, 5vw, 48px);
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+
+    .topic-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .topic-tag {
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.75);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    /* ===================== MOBILE SUBTOPIC NAV ===================== */
+    .mobile-subtopic-nav {
+      display: none;
+      position: sticky;
+      top: 64px;
+      z-index: 150;
+      background: #fff;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .mobile-subtopic-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mobile-subtopic-inner {
+      display: flex;
+      flex-wrap: nowrap;
+      padding: 0 clamp(20px,4vw,56px);
+    }
+
+    .mobile-sub-item {
+      font-size: 13px;
+      font-weight: 600;
+      color: #5a7a7e;
+      padding: 14px 16px;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: color 0.15s, border-bottom-color 0.15s;
+    }
+
+    .mobile-sub-item:hover {
+      color: #0c525e;
+    }
+
+    .mobile-sub-item.active {
+      color: #0c525e;
+      border-bottom-color: #0c525e;
+    }
+
+    @media (max-width: 900px) {
+      .mobile-subtopic-nav { display: block; }
+    }
+
+    /* ===================== BODY LAYOUT ===================== */
+    .topic-body {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px clamp(20px,4vw,56px) 80px;
+      gap: 48px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .topic-body {
+        padding-top: 0;
+      }
+    }
+
+    /* ===================== SIDEBAR ===================== */
+    .sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 84px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 1px 8px rgba(12,82,94,0.07);
+    }
+
+    .sidebar-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #8aacb0;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .sidebar nav ul {
+      list-style: none;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 9px 12px;
+      font-size: 13.5px;
+      color: #5a7a7e;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: background 0.15s, color 0.15s, border-left-color 0.15s;
+      text-decoration: none;
+      line-height: 1.4;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(12,82,94,0.05);
+      color: #0c525e;
+    }
+
+    .sidebar-link.active {
+      border-left-color: #0c525e;
+      color: #0c525e;
+      background: rgba(12,82,94,0.05);
+      font-weight: 600;
+    }
+
+    .sidebar-divider {
+      margin: 16px 0;
+      height: 1px;
+      background: rgba(0,0,0,0.07);
+      border: none;
+    }
+
+    .sidebar-download {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #0c525e;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1.5px solid rgba(12,82,94,0.2);
+      background: rgba(12,82,94,0.04);
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .sidebar-download:hover {
+      background: rgba(12,82,94,0.09);
+      border-color: rgba(12,82,94,0.35);
+    }
+
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+    }
+
+    /* ===================== MAIN CONTENT ===================== */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Intro section */
+    .intro-section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .intro-section h2 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: #1a2c2e;
+      margin-bottom: 18px;
+    }
+
+    .intro-section p {
+      font-size: 15px;
+      color: #1a2c2e;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .intro-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Start Here card */
+    .start-here-card {
+      background: linear-gradient(135deg, #0c525e 0%, #0a3d47 100%);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .start-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(245,200,66,0.15);
+      border: 1px solid rgba(245,200,66,0.35);
+      color: #f5c842;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .start-here-card h3 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 19px;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .start-here-card .start-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .start-video-layout {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .start-thumbnail {
+      flex-shrink: 0;
+      width: 280px;
+      aspect-ratio: 16/9;
+      background: #1a2c2e;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .start-thumbnail-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.25);
+    }
+
+    .play-btn-large {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.22);
+      border: 2px solid rgba(255,255,255,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .duration-badge {
+      position: absolute;
+      bottom: 6px;
+      right: 8px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .start-video-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .specialist-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .avatar-large {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .specialist-name-large {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .specialist-role-large {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .btn-watch-now {
+      display: inline-flex;
+      align-items: center;
+      background: #f5c842;
+      color: #0c525e;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 9px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      align-self: flex-start;
+    }
+
+    .btn-watch-now:hover {
+      opacity: 0.88;
+    }
+
+    @media (max-width: 900px) {
+      .start-video-layout {
+        flex-direction: column;
+      }
+      .start-thumbnail {
+        width: 100%;
+      }
+    }
+
+    /* Podcast callout */
+    .podcast-callout {
+      background: #f5f0e8;
+      border: 1.5px solid rgba(12,82,94,0.12);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .podcast-callout .podcast-text {
+      font-size: 14px;
+      color: #1a2c2e;
+    }
+
+    .podcast-links {
+      margin-left: auto;
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+    }
+
+    .btn-spotify {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #1DB954;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .btn-spotify:hover { opacity: 0.88; }
+
+    .btn-apple {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #000;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .btn-apple:hover { opacity: 0.8; }
+
+    /* Video sections */
+    .subtopic-section {
+      padding: 32px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .subtopic-section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(18px, 2.5vw, 22px);
+      color: #1a2c2e;
+    }
+
+    .count-badge {
+      margin-left: auto;
+      background: rgba(12,82,94,0.08);
+      color: #0c525e;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Video card */
+    .video-card {
+      display: flex;
+      flex-direction: row;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+      transition: box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .video-card:hover {
+      box-shadow: 0 4px 16px rgba(12,82,94,0.13);
+    }
+
+    .video-thumb {
+      width: 160px;
+      flex-shrink: 0;
+      aspect-ratio: 16/9;
+      background: #c8dfe2;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .play-btn-small {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(12,82,94,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .duration-badge-small {
+      position: absolute;
+      bottom: 4px;
+      right: 6px;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .video-card-content {
+      flex: 1;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .video-card-title {
+      font-family: 'Lora', serif;
+      font-weight: 500;
+      font-size: 14px;
+      color: #1a2c2e;
+      margin-bottom: 5px;
+      line-height: 1.4;
+    }
+
+    .video-card-specialist {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .avatar-small {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #e0eff1;
+      color: #0c525e;
+      font-size: 8px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .video-card-specialist-name {
+      font-size: 12px;
+      color: #5a7a7e;
+    }
+
+    .video-card-duration {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      background: rgba(12,82,94,0.07);
+      color: #0c525e;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-top: 6px;
+    }
+
+    /* Single card full row */
+    .video-grid-full .video-card {
+      max-width: 480px;
+    }
+
+    /* Download section */
+    .download-section {
+      border: 2px solid #0c525e;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-top: 40px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .download-section h3 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: #1a2c2e;
+      margin-bottom: 6px;
+    }
+
+    .download-section p {
+      font-size: 14px;
+      color: #5a7a7e;
+      line-height: 1.5;
+      max-width: 420px;
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #0c525e;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-download:hover {
+      background: #0a3d47;
+    }
+
+    @media (max-width: 900px) {
+      .download-section {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* ===================== FOOTER ===================== */
+    .footer {
+      background: #0a3d47;
+      padding: 56px clamp(20px,4vw,56px) 0;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 48px;
+    }
+
+    .footer-logo {
+      display: inline-flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+      text-decoration: none;
+    }
+
+    .footer-logo-top {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 10.5px;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .footer-logo-bottom {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .footer-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 12px;
+    }
+
+    .footer-funded {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .footer-col-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.72);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    .footer-bar {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-bar-copy {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .footer-bar-domain {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    @media (max-width: 600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="homepage-v6.html" class="nav-logo" aria-label="Listening to Families home">
+        <span class="nav-logo-top">Listening to</span>
+        <span class="nav-logo-bottom">Families</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="topics-v6.html">Topics</a></li>
+        <li><a href="#">Specialists</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <button class="nav-search-btn" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+        <a href="topics-v6.html" class="nav-browse-btn">Browse Topics</a>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-mobile-menu" id="nav-mobile-menu" role="menu">
+      <a href="topics-v6.html" role="menuitem">Topics</a>
+      <a href="#" role="menuitem">Specialists</a>
+      <a href="#" role="menuitem">Resources</a>
+      <a href="#" role="menuitem">About</a>
+      <a href="#" role="menuitem">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ===================== PAGE HEADER ===================== -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li aria-hidden="true"><span class="breadcrumb-sep">›</span></li>
+          <li><a href="topics-v6.html">Topics</a></li>
+          <li aria-hidden="true"><span class="breadcrumb-sep">›</span></li>
+          <li><span aria-current="page">ADHD</span></li>
+        </ol>
+      </nav>
+
+      <span class="topic-category">How they think &amp; learn</span>
+
+      <h1><span class="hl-header">ADHD</span></h1>
+
+      <div class="topic-tags">
+        <span class="topic-tag">7 sub-topics</span>
+        <span class="topic-tag">12 videos</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== MOBILE SUBTOPIC NAV ===================== -->
+  <nav class="mobile-subtopic-nav" aria-label="Subtopics">
+    <div class="mobile-subtopic-inner">
+      <a href="#schools" class="mobile-sub-item active">Schools</a>
+      <a href="#family-qa" class="mobile-sub-item">Family Q&amp;A</a>
+      <a href="#young-people" class="mobile-sub-item">Young People</a>
+      <a href="#girls" class="mobile-sub-item">Girls</a>
+      <a href="#medication" class="mobile-sub-item">Medication</a>
+      <a href="#parenting" class="mobile-sub-item">Parenting</a>
+      <a href="#teachers" class="mobile-sub-item">Teachers</a>
+    </div>
+  </nav>
+
+  <!-- ===================== MAIN BODY ===================== -->
+  <div class="topic-body">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Page sections">
+      <span class="sidebar-label">On this page</span>
+      <nav aria-label="Page sections">
+        <ul style="list-style:none">
+          <li><a href="#schools" class="sidebar-link active">ADHD and Schools</a></li>
+          <li><a href="#family-qa" class="sidebar-link">Answering Family Questions</a></li>
+          <li><a href="#young-people" class="sidebar-link">A Young Person's Questions</a></li>
+          <li><a href="#girls" class="sidebar-link">ADHD in Girls</a></li>
+          <li><a href="#medication" class="sidebar-link">Medication</a></li>
+          <li><a href="#parenting" class="sidebar-link">Parenting Course</a></li>
+          <li><a href="#teachers" class="sidebar-link">Teacher Questions</a></li>
+        </ul>
+      </nav>
+
+      <hr class="sidebar-divider" />
+
+      <a href="#" class="sidebar-download" aria-label="Download ADHD summary PDF">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download summary (PDF)
+      </a>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="main-content">
+
+      <!-- INTRO SECTION -->
+      <section class="intro-section" aria-labelledby="intro-heading">
+        <h2 id="intro-heading">Understanding ADHD</h2>
+        <p>If your child has recently been diagnosed with ADHD, or you're still waiting for an assessment, you're probably looking for clear, honest answers. What does this diagnosis actually mean? Will it affect how they learn and grow? What can you do to help? These are the questions we hear most, and our specialist videos are designed to answer them properly.</p>
+        <p>ADHD, or Attention Deficit Hyperactivity Disorder, affects the way the brain manages attention, impulse control, and activity levels. It looks different in every child. Some children are visibly restless and impulsive; others are quietly distracted and hard to reach. Many are bright and creative, with strengths that a traditional classroom doesn't always recognise.</p>
+        <p>The videos on this page are produced with New Zealand specialists who assess, diagnose, and support children with ADHD every day. They cover everything from first questions at diagnosis through to medication, school strategies, and the experiences of girls and young people who often present differently.</p>
+        <p>You don't need to watch everything at once. Use the sections below to find what's most relevant to where you are right now, whether you're just starting to look into ADHD, preparing for a school meeting, or supporting a teenager who has questions of their own.</p>
+      </section>
+
+      <!-- START HERE CARD -->
+      <div class="start-here-card">
+        <div class="start-badge">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="#f5c842" aria-hidden="true">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          Start here
+        </div>
+
+        <h3>New to this topic? Start with this video.</h3>
+        <p class="start-desc">This overview from Dr Sarah Mitchell, Paediatric Neurologist, gives you a clear introduction to ADHD: what it is, what it isn't, and what it means for your child.</p>
+
+        <div class="start-video-layout">
+          <div class="start-thumbnail" role="img" aria-label="Video thumbnail: Introduction to ADHD overview">
+            <div class="start-thumbnail-overlay"></div>
+            <div class="play-btn-large" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </div>
+            <span class="duration-badge">12:34</span>
+          </div>
+
+          <div class="start-video-info">
+            <div class="specialist-row">
+              <div class="avatar-large" aria-hidden="true">SM</div>
+              <div>
+                <div class="specialist-name-large">Dr Sarah Mitchell</div>
+                <div class="specialist-role-large">Paediatric Neurologist</div>
+              </div>
+            </div>
+            <a href="#" class="btn-watch-now">Watch video</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PODCAST CALLOUT -->
+      <div class="podcast-callout" role="complementary" aria-label="Podcast availability">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0c525e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <line x1="8" y1="23" x2="16" y2="23"/>
+        </svg>
+        <span class="podcast-text">Prefer to listen? This topic is available as a podcast.</span>
+        <div class="podcast-links">
+          <a href="#" class="btn-spotify" aria-label="Listen on Spotify">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+            </svg>
+            Spotify
+          </a>
+          <a href="#" class="btn-apple" aria-label="Listen on Apple Podcasts">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.5a7.5 7.5 0 0 1 7.5 7.5c0 2.37-1.1 4.48-2.82 5.88-.1.08-.24.04-.29-.07-.08-.18.01-.38.12-.52a6 6 0 1 0-9.02 0c.11.14.2.34.12.52-.05.11-.19.15-.29.07A7.47 7.47 0 0 1 4.5 12 7.5 7.5 0 0 1 12 4.5zm0 2.25a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm0 4.5c-1.65 0-3 .9-3 2.25v.75h6v-.75c0-1.35-1.35-2.25-3-2.25z"/>
+            </svg>
+            Apple
+          </a>
+        </div>
+      </div>
+
+      <!-- ===== SUBTOPIC SECTIONS ===== -->
+
+      <!-- 1. ADHD and Schools -->
+      <section class="subtopic-section" id="schools" aria-labelledby="section-schools">
+        <div class="section-header">
+          <h2 id="section-schools">ADHD and Schools</h2>
+          <span class="count-badge">3 videos</span>
+        </div>
+        <div class="video-grid">
+
+          <a href="#" class="video-card" aria-label="Watch: Working with Schools to Support Your Child with ADHD, 14 minutes 22 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">14:22</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">Working with Schools to Support Your Child with ADHD</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">SM</div>
+                <span class="video-card-specialist-name">Sarah Mitchell</span>
+              </div>
+              <span class="video-card-duration">14:22</span>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: What Teachers Need to Know About ADHD, 11 minutes 8 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">11:08</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">What Teachers Need to Know About ADHD</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">JW</div>
+                <span class="video-card-specialist-name">James Wilson</span>
+              </div>
+              <span class="video-card-duration">11:08</span>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: Getting an IEP: What Parents Need to Know, 9 minutes 45 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">9:45</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">Getting an IEP: What Parents Need to Know</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">RT</div>
+                <span class="video-card-specialist-name">Rachel Thompson</span>
+              </div>
+              <span class="video-card-duration">9:45</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 2. Answering Family Questions -->
+      <section class="subtopic-section" id="family-qa" aria-labelledby="section-family-qa">
+        <div class="section-header">
+          <h2 id="section-family-qa">Answering Family Questions</h2>
+          <span class="count-badge">2 videos</span>
+        </div>
+        <div class="video-grid">
+
+          <a href="#" class="video-card" aria-label="Watch: The Questions Parents Ask Most About ADHD, 16 minutes 10 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">16:10</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">The Questions Parents Ask Most About ADHD</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">SM</div>
+                <span class="video-card-specialist-name">Dr Sarah Mitchell</span>
+              </div>
+              <span class="video-card-duration">16:10</span>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: Talking to Siblings and Grandparents About ADHD, 8 minutes 33 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">8:33</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">Talking to Siblings and Grandparents About ADHD</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">CH</div>
+                <span class="video-card-specialist-name">Claire Henare</span>
+              </div>
+              <span class="video-card-duration">8:33</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 3. A Young Person's Questions -->
+      <section class="subtopic-section" id="young-people" aria-labelledby="section-young-people">
+        <div class="section-header">
+          <h2 id="section-young-people">A Young Person's Questions</h2>
+          <span class="count-badge">2 videos</span>
+        </div>
+        <div class="video-grid">
+
+          <a href="#" class="video-card" aria-label="Watch: What Does ADHD Actually Feel Like? A Young Person's Guide, 12 minutes 55 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">12:55</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">What Does ADHD Actually Feel Like? A Young Person's Guide</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">SM</div>
+                <span class="video-card-specialist-name">Dr Sarah Mitchell</span>
+              </div>
+              <span class="video-card-duration">12:55</span>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: ADHD and Friendships: What Teens Want to Know, 10 minutes 18 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">10:18</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">ADHD and Friendships: What Teens Want to Know</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">MP</div>
+                <span class="video-card-specialist-name">Mark Peterson</span>
+              </div>
+              <span class="video-card-duration">10:18</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 4. ADHD in Girls -->
+      <section class="subtopic-section" id="girls" aria-labelledby="section-girls">
+        <div class="section-header">
+          <h2 id="section-girls">ADHD in Girls</h2>
+          <span class="count-badge">2 videos</span>
+        </div>
+        <div class="video-grid">
+
+          <a href="#" class="video-card" aria-label="Watch: Why ADHD Looks Different in Girls, 13 minutes 40 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">13:40</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">Why ADHD Looks Different in Girls</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">SM</div>
+                <span class="video-card-specialist-name">Dr Sarah Mitchell</span>
+              </div>
+              <span class="video-card-duration">13:40</span>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: Late Diagnosis in Girls: What It Means and What Helps, 11 minutes 27 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">11:27</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">Late Diagnosis in Girls: What It Means and What Helps</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">CH</div>
+                <span class="video-card-specialist-name">Claire Henare</span>
+              </div>
+              <span class="video-card-duration">11:27</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 5. Medication -->
+      <section class="subtopic-section" id="medication" aria-labelledby="section-medication">
+        <div class="section-header">
+          <h2 id="section-medication">Medication</h2>
+          <span class="count-badge">2 videos</span>
+        </div>
+        <div class="video-grid">
+
+          <a href="#" class="video-card" aria-label="Watch: Understanding ADHD Medication: A Parent's Guide, 18 minutes 2 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">18:02</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">Understanding ADHD Medication: A Parent's Guide</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">SM</div>
+                <span class="video-card-specialist-name">Dr Sarah Mitchell</span>
+              </div>
+              <span class="video-card-duration">18:02</span>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: Managing Medication at School and Home, 8 minutes 15 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">8:15</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">Managing Medication at School and Home</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">RT</div>
+                <span class="video-card-specialist-name">Rachel Thompson</span>
+              </div>
+              <span class="video-card-duration">8:15</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 6. Parenting Course -->
+      <section class="subtopic-section" id="parenting" aria-labelledby="section-parenting">
+        <div class="section-header">
+          <h2 id="section-parenting">Parenting Course</h2>
+          <span class="count-badge">1 video</span>
+        </div>
+        <div class="video-grid video-grid-full">
+
+          <a href="#" class="video-card" aria-label="Watch: The LTF ADHD Parenting Course: What to Expect, 22 minutes 15 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">22:15</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">The LTF ADHD Parenting Course: What to Expect</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">SM</div>
+                <span class="video-card-specialist-name">Dr Sarah Mitchell</span>
+              </div>
+              <span class="video-card-duration">22:15</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 7. Teacher Questions -->
+      <section class="subtopic-section" id="teachers" aria-labelledby="section-teachers">
+        <div class="section-header">
+          <h2 id="section-teachers">Teacher Questions</h2>
+          <span class="count-badge">2 videos</span>
+        </div>
+        <div class="video-grid">
+
+          <a href="#" class="video-card" aria-label="Watch: Classroom Strategies That Actually Work for ADHD, 15 minutes 30 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">15:30</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">Classroom Strategies That Actually Work for ADHD</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">JW</div>
+                <span class="video-card-specialist-name">James Wilson</span>
+              </div>
+              <span class="video-card-duration">15:30</span>
+            </div>
+          </a>
+
+          <a href="#" class="video-card" aria-label="Watch: Supporting a Child with ADHD Who Struggles with Transitions, 10 minutes 44 seconds">
+            <div class="video-thumb" role="img" aria-hidden="true">
+              <div class="play-btn-small">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="duration-badge-small">10:44</span>
+            </div>
+            <div class="video-card-content">
+              <p class="video-card-title">Supporting a Child with ADHD Who Struggles with Transitions</p>
+              <div class="video-card-specialist">
+                <div class="avatar-small" aria-hidden="true">RT</div>
+                <span class="video-card-specialist-name">Rachel Thompson</span>
+              </div>
+              <span class="video-card-duration">10:44</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- DOWNLOADABLE RESOURCE -->
+      <div class="download-section">
+        <div>
+          <h3>Download the ADHD summary</h3>
+          <p>A one-page PDF covering the key information on this page. Suitable for sharing with teachers, GPs, or other professionals.</p>
+        </div>
+        <a href="#" class="btn-download">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download PDF
+        </a>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+
+        <div>
+          <a href="homepage-v6.html" class="footer-logo" aria-label="Listening to Families home">
+            <span class="footer-logo-top">Listening to</span>
+            <span class="footer-logo-bottom">Families</span>
+          </a>
+          <p class="footer-desc">Free specialist-led resources for New Zealand families.</p>
+          <p class="footer-funded">Funded by Te Whatu Ora and supported by leading NZ health organisations.</p>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Explore</p>
+          <ul class="footer-links">
+            <li><a href="topics-v6.html">Topics</a></li>
+            <li><a href="#">Specialists</a></li>
+            <li><a href="#">Resources</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer-col-title">About</p>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bar">
+        <span class="footer-bar-copy">&copy; 2026 Listening to Families. All rights reserved.</span>
+        <span class="footer-bar-domain">listeningtofamilies.co.nz</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== JS ===================== -->
+  <script>
+    // Hamburger toggle
+    const btn = document.getElementById('nav-hamburger');
+    const menu = document.getElementById('nav-mobile-menu');
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      menu.classList.toggle('open');
+    });
+  </script>
+
+</body>
+</html>

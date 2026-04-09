@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listening to Families — Homepage (V5: Bold Typographic)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: #1a2c2e; background: #fff; -webkit-font-smoothing: antialiased; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ── NAV ── */
+  .nav {
+    background: #fff;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(24px, 4vw, 56px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #f0ebe2;
+  }
+  .nav-logo { display: flex; flex-direction: column; line-height: 1.1; }
+  .nav-logo .top { font-family: 'Lora', serif; font-style: italic; font-size: 11px; color: rgba(12,82,94,0.45); letter-spacing: 0.3px; }
+  .nav-logo .bottom { font-family: 'Lora', serif; font-weight: 700; font-size: 20px; color: #0c525e; }
+  .nav-links { display: flex; gap: 2px; }
+  .nav-links a { color: #5a7a7e; font-size: 13.5px; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: all 0.15s; }
+  .nav-links a:hover { color: #0c525e; background: rgba(12,82,94,0.06); }
+  .nav-right { display: flex; align-items: center; gap: 8px; }
+  .nav-search-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 6px; color: #5a7a7e; display: flex; align-items: center; transition: all 0.15s; }
+  .nav-search-btn:hover { background: rgba(12,82,94,0.06); color: #0c525e; }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; border-radius: 6px; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: #0c525e; border-radius: 2px; }
+  *:focus-visible { outline: 3px solid #82d4e0; outline-offset: 2px; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: clamp(56px, 8vw, 100px) clamp(24px, 4vw, 56px) clamp(48px, 6vw, 80px);
+    border-bottom: 1px solid #f0ebe2;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: clamp(36px, 5vw, 56px);
+  }
+
+  .hero-heading-block { flex: 1; }
+
+  .hero-heading {
+    font-family: 'Lora', serif;
+    font-size: clamp(44px, 7vw, 86px);
+    font-weight: 700;
+    color: #1a2c2e;
+    line-height: 1.08;
+    letter-spacing: -0.5px;
+    margin-bottom: 0;
+  }
+  .hero-heading .line-accent {
+    display: block;
+    position: relative;
+    width: fit-content;
+  }
+  /* Yellow underline on the accented word */
+  .hero-heading .underline-word {
+    position: relative;
+    display: inline;
+  }
+  .hero-heading .underline-word::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 6px;
+    width: 100%;
+    height: 10px;
+    background: #f5c842;
+    z-index: -1;
+    border-radius: 3px;
+  }
+
+  .hero-aside {
+    flex-shrink: 0;
+    width: 260px;
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .hero-aside-text {
+    font-size: 15px;
+    color: #6a8a8e;
+    line-height: 1.7;
+    border-left: 3px solid #f5c842;
+    padding-left: 14px;
+  }
+  .hero-aside-funded {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    color: #a0b8ba;
+    font-weight: 500;
+  }
+
+  /* Search — full width, below heading */
+  .hero-search-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .hero-search {
+    display: flex;
+    flex: 1;
+    min-width: 280px;
+    max-width: 600px;
+    background: #f5f0e8;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .hero-search:focus-within {
+    border-color: #0c525e;
+    box-shadow: 0 0 0 4px rgba(12,82,94,0.08);
+    background: #fff;
+  }
+  .hero-search input {
+    flex: 1;
+    padding: 16px 20px;
+    font-size: 15px;
+    border: none;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    color: #1a2c2e;
+    background: transparent;
+  }
+  .hero-search input::placeholder { color: #a0b8ba; }
+  .hero-search button {
+    background: #0c525e;
+    border: none;
+    padding: 16px 28px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .hero-search button:hover { background: #0a4550; }
+
+  .hero-search-hint {
+    font-size: 12.5px;
+    color: #a0b8ba;
+    white-space: nowrap;
+  }
+  .hero-search-hint strong { color: #6a8a8e; }
+
+  /* ── CATEGORY ICON STRIP ── */
+  .cat-strip {
+    border-bottom: 1px solid #f0ebe2;
+    padding: 0 clamp(24px, 4vw, 56px);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cat-strip::-webkit-scrollbar { display: none; }
+  .cat-strip-inner {
+    display: flex;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .cat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 28px;
+    flex: 1;
+    min-width: 120px;
+    text-decoration: none;
+    color: inherit;
+    border-right: 1px solid #f0ebe2;
+    transition: background 0.15s;
+    cursor: pointer;
+  }
+  .cat-item:last-child { border-right: none; }
+  .cat-item:hover { background: #faf8f4; }
+  .cat-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.15s;
+  }
+  .cat-item:hover .cat-icon { transform: translateY(-2px); }
+  .cat-name {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #4a6a6e;
+    text-align: center;
+    line-height: 1.35;
+  }
+  .cat-count {
+    font-size: 10.5px;
+    color: #a0b8ba;
+  }
+
+  /* ── TOPICS GRID ── */
+  :root {
+    --cat1: #0c525e; --cat1-bg: rgba(12,82,94,0.09);
+    --cat2: #7b5ea7; --cat2-bg: rgba(123,94,167,0.09);
+    --cat3: #3a9080; --cat3-bg: rgba(58,144,128,0.09);
+    --cat4: #c4722a; --cat4-bg: rgba(196,114,42,0.09);
+    --cat5: #4a7ab5; --cat5-bg: rgba(74,122,181,0.09);
+    --cat6: #8a4f54; --cat6-bg: rgba(138,79,84,0.09);
+  }
+  .topics {
+    background: #f5f0e8;
+    padding: 72px clamp(24px, 4vw, 56px) 80px;
+  }
+  .topics-inner { max-width: 1100px; margin: 0 auto; }
+  .topics-header { margin-bottom: 40px; }
+  .topics-header h2 { font-family: 'Lora', serif; font-size: 32px; font-weight: 700; color: #1a2c2e; margin-bottom: 8px; }
+  .topics-header p { font-size: 15px; color: #5a7a7e; max-width: 520px; }
+  .topic-cats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .topic-cat-card { background: #fff; border-radius: 14px; padding: 22px 20px; border-left: 4px solid var(--cat-color); box-shadow: 0 1px 5px rgba(0,0,0,0.05); text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; transition: transform 0.15s, box-shadow 0.15s; }
+  .topic-cat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+  .topic-cat-icon { width: 44px; height: 44px; border-radius: 11px; background: var(--cat-bg); color: var(--cat-color); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .topic-cat-name { font-family: 'Lora', serif; font-size: 16px; font-weight: 700; color: #1a2c2e; line-height: 1.3; }
+  .topic-cat-desc { font-size: 13px; color: #5a7a7e; line-height: 1.55; flex: 1; }
+  .topic-cat-count { font-size: 12px; font-weight: 600; color: var(--cat-color); margin-top: 4px; }
+  .topics-cta { text-align: center; margin-top: 44px; }
+  .topics-cta a { display: inline-flex; align-items: center; gap: 8px; background: #0c525e; color: #fff; font-size: 15px; font-weight: 600; padding: 13px 28px; border-radius: 100px; text-decoration: none; transition: background 0.15s; }
+  .topics-cta a:hover { background: #0a4550; }
+  .topics-cta a svg { transition: transform 0.15s; }
+  .topics-cta a:hover svg { transform: translateX(3px); }
+
+  /* ── PODCAST ── */
+  .podcast { background: #fff; border-top: 1px solid #eee; padding: 28px clamp(24px, 4vw, 56px); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .podcast-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .podcast-icon { color: #0c525e; flex-shrink: 0; }
+  .podcast-text { flex: 1; min-width: 200px; }
+  .podcast-text strong { display: block; font-size: 15px; color: #1a2c2e; margin-bottom: 2px; }
+  .podcast-text span { font-size: 13px; color: #6a8a8e; }
+  .podcast-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-spotify { display: flex; align-items: center; gap: 8px; background: #1db954; color: #fff; padding: 10px 20px; border-radius: 100px; font-size: 13px; font-weight: 700; transition: opacity 0.15s; }
+  .btn-spotify:hover { opacity: 0.88; }
+  .btn-apple { display: flex; align-items: center; gap: 8px; background: #000; color: #fff; padding: 10px 20px; border-radius: 100px; font-size: 13px; font-weight: 700; transition: opacity 0.15s; }
+  .btn-apple:hover { opacity: 0.82; }
+
+  /* ── FOOTER ── */
+  .footer { background: #0c525e; color: rgba(255,255,255,0.7); padding: 56px clamp(24px, 4vw, 56px) 32px; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand .logo { font-family: 'Lora', serif; font-weight: 700; font-size: 18px; color: #fff; margin-bottom: 12px; }
+  .footer-brand p { font-size: 13px; line-height: 1.7; max-width: 280px; }
+  .footer-brand p a { color: rgba(255,255,255,0.5); }
+  .footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 13.5px; color: rgba(255,255,255,0.65); margin-bottom: 10px; transition: color 0.15s; }
+  .footer-col a:hover { color: #fff; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; font-size: 12px; color: rgba(255,255,255,0.35); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .hero-aside { display: none; }
+    .hero-top { margin-bottom: 32px; }
+    .cat-item { padding: 16px 18px; min-width: 100px; }
+    .cat-item { padding: 14px 16px; min-width: 90px; }
+  }
+  @media (max-width: 768px) {
+    .nav { background: #fff; }
+    .nav-hamburger { display: flex; }
+    .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; flex-direction: column; padding: 8px 16px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 99; border-bottom: 1px solid #f0ebe2; }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 10px 14px; }
+    .hero { padding: 40px 20px 36px; }
+    .hero-heading { font-size: 40px; }
+    .hero-heading .underline-word::after { height: 7px; bottom: 3px; }
+    .hero-search { min-width: 0; }
+    .hero-search-hint { display: none; }
+    .cat-strip { padding: 0 16px; }
+    .cat-name { font-size: 10.5px; }
+    .topics { padding: 36px 20px 44px; }
+    .topic-cats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .topic-cat-name { font-size: 14px; }
+    .topic-cat-desc { font-size: 12px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .podcast-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+  }
+  @media (max-width: 480px) {
+    .hero-heading { font-size: 34px; }
+    .topic-cats-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV (light) -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="#" class="nav-logo" aria-label="Listening to Families home">
+    <span class="top">Listening to</span>
+    <span class="bottom">Families</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#">Topics</a>
+    <a href="#">Specialists</a>
+    <a href="#">Resources</a>
+    <a href="#">Summaries</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-search-btn" aria-label="Search">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 12l3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks" onclick="toggleNav(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" aria-label="Welcome">
+  <div class="hero-top">
+    <div class="hero-heading-block">
+      <h1 class="hero-heading">
+        Free answers<br>
+        <span class="line-accent">for New Zealand<br>
+        <span class="underline-word">families.</span></span>
+      </h1>
+    </div>
+    <aside class="hero-aside" aria-label="About this site">
+      <p class="hero-aside-text">
+        Specialist-backed videos and resources covering over 30 health and development topics — made for real New Zealand families.
+      </p>
+      <div class="hero-aside-funded">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Funded by Māia Health Foundation
+      </div>
+    </aside>
+  </div>
+
+  <div class="hero-search-row" role="search">
+    <div class="hero-search">
+      <input type="text" placeholder="What does your family need help with?" aria-label="Search topics, videos, and specialists">
+      <button type="submit" aria-label="Submit search">Search</button>
+    </div>
+    <p class="hero-search-hint">
+      275 free videos &middot; <strong>17 specialists</strong>
+    </p>
+  </div>
+</section>
+
+<!-- CATEGORY ICON STRIP -->
+<nav class="cat-strip" aria-label="Browse by category">
+  <div class="cat-strip-inner">
+
+    <a href="topics.html" class="cat-item">
+      <div class="cat-icon" style="background:rgba(12,82,94,0.09);color:#0c525e" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <span class="cat-name">How they think &amp; learn</span>
+      <span class="cat-count">4 topics</span>
+    </a>
+
+    <a href="topics.html" class="cat-item">
+      <div class="cat-icon" style="background:rgba(123,94,167,0.09);color:#7b5ea7" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+      </div>
+      <span class="cat-name">Mind &amp; emotions</span>
+      <span class="cat-count">6 topics</span>
+    </a>
+
+    <a href="topics.html" class="cat-item">
+      <div class="cat-icon" style="background:rgba(58,144,128,0.09);color:#3a9080" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <span class="cat-name">Body &amp; health</span>
+      <span class="cat-count">10 topics</span>
+    </a>
+
+    <a href="topics.html" class="cat-item">
+      <div class="cat-icon" style="background:rgba(196,114,42,0.09);color:#c4722a" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      </div>
+      <span class="cat-name">School &amp; growing up</span>
+      <span class="cat-count">4 topics</span>
+    </a>
+
+    <a href="topics.html" class="cat-item">
+      <div class="cat-icon" style="background:rgba(74,122,181,0.09);color:#4a7ab5" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.46-1.46a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+      </div>
+      <span class="cat-name">Getting support</span>
+      <span class="cat-count">4 topics</span>
+    </a>
+
+    <a href="topics.html" class="cat-item">
+      <div class="cat-icon" style="background:rgba(138,79,84,0.09);color:#8a4f54" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <span class="cat-name">Keeping children safe</span>
+      <span class="cat-count">2 topics</span>
+    </a>
+
+  </div>
+</nav>
+
+<!-- TOPICS -->
+<section class="topics" aria-label="Browse topics">
+  <div class="topics-inner">
+    <div class="topics-header">
+      <h2>Browse Topics</h2>
+      <p>Find clear, honest information on the things families face most.</p>
+    </div>
+
+    <div class="topic-cats-grid">
+
+      <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat1);--cat-bg:var(--cat1-bg)">
+        <div class="topic-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div class="topic-cat-name">How they think &amp; learn</div>
+        <div class="topic-cat-desc">ADHD, autism, sensory processing and executive functioning.</div>
+        <div class="topic-cat-count">4 topics</div>
+      </a>
+
+      <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat2);--cat-bg:var(--cat2-bg)">
+        <div class="topic-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
+        <div class="topic-cat-name">Mind &amp; emotions</div>
+        <div class="topic-cat-desc">Anxiety, trauma, emotion regulation, gender diversity and more.</div>
+        <div class="topic-cat-count">6 topics</div>
+      </a>
+
+      <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat3);--cat-bg:var(--cat3-bg)">
+        <div class="topic-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="topic-cat-name">Body &amp; health</div>
+        <div class="topic-cat-desc">Eczema, allergies, IBD, chronic fatigue, cancer and more.</div>
+        <div class="topic-cat-count">10 topics</div>
+      </a>
+
+      <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat4);--cat-bg:var(--cat4-bg)">
+        <div class="topic-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <div class="topic-cat-name">School &amp; growing up</div>
+        <div class="topic-cat-desc">School attendance, online safety and parenting programmes.</div>
+        <div class="topic-cat-count">4 topics</div>
+      </a>
+
+      <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat5);--cat-bg:var(--cat5-bg)">
+        <div class="topic-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.46-1.46a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg></div>
+        <div class="topic-cat-name">Getting support</div>
+        <div class="topic-cat-desc">GPs, pharmacies, mental health services and medication.</div>
+        <div class="topic-cat-count">4 topics</div>
+      </a>
+
+      <a href="topics.html" class="topic-cat-card" style="--cat-color:var(--cat6);--cat-bg:var(--cat6-bg)">
+        <div class="topic-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="topic-cat-name">Keeping children safe</div>
+        <div class="topic-cat-desc">Sexual abuse, sexualised behaviour and child protection.</div>
+        <div class="topic-cat-count">2 topics</div>
+      </a>
+
+    </div>
+
+    <div class="topics-cta">
+      <a href="topics.html">Browse all 30 topics <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- PODCAST -->
+<div class="podcast" aria-label="Podcast">
+  <div class="podcast-inner">
+    <div class="podcast-icon" aria-hidden="true">
+      <svg width="40" height="40" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#0c525e" stroke-width="2"/><circle cx="16" cy="16" r="11" stroke="#0c525e" stroke-width="2" stroke-dasharray="3 3"/><circle cx="16" cy="16" r="2.5" fill="#0c525e"/></svg>
+    </div>
+    <div class="podcast-text">
+      <strong>Also available as a podcast</strong>
+      <span>Listen to Listening to Families on your favourite podcast app</span>
+    </div>
+    <div class="podcast-btns">
+      <a href="#" class="btn-spotify"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="white"/><path d="M11.5 10.5c-1.8-1.1-4-1.3-6.5-.7-.2.1-.4-.1-.3-.3.1-.2.3-.3.5-.3 2.7-.6 5.1-.4 7.1.8.2.1.2.4.1.5-.2.1-.4.1-.5 0z" fill="#1db954"/><path d="M12.3 8.8c-2.1-1.3-5.2-1.7-7.7-.9-.3.1-.5-.1-.5-.4 0-.2.1-.4.4-.5 2.8-.8 6.1-.4 8.5 1.1.2.1.3.4.2.7-.2.2-.5.2-.7.1z" fill="#1db954"/><path d="M12.4 7c-2.4-1.4-6.3-1.6-8.6-.9-.3.1-.6-.1-.7-.4-.1-.3.1-.6.4-.7 2.6-.8 6.7-.6 9.4 1 .3.2.4.5.2.8-.2.3-.5.4-.7.2z" fill="#1db954"/></svg>Spotify</a>
+      <a href="#" class="btn-apple"><svg width="16" height="16" viewBox="0 0 16 16" fill="white"><path d="M11.2 8.4c0-1.6 1.3-2.4 1.4-2.4-.8-1.1-2-1.2-2.4-1.2-1-.1-2 .6-2.5.6s-1.3-.6-2.2-.6c-1.1 0-2.2.7-2.7 1.7-1.2 2-.3 5 .8 6.6.6.8 1.2 1.7 2.1 1.7.8 0 1.1-.5 2.1-.5s1.2.5 2.1.5c.9 0 1.5-.8 2-1.7.4-.6.7-1.3.8-1.6-.1-.1-1.5-.6-1.5-2.1zM9.6 3.5c.5-.6.8-1.4.7-2.2-.7 0-1.5.5-2 1-.5.5-.9 1.3-.7 2.1.7 0 1.5-.4 2-1z"/></svg>Apple Podcasts</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Listening to Families</div>
+        <p>Free specialist-led health content for New Zealand families. Funded by <a href="#">Māia Health Foundation</a>.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#">Topics</a><a href="#">Specialists</a><a href="#">Resources</a><a href="#">Summaries</a>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <a href="#">About Us</a><a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Listening to Families. All rights reserved.</span>
+      <span><a href="#" style="color:rgba(255,255,255,0.35);text-decoration:underline;">Privacy Policy</a> &nbsp;&middot;&nbsp; listeningtofamilies.co.nz</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleNav(btn) {
+    const links = document.getElementById('navLinks');
+    const open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  }
+</script>
+</body>
+</html>

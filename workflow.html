@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LTF — Content Workflow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #f5f0e8;
+      color: #1a2e35;
+    }
+
+    /* Nav */
+    nav {
+      background: #0d4a52;
+      padding: 0 40px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: white;
+      line-height: 1;
+    }
+
+    .nav-logo span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.3px;
+    }
+
+    .nav-search {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      width: 220px;
+    }
+
+    .nav-topics {
+      font-size: 13px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* Hero */
+    .hero {
+      background: #0d4a52;
+      padding: 28px 40px 36px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: 'Lora', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    /* Main content */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 40px;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    /* Column heading */
+    .col-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .col-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .col-dot.orange { background: #e07b39; }
+    .col-dot.teal { background: #2a8a7a; }
+
+    .col-heading h2 {
+      font-family: 'Lora', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a2e35;
+      flex: 1;
+    }
+
+    .col-pill {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      border: 1px solid currentColor;
+    }
+
+    .col-pill.today { color: #888; border-color: #ccc; }
+    .col-pill.future { color: #2a8a7a; border-color: #2a8a7a; }
+
+    /* Flow cards */
+    .flow { display: flex; flex-direction: column; }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 2px 12px rgba(0,0,0,0.04);
+    }
+
+    .card.highlighted {
+      border: 1.5px solid #e8d5b0;
+      background: #fffaf3;
+    }
+
+    .card.teal-highlight {
+      border: 1.5px solid #b0d5cc;
+      background: #f0faf8;
+    }
+
+    .card-icon {
+      font-size: 18px;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .card-body { flex: 1; }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a2e35;
+      line-height: 1.3;
+    }
+
+    .card-sub {
+      font-size: 11px;
+      color: #888;
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    /* Warning / note banners */
+    .warning {
+      background: #fff8ee;
+      border-left: 3px solid #e8a020;
+      border-radius: 0 6px 6px 0;
+      padding: 7px 12px;
+      font-size: 11px;
+      color: #7a5010;
+      line-height: 1.4;
+      margin: 0 0 0 0;
+    }
+
+    .warning::before { content: "⚠ "; }
+
+    .note {
+      background: #eef8f5;
+      border-left: 3px solid #2a8a7a;
+      border-radius: 0 6px 6px 0;
+      padding: 7px 12px;
+      font-size: 11px;
+      color: #1a5a4a;
+      line-height: 1.4;
+    }
+
+    .note::before { content: "✓ "; }
+
+    /* Connector */
+    .connector {
+      width: 2px;
+      height: 20px;
+      background: #ddd;
+      margin-left: 20px;
+    }
+
+    /* Branch grid */
+    .branch-label {
+      font-size: 10px;
+      color: #bbb;
+      text-align: center;
+      margin: 2px 0;
+      font-style: italic;
+    }
+
+    .branch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .branch-card {
+      background: white;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 11px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .branch-card strong {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #1a2e35;
+      margin-bottom: 2px;
+    }
+
+    .branch-card span { color: #888; }
+
+    /* Automated chips */
+    .chip {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 10px;
+      margin-top: 4px;
+    }
+
+    .chip.auto { background: #d4eee9; color: #1a6a5a; }
+
+    /* Benefits list */
+    .benefits {
+      background: #eef8f5;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-top: 0;
+    }
+
+    .benefit-item {
+      font-size: 12px;
+      color: #1a5a4a;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      display: flex;
+      gap: 8px;
+    }
+
+    .benefit-item:last-child { border-bottom: none; }
+    .benefit-item::before { content: "✓"; font-weight: 700; }
+
+    /* Distribution grid */
+    .dist-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .dist-card {
+      background: white;
+      border-radius: 8px;
+      padding: 10px 12px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .dist-card .dist-icon { font-size: 18px; margin-bottom: 4px; }
+    .dist-card strong { display: block; font-size: 11px; font-weight: 600; color: #1a2e35; }
+    .dist-card span { font-size: 10px; color: #888; }
+    .dist-card .chip { display: block; margin: 4px auto 0; width: fit-content; }
+
+    /* Comparison table */
+    .comparison {
+      margin-top: 48px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .comparison-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #0d4a52;
+    }
+
+    .comparison-head div {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .comparison-head div:first-child { border-right: 1px solid rgba(255,255,255,0.1); }
+
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: white;
+      border-top: 1px solid #f0ece4;
+    }
+
+    .comparison-row div {
+      font-size: 12px;
+      padding: 12px 20px;
+      line-height: 1.5;
+      color: #444;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .comparison-row div:first-child { border-right: 1px solid #f0ece4; }
+
+    .bad::before { content: "✕"; color: #c0392b; font-weight: 700; flex-shrink: 0; }
+    .good::before { content: "✓"; color: #2a8a7a; font-weight: 700; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">LTF <span>Listening to Families</span></div>
+    <div class="nav-search">Search topics...</div>
+    <div class="nav-topics">Topics ∨</div>
+  </nav>
+
+  <div class="hero">
+    <h1>How LTF Content Gets to Families</h1>
+    <p>Current workflow vs end of Stage 2</p>
+  </div>
+
+  <div class="main">
+    <div class="columns">
+
+      <!-- Left: Today -->
+      <div>
+        <div class="col-heading">
+          <div class="col-dot orange"></div>
+          <h2>Current Workflow</h2>
+          <span class="col-pill today">TODAY</span>
+        </div>
+
+        <div class="flow">
+          <div class="card">
+            <div class="card-icon">🎬</div>
+            <div class="card-body">
+              <div class="card-title">Content Creators</div>
+              <div class="card-sub">Specialists record videos</div>
+            </div>
+          </div>
+
+          <div class="connector"></div>
+
+          <div class="card highlighted">
+            <div class="card-icon">👤</div>
+            <div class="card-body">
+              <div class="card-title">Bruce</div>
+              <div class="card-sub">Receives files, coordinates everything</div>
+            </div>
+          </div>
+          <div class="warning">Bruce handles technical distribution he never signed up for</div>
+
+          <div class="connector"></div>
+
+          <div class="card">
+            <div class="card-icon">▶️</div>
+            <div class="card-body">
+              <div class="card-title">Main YouTube Channel</div>
+              <div class="card-sub">Uploaded as unlisted</div>
+            </div>
+          </div>
+          <div class="warning">Videos uploaded twice — once to main, re-uploaded to topic channels</div>
+
+          <div class="connector"></div>
+
+          <div class="card highlighted">
+            <div class="card-icon">⬇️</div>
+            <div class="card-body">
+              <div class="card-title">Will Downloads</div>
+              <div class="card-sub">Downloads from YouTube manually</div>
+            </div>
+          </div>
+
+          <div class="connector"></div>
+          <div class="branch-label">splits into 3 manual paths</div>
+
+          <div class="branch-grid">
+            <div class="branch-card">
+              <strong>32 Topic YouTube Channels</strong>
+              <span>Re-uploads to separate channels</span>
+            </div>
+            <div class="branch-card">
+              <strong>Squarespace Website</strong>
+              <span>Manual linking, split 50/50 with direct uploads</span>
+            </div>
+            <div class="branch-card">
+              <strong>Podcast</strong>
+              <span>Manual audio extraction + upload</span>
+            </div>
+          </div>
+
+          <div class="connector"></div>
+
+          <div class="warning">Manual linking between website and YouTube</div>
+          <div style="height:4px;"></div>
+          <div class="warning">No automated analytics or search</div>
+          <div style="height:4px;"></div>
+          <div class="warning">Inconsistent content across platforms</div>
+        </div>
+      </div>
+
+      <!-- Right: End of Stage 2 -->
+      <div>
+        <div class="col-heading">
+          <div class="col-dot teal"></div>
+          <h2>End of Stage 2</h2>
+          <span class="col-pill future">FUTURE</span>
+        </div>
+
+        <div class="flow">
+          <div class="card">
+            <div class="card-icon">🎬</div>
+            <div class="card-body">
+              <div class="card-title">Content Creators</div>
+              <div class="card-sub">Specialists record videos</div>
+            </div>
+          </div>
+
+          <div class="connector"></div>
+
+          <div class="card teal-highlight">
+            <div class="card-icon">📤</div>
+            <div class="card-body">
+              <div class="card-title">Central Platform</div>
+              <div class="card-sub">Bruce submits via admin dashboard — under 2 minutes</div>
+            </div>
+          </div>
+          <div class="note">Bruce focuses on specialist relationships and content strategy</div>
+
+          <div class="connector"></div>
+          <div class="branch-label">automated distribution</div>
+
+          <div class="dist-grid">
+            <div class="dist-card">
+              <div class="dist-icon">🌐</div>
+              <strong>Website</strong>
+              <span>SEO, search, cross-linked topics</span>
+              <span class="chip auto">Automated</span>
+            </div>
+            <div class="dist-card">
+              <div class="dist-icon">▶️</div>
+              <strong>Single YouTube Channel</strong>
+              <span>Organised with playlists</span>
+              <span class="chip auto">Automated</span>
+            </div>
+            <div class="dist-card">
+              <div class="dist-icon">🎧</div>
+              <strong>Podcast Platforms</strong>
+              <span>Auto audio extraction</span>
+              <span class="chip auto">Automated</span>
+            </div>
+          </div>
+
+          <div class="connector"></div>
+
+          <div class="card teal-highlight">
+            <div class="card-icon">✅</div>
+            <div class="card-body">
+              <div class="card-title">Will Reviews and Publishes</div>
+              <div class="card-sub">AI transcription, written content generation, human review — under 25 minutes</div>
+            </div>
+          </div>
+
+          <div class="connector"></div>
+
+          <div style="border: 1.5px dashed #b0d5cc; border-radius: 10px; padding: 14px 16px; background: #f0faf8;">
+            <div style="font-size:10px; color:#2a8a7a; text-align:center; margin-bottom:8px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase;">Advisory</div>
+            <div class="card" style="box-shadow:none; padding:0; background:transparent;">
+              <div class="card-icon">👤</div>
+              <div class="card-body">
+                <div class="card-title">Bruce</div>
+                <div class="card-sub">Content Strategy &amp; Specialist Relationships<br>Focused on what he built LTF to do</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="height:12px;"></div>
+
+          <div class="benefits">
+            <div class="benefit-item">Single upload, automated distribution</div>
+            <div class="benefit-item">Bruce focused on strategy, not technical plumbing</div>
+            <div class="benefit-item">Consistent content everywhere</div>
+            <div class="benefit-item">Built-in search, analytics, and cross-linked topics</div>
+            <div class="benefit-item">AI-generated written content from every video</div>
+            <div class="benefit-item">Monthly report arrives in Bruce's inbox automatically</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Comparison table -->
+    <div class="comparison">
+      <div class="comparison-head">
+        <div>Today</div>
+        <div>End of Stage 2</div>
+      </div>
+      <div class="comparison-row">
+        <div class="bad">Bruce is the bottleneck for all technical distribution</div>
+        <div class="good">Bruce focuses on strategy and specialist relationships</div>
+      </div>
+      <div class="comparison-row">
+        <div class="bad">Videos uploaded manually across multiple platforms</div>
+        <div class="good">One upload triggers distribution everywhere</div>
+      </div>
+      <div class="comparison-row">
+        <div class="bad">32 separate YouTube channels to manage</div>
+        <div class="good">Single organised channel with topic playlists</div>
+      </div>
+      <div class="comparison-row">
+        <div class="bad">Families find a wall of thumbnails, no guidance</div>
+        <div class="good">Families search, browse by topic, and get guided to the right content</div>
+      </div>
+      <div class="comparison-row">
+        <div class="bad">No written content — invisible to Google and AI services</div>
+        <div class="good">Written content on every topic page — fully discoverable</div>
+      </div>
+      <div class="comparison-row">
+        <div class="bad">Analytics compiled manually by Will</div>
+        <div class="good">Monthly report arrives in Bruce's inbox automatically</div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

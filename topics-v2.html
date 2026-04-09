@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browse Topics — Listening to Families</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: #1a2c2e; background: #fff; -webkit-font-smoothing: antialiased; }
+  a { text-decoration: none; color: inherit; }
+  *:focus-visible { outline: 3px solid #82d4e0; outline-offset: 2px; }
+
+  :root {
+    --cat1: #0c525e; --cat1-bg: rgba(12,82,94,0.09);
+    --cat2: #7b5ea7; --cat2-bg: rgba(123,94,167,0.09);
+    --cat3: #3a9080; --cat3-bg: rgba(58,144,128,0.09);
+    --cat4: #c4722a; --cat4-bg: rgba(196,114,42,0.09);
+    --cat5: #4a7ab5; --cat5-bg: rgba(74,122,181,0.09);
+    --cat6: #8a4f54; --cat6-bg: rgba(138,79,84,0.09);
+  }
+
+  /* ── NAV ── */
+  .nav {
+    background: #0c525e;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(24px, 4vw, 56px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .nav-logo { display: flex; flex-direction: column; line-height: 1.1; }
+  .nav-logo .top { font-family: 'Lora', serif; font-style: italic; font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 0.3px; }
+  .nav-logo .bottom { font-family: 'Lora', serif; font-weight: 700; font-size: 20px; color: #fff; }
+  .nav-links { display: flex; gap: 2px; }
+  .nav-links a { color: rgba(255,255,255,0.75); font-size: 13.5px; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: all 0.15s; }
+  .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+  .nav-links a[aria-current="page"] { color: #fff; background: rgba(255,255,255,0.15); }
+  .nav-right { display: flex; align-items: center; gap: 4px; }
+  .nav-search-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 8px; border-radius: 6px;
+    color: rgba(255,255,255,0.75);
+    display: flex; align-items: center;
+    transition: all 0.15s;
+  }
+  .nav-search-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .nav-hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer;
+    padding: 8px; border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .nav-hamburger:hover { background: rgba(255,255,255,0.1); }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: #f5f0e8;
+    padding: 52px clamp(24px, 4vw, 56px) 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(12,82,94,0.06);
+    pointer-events: none;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -50px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(245,200,66,0.12);
+    pointer-events: none;
+  }
+  .page-header-inner { position: relative; z-index: 1; max-width: 760px; }
+  .eyebrow-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(12,82,94,0.09);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #0c525e;
+    letter-spacing: 0.3px;
+    margin-bottom: 24px;
+  }
+  .eyebrow-pill-dot { width: 5px; height: 5px; border-radius: 50%; background: #0c525e; opacity: 0.5; }
+  .page-header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: #1a2c2e;
+    line-height: 1.18;
+    margin-bottom: 16px;
+  }
+  .page-header p {
+    font-size: clamp(14px, 1.6vw, 16px);
+    color: #5a7a7e;
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 32px;
+  }
+
+  /* Search bar */
+  .header-search {
+    display: flex;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 18px rgba(0,0,0,0.1);
+    max-width: 480px;
+    border: 1.5px solid rgba(12,82,94,0.12);
+  }
+  .header-search input {
+    flex: 1;
+    padding: 14px 20px;
+    font-size: 14.5px;
+    border: none;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    color: #1a2c2e;
+    background: transparent;
+  }
+  .header-search input::placeholder { color: #aab8b9; }
+  .header-search button {
+    background: #0c525e;
+    border: none;
+    padding: 14px 22px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.3px;
+    transition: background 0.15s;
+    display: flex; align-items: center; gap: 7px;
+    flex-shrink: 0;
+  }
+  .header-search button:hover { background: #0a4550; }
+
+  /* ── TOPICS BODY ── */
+  .topics-body {
+    background: #f5f0e8;
+    padding: 56px clamp(24px, 4vw, 80px) 80px;
+  }
+
+  /* Filter pills */
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 52px;
+  }
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1.5px solid #e0d8cc;
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #4a6a6e;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .filter-pill:hover { border-color: #0c525e; color: #0c525e; background: rgba(12,82,94,0.04); }
+  .filter-pill.active { background: #0c525e; border-color: #0c525e; color: #fff; }
+  .filter-pill-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Category sections */
+  .cat-section { margin-bottom: 56px; }
+  .cat-section:last-child { margin-bottom: 0; }
+  .cat-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .cat-label-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .cat-header h2 {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a2c2e;
+  }
+  .cat-count-badge {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* Topic cards grid */
+  .topic-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .topic-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    border-left: 4px solid var(--cat-color);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+  }
+  .topic-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+
+  .topic-card-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    background: var(--cat-bg);
+    color: var(--cat-color);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .topic-card h3 {
+    font-family: 'Lora', serif;
+    font-size: 15.5px;
+    font-weight: 700;
+    color: #1a2c2e;
+    line-height: 1.3;
+    flex: 1;
+  }
+  .topic-card p {
+    font-size: 12.5px;
+    color: #6a8a8e;
+    line-height: 1.55;
+  }
+  .topic-card-arrow {
+    align-self: flex-end;
+    color: var(--cat-color);
+    opacity: 0.6;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .topic-card:hover .topic-card-arrow { opacity: 1; transform: translateX(3px); }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: #0c525e;
+    color: rgba(255,255,255,0.7);
+    padding: 56px clamp(24px, 4vw, 56px) 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand .logo { font-family: 'Lora', serif; font-weight: 700; font-size: 18px; color: #fff; margin-bottom: 12px; }
+  .footer-brand p { font-size: 13px; line-height: 1.7; max-width: 280px; }
+  .footer-brand p a { color: rgba(255,255,255,0.5); }
+  .footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 13.5px; color: rgba(255,255,255,0.65); margin-bottom: 10px; transition: color 0.15s; }
+  .footer-col a:hover { color: #fff; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 24px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      display: none; position: absolute; top: 64px; left: 0; right: 0;
+      background: #0c525e; flex-direction: column;
+      padding: 8px 16px 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 10px 14px; border-radius: 6px; }
+
+    .page-header { padding: 36px 20px 40px; }
+    .topics-body { padding: 36px 20px 48px; }
+    .filter-row { gap: 6px; margin-bottom: 36px; }
+    .topic-cards-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 480px) {
+    .topic-cards-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="homepage-v2.html" class="nav-logo" aria-label="Listening to Families home">
+    <span class="top">Listening to</span>
+    <span class="bottom">Families</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="topics-v2.html" aria-current="page">Topics</a>
+    <a href="#">Specialists</a>
+    <a href="#">Resources</a>
+    <a href="#">Summaries</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-search-btn" aria-label="Search">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 12l3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks" onclick="toggleNav(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header" aria-label="Topics page header">
+  <div class="page-header-inner">
+    <div class="eyebrow-pill">
+      <span class="eyebrow-pill-dot"></span>
+      Free &middot; Specialist-backed &middot; New Zealand
+    </div>
+    <h1>Browse Topics</h1>
+    <p>Free, specialist-backed videos and resources covering over 30 health and development topics &mdash; organised by what your family is facing.</p>
+    <div class="header-search" role="search">
+      <input type="text" placeholder="Search topics, videos, specialists&hellip;" aria-label="Search topics, videos, specialists">
+      <button type="submit" aria-label="Submit search">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.7"/><path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        Search
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- TOPICS BODY -->
+<main class="topics-body" id="main">
+
+  <!-- Filter pills -->
+  <div class="filter-row" role="group" aria-label="Filter by category">
+    <button class="filter-pill active" onclick="filterTopics('all', this)">All topics</button>
+    <button class="filter-pill" onclick="filterTopics('cat1', this)">
+      <span class="filter-pill-dot" style="background:#0c525e"></span>
+      How they think &amp; learn
+    </button>
+    <button class="filter-pill" onclick="filterTopics('cat2', this)">
+      <span class="filter-pill-dot" style="background:#7b5ea7"></span>
+      Mind &amp; emotions
+    </button>
+    <button class="filter-pill" onclick="filterTopics('cat3', this)">
+      <span class="filter-pill-dot" style="background:#3a9080"></span>
+      Body &amp; health
+    </button>
+    <button class="filter-pill" onclick="filterTopics('cat4', this)">
+      <span class="filter-pill-dot" style="background:#c4722a"></span>
+      School &amp; growing up
+    </button>
+    <button class="filter-pill" onclick="filterTopics('cat5', this)">
+      <span class="filter-pill-dot" style="background:#4a7ab5"></span>
+      Getting support
+    </button>
+    <button class="filter-pill" onclick="filterTopics('cat6', this)">
+      <span class="filter-pill-dot" style="background:#8a4f54"></span>
+      Keeping children safe
+    </button>
+  </div>
+
+  <!-- CAT 1: How they think & learn -->
+  <section class="cat-section" data-cat="cat1" aria-label="How they think and learn">
+    <div class="cat-header">
+      <span class="cat-label-dot" style="background:#0c525e" aria-hidden="true"></span>
+      <h2>How they think &amp; learn</h2>
+      <span class="cat-count-badge" style="background:rgba(12,82,94,0.1);color:#0c525e">4 topics</span>
+    </div>
+    <div class="topic-cards-grid">
+
+      <a href="adhd-v2.html" class="topic-card" style="--cat-color:#0c525e;--cat-bg:rgba(12,82,94,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>ADHD</h3>
+        <p>Understanding attention, hyperactivity, and how to support your child at home and school.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#0c525e;--cat-bg:rgba(12,82,94,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+        </div>
+        <h3>Autism</h3>
+        <p>Understanding autism spectrum disorder, diagnosis, and supporting your child's needs.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#0c525e;--cat-bg:rgba(12,82,94,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a9 9 0 0 1 9 9c0 3.18-1.65 5.97-4.13 7.6L12 22l-4.87-3.4A9 9 0 0 1 3 11a9 9 0 0 1 9-9z"/><circle cx="12" cy="11" r="3"/></svg>
+        </div>
+        <h3>Sensory Processing</h3>
+        <p>When sights, sounds and textures feel overwhelming — strategies for home and school.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#0c525e;--cat-bg:rgba(12,82,94,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Executive Functioning</h3>
+        <p>Planning, organisation and self-regulation — practical tools to help your child thrive.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CAT 2: Mind & emotions -->
+  <section class="cat-section" data-cat="cat2" aria-label="Mind and emotions">
+    <div class="cat-header">
+      <span class="cat-label-dot" style="background:#7b5ea7" aria-hidden="true"></span>
+      <h2>Mind &amp; emotions</h2>
+      <span class="cat-count-badge" style="background:rgba(123,94,167,0.1);color:#7b5ea7">6 topics</span>
+    </div>
+    <div class="topic-cards-grid">
+
+      <a href="#" class="topic-card" style="--cat-color:#7b5ea7;--cat-bg:rgba(123,94,167,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+        </div>
+        <h3>Anxiety</h3>
+        <p>Recognising anxiety in children and young people, and what actually helps.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#7b5ea7;--cat-bg:rgba(123,94,167,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 15h8M9 9h.01M15 9h.01"/></svg>
+        </div>
+        <h3>Emotion Regulation</h3>
+        <p>Helping children manage big feelings — understanding meltdowns and building resilience.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#7b5ea7;--cat-bg:rgba(123,94,167,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Family Stress &amp; Wellbeing</h3>
+        <p>Looking after your whole family — stress, connection and wellbeing for parents too.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#7b5ea7;--cat-bg:rgba(123,94,167,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Trauma</h3>
+        <p>Understanding childhood trauma and how to support recovery at home and school.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#7b5ea7;--cat-bg:rgba(123,94,167,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>Suicide &amp; Self-harm</h3>
+        <p>Guidance for families when a young person is struggling — how to help and where to turn.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#7b5ea7;--cat-bg:rgba(123,94,167,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <h3>Gender Diversity</h3>
+        <p>Supporting gender-diverse children and young people — with care, information and honesty.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CAT 3: Body & health -->
+  <section class="cat-section" data-cat="cat3" aria-label="Body and health">
+    <div class="cat-header">
+      <span class="cat-label-dot" style="background:#3a9080" aria-hidden="true"></span>
+      <h2>Body &amp; health</h2>
+      <span class="cat-count-badge" style="background:rgba(58,144,128,0.1);color:#3a9080">10 topics</span>
+    </div>
+    <div class="topic-cards-grid">
+
+      <a href="#" class="topic-card" style="--cat-color:#3a9080;--cat-bg:rgba(58,144,128,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10"/><path d="M12 8v4l3 3"/><path d="M16 16l4 4"/></svg>
+        </div>
+        <h3>Eczema</h3>
+        <p>Managing eczema in children — triggers, treatment and keeping skin comfortable.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#3a9080;--cat-bg:rgba(58,144,128,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Allergies &amp; Anaphylaxis</h3>
+        <p>Food allergies, anaphylaxis risk, EpiPens and keeping your child safe day to day.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#3a9080;--cat-bg:rgba(58,144,128,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>
+        </div>
+        <h3>Coeliac Disease</h3>
+        <p>Living gluten-free — diagnosis, diet, and supporting your child at school and home.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#3a9080;--cat-bg:rgba(58,144,128,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>IBD</h3>
+        <p>Inflammatory bowel disease in children — understanding Crohn's and colitis.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#3a9080;--cat-bg:rgba(58,144,128,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Chronic Fatigue Syndrome</h3>
+        <p>ME/CFS in young people — pacing, school support, and understanding this condition.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#3a9080;--cat-bg:rgba(58,144,128,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>AYA Cancer</h3>
+        <p>Supporting adolescents and young adults through cancer — for families and the young person.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#3a9080;--cat-bg:rgba(58,144,128,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+        </div>
+        <h3>Eating Challenges</h3>
+        <p>Fussy eating, avoidant eating and feeding difficulties — when to worry and what helps.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#3a9080;--cat-bg:rgba(58,144,128,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Toileting</h3>
+        <p>Bedwetting, daytime accidents and constipation — reassuring guidance for families.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#3a9080;--cat-bg:rgba(58,144,128,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="14.83" y1="9.17" x2="18.36" y2="5.64"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg>
+        </div>
+        <h3>Vision</h3>
+        <p>Eye health, vision problems and glasses — what to look for and when to seek help.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#3a9080;--cat-bg:rgba(58,144,128,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <h3>Dental &amp; Oral Health</h3>
+        <p>Dental care for children, managing dental anxiety and keeping teeth healthy.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CAT 4: School & growing up -->
+  <section class="cat-section" data-cat="cat4" aria-label="School and growing up">
+    <div class="cat-header">
+      <span class="cat-label-dot" style="background:#c4722a" aria-hidden="true"></span>
+      <h2>School &amp; growing up</h2>
+      <span class="cat-count-badge" style="background:rgba(196,114,42,0.1);color:#c4722a">4 topics</span>
+    </div>
+    <div class="topic-cards-grid">
+
+      <a href="#" class="topic-card" style="--cat-color:#c4722a;--cat-bg:rgba(196,114,42,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <h3>School Attendance</h3>
+        <p>School refusal, anxiety about school, and how families and schools can work together.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#c4722a;--cat-bg:rgba(196,114,42,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Online Safety &amp; Wellbeing</h3>
+        <p>Keeping children safe online, managing screen time and having the right conversations.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#c4722a;--cat-bg:rgba(196,114,42,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Parent Education Programs</h3>
+        <p>Evidence-based parenting programmes — what they offer and how to find the right fit.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#c4722a;--cat-bg:rgba(196,114,42,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Supporting Families</h3>
+        <p>Practical guidance for families navigating challenging seasons with children and teens.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CAT 5: Getting support -->
+  <section class="cat-section" data-cat="cat5" aria-label="Getting support">
+    <div class="cat-header">
+      <span class="cat-label-dot" style="background:#4a7ab5" aria-hidden="true"></span>
+      <h2>Getting support</h2>
+      <span class="cat-count-badge" style="background:rgba(74,122,181,0.1);color:#4a7ab5">4 topics</span>
+    </div>
+    <div class="topic-cards-grid">
+
+      <a href="#" class="topic-card" style="--cat-color:#4a7ab5;--cat-bg:rgba(74,122,181,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.46-1.46a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+        </div>
+        <h3>General Practice</h3>
+        <p>Getting the most from your GP — referrals, what to ask, and navigating the system.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#4a7ab5;--cat-bg:rgba(74,122,181,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Pharmacies</h3>
+        <p>The role of community pharmacies in your child's health — advice, medication and more.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#4a7ab5;--cat-bg:rgba(74,122,181,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>CAF Mental Health Services</h3>
+        <p>Child and adolescent mental health services — what they offer and how to access them.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#4a7ab5;--cat-bg:rgba(74,122,181,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+        </div>
+        <h3>Medication for Mental Health</h3>
+        <p>Understanding psychiatric medication for children — what families need to know.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CAT 6: Keeping children safe -->
+  <section class="cat-section" data-cat="cat6" aria-label="Keeping children safe">
+    <div class="cat-header">
+      <span class="cat-label-dot" style="background:#8a4f54" aria-hidden="true"></span>
+      <h2>Keeping children safe</h2>
+      <span class="cat-count-badge" style="background:rgba(138,79,84,0.1);color:#8a4f54">2 topics</span>
+    </div>
+    <div class="topic-cards-grid">
+
+      <a href="#" class="topic-card" style="--cat-color:#8a4f54;--cat-bg:rgba(138,79,84,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Sexual Abuse</h3>
+        <p>Understanding child sexual abuse — how to talk about it, recognise it, and respond.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="#" class="topic-card" style="--cat-color:#8a4f54;--cat-bg:rgba(138,79,84,0.09)">
+        <div class="topic-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>Sexualised Behaviour in Children</h3>
+        <p>Understanding concerning sexual behaviour in children — causes, responses and support.</p>
+        <span class="topic-card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Listening to Families</div>
+      <p>Free specialist-led health content for New Zealand families. Funded by <a href="#">Māia Health Foundation</a>.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="topics-v2.html">Topics</a>
+      <a href="#">Specialists</a>
+      <a href="#">Resources</a>
+      <a href="#">Summaries</a>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Listening to Families. All rights reserved.</span>
+    <span><a href="#" style="color:rgba(255,255,255,0.35);text-decoration:underline;">Privacy Policy</a> &nbsp;&middot;&nbsp; listeningtofamilies.co.nz</span>
+  </div>
+</footer>
+
+<script>
+  function toggleNav(btn) {
+    const links = document.getElementById('navLinks');
+    const open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  }
+
+  function filterTopics(cat, btn) {
+    // Update active pill
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Show/hide sections
+    document.querySelectorAll('.cat-section').forEach(section => {
+      if (cat === 'all' || section.dataset.cat === cat) {
+        section.style.display = '';
+      } else {
+        section.style.display = 'none';
+      }
+    });
+  }
+</script>
+</body>
+</html>
