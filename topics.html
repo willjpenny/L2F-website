@@ -212,6 +212,46 @@
   .back-to-top.visible { opacity: 1; pointer-events: auto; }
   .back-to-top:hover { transform: translateY(-2px); }
 
+  /* ── VIEW TOGGLE ── */
+  .view-toggle { display: flex; gap: 4px; margin-bottom: 20px; }
+  .view-toggle button {
+    background: #fff; border: 1.5px solid #e0d8cc; border-radius: 8px;
+    padding: 7px 16px; font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600; color: #5a6a6c;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .view-toggle button:hover { border-color: #0c525e; color: #0c525e; }
+  .view-toggle button.active { background: #0c525e; border-color: #0c525e; color: #fff; }
+
+  /* ── A-Z VIEW ── */
+  .az-view { display: none; }
+  .az-view.active { display: block; }
+  .az-letter-group { margin-bottom: 28px; }
+  .az-letter {
+    font-family: 'Lora', serif; font-weight: 700; font-size: 18px;
+    color: #0c525e; margin-bottom: 10px; padding-bottom: 8px;
+    border-bottom: 1.5px solid rgba(0,0,0,0.07);
+  }
+  .az-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 8px;
+  }
+  .az-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; background: #fff; border-radius: 10px;
+    text-decoration: none; color: #1a2c2e;
+    border: 1.5px solid rgba(0,0,0,0.05);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    transition: all 0.15s;
+  }
+  .az-item:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .az-item-name { font-weight: 600; font-size: 14px; flex: 1; }
+  .az-item-cat {
+    font-size: 10px; font-weight: 700; color: #fff;
+    padding: 3px 8px; border-radius: 100px; white-space: nowrap;
+  }
+
   /* ── MOBILE ── */
   @media (max-width: 768px) {
     .nav-hamburger { display: flex; }
@@ -273,6 +313,11 @@
 
 <!-- TOPICS -->
 <div class="topics-body">
+
+  <div class="view-toggle" role="tablist" aria-label="View topics by">
+    <button class="active" data-view="cat" role="tab" aria-selected="true">By category</button>
+    <button data-view="az" role="tab" aria-selected="false">A–Z</button>
+  </div>
 
   <div class="filter-bar" role="group" aria-label="Filter by category">
     <button class="filter-pill active" onclick="filterTopics(this,'all')">All topics</button>
@@ -650,6 +695,132 @@
     </div>
   </div>
 
+  <!-- A-Z VIEW -->
+  <div class="az-view" id="azView">
+
+    <!-- A -->
+    <div class="az-letter-group">
+      <div class="az-letter">A</div>
+      <div class="az-list">
+        <a href="adhd-mockup.html" class="az-item"><span class="az-item-name">ADHD</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Allergies &amp; Anaphylaxis</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Anxiety</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Autism</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">AYA Cancer</span></a>
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="az-letter-group">
+      <div class="az-letter">C</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">CAF Mental Health Services</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Chronic Fatigue Syndrome</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Coeliac Disease</span></a>
+      </div>
+    </div>
+
+    <!-- D -->
+    <div class="az-letter-group">
+      <div class="az-letter">D</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">Dental &amp; Oral Health</span></a>
+      </div>
+    </div>
+
+    <!-- E -->
+    <div class="az-letter-group">
+      <div class="az-letter">E</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">Eating Challenges</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Eczema</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Emotion Regulation</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Executive Functioning</span></a>
+      </div>
+    </div>
+
+    <!-- F -->
+    <div class="az-letter-group">
+      <div class="az-letter">F</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">Family Stress &amp; Wellbeing</span></a>
+      </div>
+    </div>
+
+    <!-- G -->
+    <div class="az-letter-group">
+      <div class="az-letter">G</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">Gender Diversity</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">General Practice</span></a>
+      </div>
+    </div>
+
+    <!-- I -->
+    <div class="az-letter-group">
+      <div class="az-letter">I</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">IBD</span></a>
+      </div>
+    </div>
+
+    <!-- M -->
+    <div class="az-letter-group">
+      <div class="az-letter">M</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">Medication for Mental Health</span></a>
+      </div>
+    </div>
+
+    <!-- O -->
+    <div class="az-letter-group">
+      <div class="az-letter">O</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">Online Safety &amp; Wellbeing</span></a>
+      </div>
+    </div>
+
+    <!-- P -->
+    <div class="az-letter-group">
+      <div class="az-letter">P</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">Parent Education Programs</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Pharmacies</span></a>
+      </div>
+    </div>
+
+    <!-- S -->
+    <div class="az-letter-group">
+      <div class="az-letter">S</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">School Attendance</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Sensory Processing</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Sexual Abuse</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Sexualised Behaviour</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Suicide &amp; Self-harm</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Supporting Families</span></a>
+      </div>
+    </div>
+
+    <!-- T -->
+    <div class="az-letter-group">
+      <div class="az-letter">T</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">Toileting</span></a>
+        <a href="#" class="az-item"><span class="az-item-name">Trauma</span></a>
+      </div>
+    </div>
+
+    <!-- V -->
+    <div class="az-letter-group">
+      <div class="az-letter">V</div>
+      <div class="az-list">
+        <a href="#" class="az-item"><span class="az-item-name">Vision</span></a>
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
 <!-- FOOTER -->
@@ -683,6 +854,27 @@
 </button>
 
 <script>
+  // View toggle (By category / A-Z)
+  const azView = document.getElementById('azView');
+  const filterBar = document.querySelector('.filter-bar');
+  const categoryRows = document.querySelectorAll('.category-row');
+  document.querySelectorAll('.view-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.view-toggle button').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      if (btn.dataset.view === 'az') {
+        filterBar.style.display = 'none';
+        categoryRows.forEach(r => r.style.display = 'none');
+        azView.classList.add('active');
+      } else {
+        filterBar.style.display = '';
+        categoryRows.forEach(r => r.style.display = '');
+        azView.classList.remove('active');
+      }
+    });
+  });
+
   function filterTopics(btn, filter) {
     document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
