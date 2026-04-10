@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listening to Families | Free specialist-led resources for NZ families (v8)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *:focus-visible { outline: 3px solid #82d4e0; outline-offset: 2px; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: #1a2c2e; background: #f5f0e8; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: #0c525e; height: 64px;
+      display: flex; align-items: center;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 56px);
+      width: 100%; display: flex; align-items: center; gap: 40px;
+    }
+    .nav-logo { display: flex; flex-direction: column; line-height: 1; text-decoration: none; flex-shrink: 0; }
+    .nav-logo-eyebrow { font-family: 'Lora', serif; font-style: italic; font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 2px; }
+    .nav-logo-main { font-family: 'Lora', serif; font-weight: 700; font-size: 26px; color: #fff; }
+    .nav-links { display: flex; align-items: center; gap: 6px; flex: 1; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); padding: 6px 10px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; margin-left: auto; }
+    .nav-search-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: rgba(255,255,255,0.7); transition: color 0.15s, background 0.15s; }
+    .nav-search-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .nav-cta { display: inline-flex; align-items: center; background: #f5c842; color: #0c525e; font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: 999px; transition: opacity 0.15s; white-space: nowrap; }
+    .nav-cta:hover { opacity: 0.88; }
+    .nav-hamburger { display: none; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 6px; color: rgba(255,255,255,0.8); }
+    .nav-mobile-menu { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #0c525e; border-top: 1px solid rgba(255,255,255,0.12); padding: 12px 0 16px; z-index: 99; }
+    .nav-mobile-menu.open { display: block; }
+    .nav-mobile-menu a { display: block; padding: 11px clamp(20px,4vw,56px); font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.8); transition: background 0.15s; }
+    .nav-mobile-menu a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+
+    /* ── HERO ── */
+    .hero {
+      background: #0c525e;
+      min-height: calc(100vh - 64px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* Left panel */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(48px, 7vw, 96px) clamp(32px, 5vw, 72px);
+    }
+
+    /* Speech bubbles */
+    .bubbles { display: flex; flex-direction: column; gap: 28px; margin-bottom: 36px; }
+    .bubble {
+      display: inline-flex; align-items: center;
+      padding: 16px 28px; border-radius: 100px;
+      font-family: 'Lora', serif;
+      font-size: clamp(20px, 2.2vw, 28px);
+      line-height: 1.2; position: relative; width: fit-content;
+    }
+    .bubble-teal { background: #82d4e0; color: #0c3d47; border-bottom-left-radius: 4px; }
+    .bubble-teal::after {
+      content: ''; position: absolute; bottom: -13px; left: 32px;
+      border: 8px solid transparent; border-top-color: #82d4e0; border-bottom: none;
+    }
+    .bubble-yellow { background: #f5c842; color: #2a1f00; border-bottom-left-radius: 4px; margin-left: 24px; }
+    .bubble-yellow::after {
+      content: ''; position: absolute; bottom: -13px; left: 28px;
+      border: 8px solid transparent; border-top-color: #f5c842; border-bottom: none;
+    }
+    .bubble strong { font-weight: 700; }
+    .hero-sub { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; max-width: 400px; margin-bottom: 10px; }
+    .hero-proof { font-size: 12.5px; color: rgba(255,255,255,0.45); margin-bottom: 28px; letter-spacing: 0.1px; }
+    .hero-searchbar {
+      display: flex; background: #fff; border-radius: 10px;
+      overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.2); max-width: 440px;
+    }
+    .hero-searchbar input { flex: 1; padding: 15px 20px; font-size: 14px; border: none; outline: none; font-family: 'Inter', sans-serif; color: #1a2c2e; }
+    .hero-searchbar input::placeholder { color: #aaa; }
+    .hero-searchbar button { background: #0c525e; border: none; padding: 15px 22px; cursor: pointer; color: #fff; font-size: 13px; font-weight: 600; font-family: 'Inter', sans-serif; letter-spacing: 0.3px; transition: background 0.15s; }
+    .hero-searchbar button:hover { background: #0a4550; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.85);
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+      width: fit-content;
+    }
+
+    .hero h1 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(32px, 4.5vw, 52px);
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: #f5c842;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 420px;
+    }
+
+    .hero-search {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 999px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+      max-width: 440px;
+      padding: 4px 4px 4px 20px;
+      margin-bottom: 20px;
+    }
+    .hero-search input { flex: 1; border: none; outline: none; font-family: 'Inter', sans-serif; font-size: 14px; color: #1a2c2e; background: transparent; min-width: 0; }
+    .hero-search input::placeholder { color: #8aacb0; }
+    .hero-search button { background: #f5c842; color: #0c525e; font-size: 14px; font-weight: 700; padding: 9px 20px; border-radius: 999px; transition: opacity 0.15s; white-space: nowrap; flex-shrink: 0; }
+    .hero-search button:hover { opacity: 0.88; }
+
+    .hero-funded { display: flex; align-items: center; gap: 7px; font-size: 12px; color: rgba(255,255,255,0.45); }
+
+    /* Right panel — video reel */
+    .hero-right {
+      position: relative;
+      background: #071f24;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* Simulated video background — dark teal gradient with subtle pattern */
+    .video-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #0a3d47 0%, #051519 100%);
+    }
+
+    /* The "clips" — each is a full-panel overlay that fades in/out */
+    .clip {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      pointer-events: none;
+    }
+
+    .clip.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Decorative "frame" — simulates a talking-head video */
+    .clip-frame {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .clip-silhouette {
+      width: 240px;
+      height: 340px;
+      border-radius: 50% 50% 48% 48% / 40% 40% 60% 60%;
+      opacity: 0.08;
+      flex-shrink: 0;
+    }
+
+    /* Gradient overlay at bottom for text legibility */
+    .clip-gradient {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 70%;
+      background: linear-gradient(to top, rgba(5,21,25,0.97) 0%, rgba(5,21,25,0.6) 50%, transparent 100%);
+    }
+
+    /* Clip content */
+    .clip-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 36px 28px;
+    }
+
+    .clip-topic {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245,200,66,0.15);
+      border: 1px solid rgba(245,200,66,0.4);
+      color: #f5c842;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+      letter-spacing: 0.2px;
+    }
+
+    .clip-question {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: clamp(17px, 2.2vw, 22px);
+      line-height: 1.4;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .clip-specialist {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .clip-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .clip-specialist-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .clip-specialist-role {
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+      margin-top: 1px;
+    }
+
+    /* Watch button */
+    .clip-watch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .clip-watch:hover { background: rgba(255,255,255,0.18); }
+
+    /* Play indicator (top-right) */
+    .play-indicator {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      padding: 6px 14px 6px 8px;
+    }
+
+    .play-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f5c842;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .play-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 0.3px;
+    }
+
+    /* Progress bar strip */
+    .reel-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      display: flex;
+      gap: 3px;
+      padding: 0 36px 10px;
+    }
+
+    .reel-bar {
+      flex: 1;
+      height: 3px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .reel-bar-fill {
+      height: 100%;
+      background: #f5c842;
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .reel-bar.done .reel-bar-fill { width: 100%; background: rgba(255,255,255,0.5); }
+    .reel-bar.active .reel-bar-fill { background: #f5c842; }
+
+    /* Nav arrows */
+    .reel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .reel-nav:hover { background: rgba(255,255,255,0.18); color: #fff; }
+    .reel-nav.prev { left: 14px; }
+    .reel-nav.next { right: 14px; }
+
+    /* ── TRUST BAND ── */
+    .trust-band { background: #f5f0e8; padding: 22px 0; border-top: 1px solid rgba(12,82,94,0.08); }
+    .trust-band-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,56px); display: flex; align-items: center; justify-content: center; gap: clamp(28px,6vw,80px); flex-wrap: wrap; }
+    .trust-stat { text-align: center; }
+    .trust-stat .num { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(24px,3.5vw,36px); color: #0c525e; line-height: 1.1; }
+    .trust-stat .label { font-size: 12px; color: #5a7a7e; margin-top: 3px; }
+
+    /* ── TOPICS ── */
+    .topics-section { background: #f5f0e8; padding: clamp(48px,7vw,88px) 0; }
+    .topics-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,56px); }
+    .section-header { margin-bottom: 36px; }
+    .section-header h2 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(24px,3.5vw,32px); color: #1a2c2e; margin-bottom: 8px; }
+    .section-header p { font-size: 15px; color: #5a7a7e; line-height: 1.6; }
+
+    .topics-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-bottom: 36px; }
+    .topic-card { display: block; background: #fff; border-radius: 12px; padding: 22px 20px; text-decoration: none; transition: transform 0.18s, box-shadow 0.18s; border-left: 4px solid currentColor; }
+    .topic-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(12,82,94,0.12); }
+    .topic-icon-wrap { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .topic-card h3 { font-family: 'Lora', serif; font-weight: 700; font-size: 16px; color: #1a2c2e; margin-bottom: 6px; line-height: 1.3; }
+    .topic-card p { font-size: 13.5px; color: #5a7a7e; line-height: 1.55; margin-bottom: 10px; }
+    .topic-count { font-size: 12px; font-weight: 600; color: currentColor; opacity: 0.75; }
+    .topics-cta-wrap { text-align: center; }
+    .topics-cta { display: inline-block; background: #0c525e; color: #fff; font-size: 14px; font-weight: 600; padding: 12px 28px; border-radius: 999px; transition: background 0.15s; }
+    .topics-cta:hover { background: #0a3d47; }
+
+    /* ── PODCAST ── */
+    .podcast-section { background: #fff; padding: clamp(48px,7vw,88px) 0; }
+    .podcast-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,56px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px,6vw,72px); align-items: center; }
+    .podcast-label { display: inline-flex; align-items: center; gap: 6px; background: rgba(12,82,94,0.07); color: #0c525e; font-size: 11.5px; font-weight: 600; padding: 5px 12px; border-radius: 999px; margin-bottom: 16px; }
+    .podcast-left h2 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(24px,3.5vw,32px); color: #1a2c2e; margin-bottom: 14px; }
+    .podcast-left p { font-size: 15px; color: #5a7a7e; line-height: 1.7; }
+    .podcast-buttons { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+    .podcast-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: opacity 0.15s; max-width: 260px; width: 100%; }
+    .podcast-btn:hover { opacity: 0.88; }
+    .podcast-btn-spotify { background: #1DB954; color: #fff; }
+    .podcast-btn-apple { background: #000; color: #fff; }
+    .podcast-free-note { font-size: 12.5px; color: #8aacb0; font-weight: 500; margin-top: 8px; }
+
+    /* ── FOOTER ── */
+    .footer { background: #0a3d47; padding-top: clamp(40px,5vw,64px); }
+    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,56px); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: clamp(28px,5vw,56px); padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .footer-logo { display: flex; flex-direction: column; line-height: 1; margin-bottom: 14px; }
+    .footer-logo-eyebrow { font-family: 'Lora', serif; font-style: italic; font-size: 10.5px; color: rgba(255,255,255,0.45); margin-bottom: 2px; }
+    .footer-logo-main { font-family: 'Lora', serif; font-weight: 700; font-size: 20px; color: #fff; }
+    .footer-desc { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+    .footer-funded { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+    .footer-col h4 { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 14px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { font-size: 14px; color: rgba(255,255,255,0.7); transition: color 0.15s; }
+    .footer-col ul a:hover { color: #fff; }
+    .footer-bar { max-width: 1200px; margin: 0 auto; padding: 18px clamp(20px,4vw,56px); display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: rgba(255,255,255,0.4); flex-wrap: wrap; gap: 8px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { min-height: 60vh; }
+      .hero-right { min-height: 56vw; }
+      .topics-grid { grid-template-columns: repeat(2,1fr); }
+      .podcast-inner { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid > .footer-brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 600px) {
+      .topics-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .clip-question { font-size: 16px; }
+      .reel-progress { padding: 0 16px 10px; }
+      .clip-content { padding: 0 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Listening to Families, home">
+        <span class="nav-logo-eyebrow">Listening to</span>
+        <span class="nav-logo-main">Families</span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="topics.html">Topics</a></li>
+        <li><a href="#">Specialists</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="nav-search-btn" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <circle cx="7.5" cy="7.5" r="5.25" stroke="currentColor" stroke-width="1.75"/>
+            <path d="M11.25 11.25L15.75 15.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <a href="topics.html" class="nav-cta">Browse Topics</a>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="nav-mobile-menu" id="nav-mobile-menu" role="menu">
+      <a href="topics.html" role="menuitem">Topics</a>
+      <a href="#" role="menuitem">Specialists</a>
+      <a href="#" role="menuitem">Resources</a>
+      <a href="#" role="menuitem">About</a>
+      <a href="#" role="menuitem">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Homepage hero">
+
+    <!-- Left: messaging + search -->
+    <div class="hero-left">
+      <div class="bubbles">
+        <div class="bubble bubble-teal">Families have&nbsp;<strong>questions.</strong></div>
+        <div class="bubble bubble-yellow">We have&nbsp;<strong>real answers.</strong></div>
+      </div>
+      <p class="hero-sub">Free, specialist-backed videos and resources for New Zealand families — covering over 30 health and development topics.</p>
+      <p class="hero-proof">275 free videos &middot; 17 specialist contributors &middot; Always free</p>
+      <div class="hero-searchbar">
+        <input type="text" placeholder="Search topics, videos&hellip;" aria-label="Search topics">
+        <button>Search</button>
+      </div>
+    </div>
+
+    <!-- Right: cycling video reel -->
+    <div class="hero-right" aria-label="Specialist video clips">
+
+      <div class="video-bg"></div>
+
+      <!-- Playing indicator -->
+      <div class="play-indicator" aria-hidden="true">
+        <span class="play-dot"></span>
+        <span class="play-label">Now playing</span>
+      </div>
+
+      <!-- Prev / Next arrows -->
+      <button class="reel-nav prev" id="reel-prev" aria-label="Previous clip">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="reel-nav next" id="reel-next" aria-label="Next clip">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <!-- CLIP 1 -->
+      <div class="clip active" data-clip="0">
+        <div class="clip-frame">
+          <svg class="clip-silhouette" viewBox="0 0 240 340" fill="white" aria-hidden="true">
+            <ellipse cx="120" cy="90" rx="52" ry="58"/>
+            <path d="M20 340 C20 220 220 220 220 340Z"/>
+          </svg>
+        </div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
+            ADHD
+          </div>
+          <p class="clip-question">&ldquo;What does an ADHD diagnosis actually mean for my child&rsquo;s future?&rdquo;</p>
+          <div class="clip-specialist">
+            <div class="clip-avatar">SK</div>
+            <div>
+              <div class="clip-specialist-name">Dr. Sarah Kim</div>
+              <div class="clip-specialist-role">Paediatric Psychologist</div>
+            </div>
+          </div>
+          <a href="adhd-v6.html" class="clip-watch">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/>
+              <path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/>
+            </svg>
+            Watch this clip
+          </a>
+        </div>
+      </div>
+
+      <!-- CLIP 2 -->
+      <div class="clip" data-clip="1">
+        <div class="clip-frame">
+          <svg class="clip-silhouette" viewBox="0 0 240 340" fill="white" aria-hidden="true">
+            <ellipse cx="120" cy="90" rx="52" ry="58"/>
+            <path d="M20 340 C20 220 220 220 220 340Z"/>
+          </svg>
+        </div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
+            Anxiety
+          </div>
+          <p class="clip-question">&ldquo;How do I know when my child&rsquo;s worry crosses the line into anxiety?&rdquo;</p>
+          <div class="clip-specialist">
+            <div class="clip-avatar">ER</div>
+            <div>
+              <div class="clip-specialist-name">Dr. Emma Richards</div>
+              <div class="clip-specialist-role">Child &amp; Adolescent Psychiatrist</div>
+            </div>
+          </div>
+          <a href="#" class="clip-watch">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/>
+              <path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/>
+            </svg>
+            Watch this clip
+          </a>
+        </div>
+      </div>
+
+      <!-- CLIP 3 -->
+      <div class="clip" data-clip="2">
+        <div class="clip-frame">
+          <svg class="clip-silhouette" viewBox="0 0 240 340" fill="white" aria-hidden="true">
+            <ellipse cx="120" cy="90" rx="52" ry="58"/>
+            <path d="M20 340 C20 220 220 220 220 340Z"/>
+          </svg>
+        </div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
+            Eczema
+          </div>
+          <p class="clip-question">&ldquo;My daughter scratches all night &mdash; what can we actually do to break the cycle?&rdquo;</p>
+          <div class="clip-specialist">
+            <div class="clip-avatar">JM</div>
+            <div>
+              <div class="clip-specialist-name">Dr. James Morton</div>
+              <div class="clip-specialist-role">Paediatric Dermatologist</div>
+            </div>
+          </div>
+          <a href="#" class="clip-watch">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/>
+              <path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/>
+            </svg>
+            Watch this clip
+          </a>
+        </div>
+      </div>
+
+      <!-- CLIP 4 -->
+      <div class="clip" data-clip="3">
+        <div class="clip-frame">
+          <svg class="clip-silhouette" viewBox="0 0 240 340" fill="white" aria-hidden="true">
+            <ellipse cx="120" cy="90" rx="52" ry="58"/>
+            <path d="M20 340 C20 220 220 220 220 340Z"/>
+          </svg>
+        </div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
+            Autism
+          </div>
+          <p class="clip-question">&ldquo;What should I expect at my child&rsquo;s first autism assessment?&rdquo;</p>
+          <div class="clip-specialist">
+            <div class="clip-avatar">LW</div>
+            <div>
+              <div class="clip-specialist-name">Dr. Lisa Walker</div>
+              <div class="clip-specialist-role">Developmental Paediatrician</div>
+            </div>
+          </div>
+          <a href="#" class="clip-watch">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/>
+              <path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/>
+            </svg>
+            Watch this clip
+          </a>
+        </div>
+      </div>
+
+      <!-- CLIP 5 -->
+      <div class="clip" data-clip="4">
+        <div class="clip-frame">
+          <svg class="clip-silhouette" viewBox="0 0 240 340" fill="white" aria-hidden="true">
+            <ellipse cx="120" cy="90" rx="52" ry="58"/>
+            <path d="M20 340 C20 220 220 220 220 340Z"/>
+          </svg>
+        </div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
+            School Attendance
+          </div>
+          <p class="clip-question">&ldquo;My son refuses to go to school. Where do we even start?&rdquo;</p>
+          <div class="clip-specialist">
+            <div class="clip-avatar">TH</div>
+            <div>
+              <div class="clip-specialist-name">Tom Halliday</div>
+              <div class="clip-specialist-role">Educational Psychologist</div>
+            </div>
+          </div>
+          <a href="#" class="clip-watch">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/>
+              <path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/>
+            </svg>
+            Watch this clip
+          </a>
+        </div>
+      </div>
+
+      <!-- Progress bars -->
+      <div class="reel-progress" aria-hidden="true" id="reel-progress">
+        <div class="reel-bar active"><div class="reel-bar-fill" id="bar-0"></div></div>
+        <div class="reel-bar"><div class="reel-bar-fill" id="bar-1"></div></div>
+        <div class="reel-bar"><div class="reel-bar-fill" id="bar-2"></div></div>
+        <div class="reel-bar"><div class="reel-bar-fill" id="bar-3"></div></div>
+        <div class="reel-bar"><div class="reel-bar-fill" id="bar-4"></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TRUST BAND -->
+  <section class="trust-band" aria-label="Key statistics">
+    <div class="trust-band-inner">
+      <div class="trust-stat"><div class="num">275</div><div class="label">free videos</div></div>
+      <div class="trust-stat"><div class="num">30+</div><div class="label">topics</div></div>
+      <div class="trust-stat"><div class="num">17</div><div class="label">NZ specialists</div></div>
+      <div class="trust-stat"><div class="num">100%</div><div class="label">free, always</div></div>
+    </div>
+  </section>
+
+  <!-- TOPICS -->
+  <section class="topics-section" aria-labelledby="topics-heading">
+    <div class="topics-inner">
+      <div class="section-header">
+        <h2 id="topics-heading">Browse by category</h2>
+        <p>We cover 30+ topics across six categories. Pick a category to find what you need.</p>
+      </div>
+      <div class="topics-grid">
+        <a href="topics.html" class="topic-card" style="color:#0c525e;" aria-label="How they think and learn">
+          <div class="topic-icon-wrap" style="background:rgba(12,82,94,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3C7.2 3 5 5.2 5 8c0 1.8.9 3.4 2.3 4.4V14h5v-1.6C13.8 11.4 15 9.8 15 8c0-2.8-2.2-5-5-5Z" stroke="#0c525e" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.5 14v1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5V14" stroke="#0c525e" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>How they think &amp; learn</h3>
+          <p>ADHD, autism, sensory processing and executive functioning.</p>
+          <div class="topic-count">4 topics inside &rarr;</div>
+        </a>
+        <a href="topics.html" class="topic-card" style="color:#7b5ea7;" aria-label="Mind and emotions">
+          <div class="topic-icon-wrap" style="background:rgba(123,94,167,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 16.5S3 12 3 7.5C3 5.6 4.6 4 6.5 4c1.1 0 2 .5 2.7 1.3L10 6.2l.8-.9C11.5 4.5 12.4 4 13.5 4 15.4 4 17 5.6 17 7.5c0 4.5-7 9-7 9Z" stroke="#7b5ea7" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Mind &amp; emotions</h3>
+          <p>Anxiety, trauma, emotion regulation, gender diversity and more.</p>
+          <div class="topic-count">6 topics inside &rarr;</div>
+        </a>
+        <a href="topics.html" class="topic-card" style="color:#3a9080;" aria-label="Body and health">
+          <div class="topic-icon-wrap" style="background:rgba(58,144,128,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3v14M3 10h14" stroke="#3a9080" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Body &amp; health</h3>
+          <p>Eczema, allergies, IBD, chronic fatigue, cancer and more.</p>
+          <div class="topic-count">10 topics inside &rarr;</div>
+        </a>
+        <a href="topics.html" class="topic-card" style="color:#c4722a;" aria-label="School and growing up">
+          <div class="topic-icon-wrap" style="background:rgba(196,114,42,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="1.5" stroke="#c4722a" stroke-width="1.8"/><path d="M7 4V3M13 4V3M6.5 10h7M6.5 13h4.5" stroke="#c4722a" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>School &amp; growing up</h3>
+          <p>School attendance, online safety and parenting programmes.</p>
+          <div class="topic-count">4 topics inside &rarr;</div>
+        </a>
+        <a href="topics.html" class="topic-card" style="color:#4a7ab5;" aria-label="Getting support">
+          <div class="topic-icon-wrap" style="background:rgba(74,122,181,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 14c0-2.8 2.7-5 6-5s6 2.2 6 5" stroke="#4a7ab5" stroke-width="1.8" stroke-linecap="round"/><circle cx="10" cy="6.5" r="2.5" stroke="#4a7ab5" stroke-width="1.8"/></svg>
+          </div>
+          <h3>Getting support</h3>
+          <p>GPs, pharmacies, mental health services and medication.</p>
+          <div class="topic-count">4 topics inside &rarr;</div>
+        </a>
+        <a href="topics.html" class="topic-card" style="color:#8a4f54;" aria-label="Keeping children safe">
+          <div class="topic-icon-wrap" style="background:rgba(138,79,84,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2L3 5v5c0 3.9 2.9 7.4 7 8.5 4.1-1.1 7-4.6 7-8.5V5L10 2Z" stroke="#8a4f54" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 10l2 2 4-4" stroke="#8a4f54" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Keeping children safe</h3>
+          <p>Sexual abuse, sexualised behaviour and child protection.</p>
+          <div class="topic-count">2 topics inside &rarr;</div>
+        </a>
+      </div>
+      <div class="topics-cta-wrap">
+        <a href="topics.html" class="topics-cta">Browse all 30+ topics &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PODCAST -->
+  <section class="podcast-section" aria-labelledby="podcast-heading">
+    <div class="podcast-inner">
+      <div class="podcast-left">
+        <div class="podcast-label">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="2.5" stroke="#0c525e" stroke-width="1.5"/><path d="M3.5 10.5A5 5 0 1 1 10.5 3.5" stroke="#0c525e" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Podcast
+        </div>
+        <h2 id="podcast-heading">Also available as a podcast</h2>
+        <p>All of our specialist conversations are available as audio. Listen during your commute, after the kids are in bed, or whenever suits you. 58 episodes across 30+ topics.</p>
+      </div>
+      <div class="podcast-right">
+        <div class="podcast-buttons">
+          <a href="#" class="podcast-btn podcast-btn-spotify" aria-label="Listen on Spotify">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9.25" fill="#1DB954"/><path d="M5.5 12.5c2.2-1.3 5.8-1.5 8 .3M6.2 10.2c2.6-1.5 6.6-1.7 9.1.3M7 7.8C10 6 14.5 5.8 17.5 8" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Listen on Spotify
+          </a>
+          <a href="#" class="podcast-btn podcast-btn-apple" aria-label="Listen on Apple Podcasts">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect width="20" height="20" rx="5" fill="#000"/><circle cx="10" cy="8.5" r="3" stroke="#fff" stroke-width="1.3"/><path d="M8.5 12.5C8.5 14 9.2 16 10 16s1.5-2 1.5-3.5M10 11.5v1" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Apple Podcasts
+          </a>
+        </div>
+        <p class="podcast-free-note">Free on all podcast apps</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo"><span class="footer-logo-eyebrow">Listening to</span><span class="footer-logo-main">Families</span></div>
+          <p class="footer-desc">Free specialist-led resources for New Zealand families. Covering 30+ topics in child and adolescent health and development.</p>
+          <p class="footer-funded">Funded by M&#x101;ia Health Foundation</p>
+        </div>
+        <div class="footer-col"><h4>Explore</h4><ul><li><a href="topics.html">Topics</a></li><li><a href="#">Specialists</a></li><li><a href="#">Resources</a></li></ul></div>
+        <div class="footer-col"><h4>About</h4><ul><li><a href="#">About</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+      </div>
+    </div>
+    <div class="footer-bar"><span>&copy; 2024 Listening to Families</span><span>listeningtofamilies.nz</span></div>
+  </footer>
+
+  <script>
+    // Hamburger
+    const btn = document.getElementById('nav-hamburger');
+    const menu = document.getElementById('nav-mobile-menu');
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      menu.classList.toggle('open');
+    });
+
+    // Video reel cycling
+    const CLIP_DURATION = 10000; // 10 seconds per clip
+    const TICK = 100;            // progress bar update interval (ms)
+
+    const clips = document.querySelectorAll('.clip');
+    const bars = document.querySelectorAll('.reel-bar');
+    const fills = document.querySelectorAll('.reel-bar-fill');
+    let current = 0;
+    let elapsed = 0;
+    let timer = null;
+
+    function goTo(index) {
+      // Deactivate current
+      clips[current].classList.remove('active');
+      bars[current].classList.remove('active');
+      bars[current].classList.add('done');
+      fills[current].style.width = '100%';
+
+      current = index;
+      elapsed = 0;
+
+      // If wrapping around, reset all bars
+      if (current === 0) {
+        bars.forEach(b => { b.classList.remove('done', 'active'); });
+        fills.forEach(f => { f.style.width = '0%'; });
+      }
+
+      clips[current].classList.add('active');
+      bars[current].classList.remove('done');
+      bars[current].classList.add('active');
+      fills[current].style.width = '0%';
+    }
+
+    function tick() {
+      elapsed += TICK;
+      const pct = Math.min((elapsed / CLIP_DURATION) * 100, 100);
+      fills[current].style.width = pct + '%';
+
+      if (elapsed >= CLIP_DURATION) {
+        const next = (current + 1) % clips.length;
+        goTo(next);
+      }
+    }
+
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(tick, TICK);
+    }
+
+    // Prev / Next
+    document.getElementById('reel-prev').addEventListener('click', () => {
+      const prev = (current - 1 + clips.length) % clips.length;
+      // Reset done bars after current when going back
+      for (let i = prev; i < clips.length; i++) {
+        bars[i].classList.remove('done', 'active');
+        fills[i].style.width = '0%';
+      }
+      goTo(prev);
+      startTimer();
+    });
+
+    document.getElementById('reel-next').addEventListener('click', () => {
+      const next = (current + 1) % clips.length;
+      goTo(next);
+      startTimer();
+    });
+
+    // Click on a bar to jump to that clip
+    bars.forEach((bar, i) => {
+      bar.addEventListener('click', () => {
+        for (let j = i; j < clips.length; j++) {
+          bars[j].classList.remove('done', 'active');
+          fills[j].style.width = '0%';
+        }
+        goTo(i);
+        startTimer();
+      });
+    });
+
+    // Pause on hover
+    const heroRight = document.querySelector('.hero-right');
+    heroRight.addEventListener('mouseenter', () => clearInterval(timer));
+    heroRight.addEventListener('mouseleave', startTimer);
+
+    // Start
+    startTimer();
+  </script>
+
+</body>
+</html>
