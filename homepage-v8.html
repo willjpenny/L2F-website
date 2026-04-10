@@ -390,7 +390,7 @@
     .section-header h2 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(24px,3.5vw,32px); color: #1a2c2e; margin-bottom: 8px; }
     .section-header p { font-size: 15px; color: #5a7a7e; line-height: 1.6; }
 
-    .topics-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-bottom: 36px; }
+    .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; margin-bottom: 36px; }
     .topic-card { display: block; background: #fff; border-radius: 12px; padding: 22px 20px; text-decoration: none; transition: transform 0.18s, box-shadow 0.18s; border-left: 4px solid currentColor; }
     .topic-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(12,82,94,0.12); }
     .topic-icon-wrap { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
@@ -721,57 +721,65 @@
         <p>We cover 30+ topics across six categories. Pick a category to find what you need.</p>
       </div>
       <div class="topics-grid">
-        <a href="topics.html" class="topic-card" style="color:#0c525e;" aria-label="How they think and learn">
+        <a href="topics-v8.html" class="topic-card" style="color:#0c525e;" aria-label="Neurodevelopment and Learning">
           <div class="topic-icon-wrap" style="background:rgba(12,82,94,0.1);">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3C7.2 3 5 5.2 5 8c0 1.8.9 3.4 2.3 4.4V14h5v-1.6C13.8 11.4 15 9.8 15 8c0-2.8-2.2-5-5-5Z" stroke="#0c525e" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.5 14v1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5V14" stroke="#0c525e" stroke-width="1.8" stroke-linejoin="round"/></svg>
           </div>
-          <h3>How they think &amp; learn</h3>
+          <h3>Neurodevelopment &amp; Learning</h3>
           <p>ADHD, autism, sensory processing and executive functioning.</p>
-          <div class="topic-count">4 topics inside &rarr;</div>
+          <div class="topic-count">4 topics &rarr;</div>
         </a>
-        <a href="topics.html" class="topic-card" style="color:#7b5ea7;" aria-label="Mind and emotions">
+        <a href="topics-v8.html" class="topic-card" style="color:#7b5ea7;" aria-label="Mental Health and Emotional Wellbeing">
           <div class="topic-icon-wrap" style="background:rgba(123,94,167,0.1);">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 16.5S3 12 3 7.5C3 5.6 4.6 4 6.5 4c1.1 0 2 .5 2.7 1.3L10 6.2l.8-.9C11.5 4.5 12.4 4 13.5 4 15.4 4 17 5.6 17 7.5c0 4.5-7 9-7 9Z" stroke="#7b5ea7" stroke-width="1.8" stroke-linejoin="round"/></svg>
           </div>
-          <h3>Mind &amp; emotions</h3>
-          <p>Anxiety, trauma, emotion regulation, gender diversity and more.</p>
-          <div class="topic-count">6 topics inside &rarr;</div>
+          <h3>Mental Health &amp; Emotional Wellbeing</h3>
+          <p>Anxiety, trauma, emotion regulation, suicide risk and more.</p>
+          <div class="topic-count">6 topics &rarr;</div>
         </a>
-        <a href="topics.html" class="topic-card" style="color:#3a9080;" aria-label="Body and health">
+        <a href="topics-v8.html" class="topic-card" style="color:#3a9080;" aria-label="Eating Body and Digestive Health">
           <div class="topic-icon-wrap" style="background:rgba(58,144,128,0.1);">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3v14M3 10h14" stroke="#3a9080" stroke-width="1.8" stroke-linecap="round"/></svg>
           </div>
-          <h3>Body &amp; health</h3>
-          <p>Eczema, allergies, IBD, chronic fatigue, cancer and more.</p>
-          <div class="topic-count">10 topics inside &rarr;</div>
+          <h3>Eating, Body &amp; Digestive Health</h3>
+          <p>Eating challenges, coeliac disease and IBD.</p>
+          <div class="topic-count">3 topics &rarr;</div>
         </a>
-        <a href="topics.html" class="topic-card" style="color:#c4722a;" aria-label="School and growing up">
+        <a href="topics-v8.html" class="topic-card" style="color:#c4722a;" aria-label="Physical Health and Medical Conditions">
           <div class="topic-icon-wrap" style="background:rgba(196,114,42,0.1);">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="1.5" stroke="#c4722a" stroke-width="1.8"/><path d="M7 4V3M13 4V3M6.5 10h7M6.5 13h4.5" stroke="#c4722a" stroke-width="1.8" stroke-linecap="round"/></svg>
           </div>
-          <h3>School &amp; growing up</h3>
-          <p>School attendance, online safety and parenting programmes.</p>
-          <div class="topic-count">4 topics inside &rarr;</div>
+          <h3>Physical Health &amp; Medical Conditions</h3>
+          <p>Allergies, eczema, chronic fatigue, vision and cancer.</p>
+          <div class="topic-count">5 topics &rarr;</div>
         </a>
-        <a href="topics.html" class="topic-card" style="color:#4a7ab5;" aria-label="Getting support">
+        <a href="topics-v8.html" class="topic-card" style="color:#4a7ab5;" aria-label="Family Identity and Relationships">
           <div class="topic-icon-wrap" style="background:rgba(74,122,181,0.1);">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 14c0-2.8 2.7-5 6-5s6 2.2 6 5" stroke="#4a7ab5" stroke-width="1.8" stroke-linecap="round"/><circle cx="10" cy="6.5" r="2.5" stroke="#4a7ab5" stroke-width="1.8"/></svg>
           </div>
-          <h3>Getting support</h3>
-          <p>GPs, pharmacies, mental health services and medication.</p>
-          <div class="topic-count">4 topics inside &rarr;</div>
+          <h3>Family, Identity &amp; Relationships</h3>
+          <p>Gender diversity, family stress, sexualised behaviour and sexual abuse.</p>
+          <div class="topic-count">4 topics &rarr;</div>
         </a>
-        <a href="topics.html" class="topic-card" style="color:#8a4f54;" aria-label="Keeping children safe">
+        <a href="topics-v8.html" class="topic-card" style="color:#8a4f54;" aria-label="Services Systems and Support">
           <div class="topic-icon-wrap" style="background:rgba(138,79,84,0.1);">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2L3 5v5c0 3.9 2.9 7.4 7 8.5 4.1-1.1 7-4.6 7-8.5V5L10 2Z" stroke="#8a4f54" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 10l2 2 4-4" stroke="#8a4f54" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <h3>Keeping children safe</h3>
-          <p>Sexual abuse, sexualised behaviour and child protection.</p>
-          <div class="topic-count">2 topics inside &rarr;</div>
+          <h3>Services, Systems &amp; Support</h3>
+          <p>GPs, pharmacies, CAF service and parent education programmes.</p>
+          <div class="topic-count">4 topics &rarr;</div>
+        </a>
+        <a href="topics-v8.html" class="topic-card" style="color:#2d7a4f;" aria-label="Everyday Parenting and Child Development">
+          <div class="topic-icon-wrap" style="background:rgba(45,122,79,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2L3 5v5c0 3.9 2.9 7.4 7 8.5 4.1-1.1 7-4.6 7-8.5V5L10 2Z" stroke="#2d7a4f" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Everyday Parenting &amp; Child Development</h3>
+          <p>School attendance, online safety and toileting.</p>
+          <div class="topic-count">3 topics &rarr;</div>
         </a>
       </div>
       <div class="topics-cta-wrap">
-        <a href="topics.html" class="topics-cta">Browse all 30+ topics &rarr;</a>
+        <a href="topics-v8.html" class="topics-cta">Browse all 29 topics &rarr;</a>
       </div>
     </div>
   </section>
