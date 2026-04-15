@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Browse Topics — Listening to Families</title>
+  <link rel="icon" type="image/svg+xml" href="LTF-Logo/People%20Icon/Dark%20Blue_People.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -35,9 +36,10 @@
       padding: 0 clamp(20px, 4vw, 56px);
       width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
     }
-    .nav-logo { display: flex; flex-direction: column; line-height: 1; text-decoration: none; flex-shrink: 0; }
-    .nav-logo-eyebrow { font-family: 'Lora', serif; font-style: italic; font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 2px; }
-    .nav-logo-main { font-family: 'Lora', serif; font-weight: 700; font-size: 26px; color: #fff; }
+    .nav-brand { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo-img { height: 46px; width: auto; display: block; }
+    .nav-partner-img { height: 34px; width: auto; display: block; opacity: 0.95; }
     .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; justify-content: center; }
     .nav-links a { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); padding: 6px 12px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
     .nav-links a:hover, .nav-links a[aria-current="page"] { color: #fff; background: rgba(255,255,255,0.12); }
@@ -80,6 +82,13 @@
     .cat-nav.hidden { display: none; }
     .cat-nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); display: flex; overflow-x: auto; scrollbar-width: none; }
     .cat-nav-inner::-webkit-scrollbar { display: none; }
+    /* Right-edge fade affordance — shows tabs overflow horizontally on tablet/mobile */
+    .cat-nav::after {
+      content: ''; position: absolute; top: 0; right: 0; bottom: 0;
+      width: 36px; pointer-events: none; z-index: 2;
+      background: linear-gradient(to right, rgba(255,255,255,0), #fff 70%);
+    }
+    @media (min-width: 1100px) { .cat-nav::after { display: none; } }
     .cat-nav-tab { display: flex; align-items: center; gap: 7px; padding: 12px 16px; font-size: 13px; font-weight: 500; color: #5a6a6c; white-space: nowrap; text-decoration: none; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; flex-shrink: 0; }
     .cat-nav-tab:hover { color: #1a2c2e; }
     .cat-nav-tab.active { color: #1a2c2e; font-weight: 600; border-bottom-color: var(--tab-color, #0c525e); }
@@ -92,7 +101,7 @@
     .category-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
     .category-title { font-family: 'Lora', serif; font-size: 1.2rem; font-weight: 700; color: #1a2c2e; }
     .category-desc { font-size: 0.82rem; color: #7a9095; margin-top: 2px; max-width: 640px; margin-bottom: 18px; }
-    .category-count { font-size: 0.78rem; color: #7a9095; font-weight: 500; margin-left: 4px; }
+    .category-count { font-size: 0.78rem; color: #7a9095; font-weight: 500; margin-left: 4px; white-space: nowrap; }
 
     /* ── TOPIC CARD ── */
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
@@ -128,9 +137,9 @@
     .footer { background: #0a3d47; padding-top: clamp(40px,5vw,64px); }
     .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,56px); }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: clamp(28px,5vw,56px); padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .footer-logo { display: flex; flex-direction: column; line-height: 1; margin-bottom: 14px; }
-    .footer-logo-eyebrow { font-family: 'Lora', serif; font-style: italic; font-size: 10.5px; color: rgba(255,255,255,0.45); margin-bottom: 2px; }
-    .footer-logo-main { font-family: 'Lora', serif; font-weight: 700; font-size: 20px; color: #fff; }
+    .footer-logo { display: flex; align-items: center; gap: 22px; margin-bottom: 14px; }
+    .footer-logo-img { height: 56px; width: auto; display: block; }
+    .footer-partner-img { height: 42px; width: auto; display: block; opacity: 0.95; }
     .footer-desc { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.6; }
     .footer-col h4 { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 14px; }
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
@@ -141,9 +150,16 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
+      .nav-hamburger { display: flex; width: 44px; height: 44px; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .footer-grid > .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 768px) {
+      /* Mobile tap targets — WCAG / Apple HIG 44×44 minimum */
+      .view-toggle button { min-height: 44px; padding: 10px 18px; }
+      .footer-col ul { gap: 2px; }
+      .footer-col ul a { padding: 14px 0; display: block; line-height: 1.2; }
+      .footer-bar a { padding: 14px 0; display: inline-block; }
     }
     @media (max-width: 600px) {
       .cards-grid { grid-template-columns: 1fr; }
@@ -157,16 +173,18 @@
   <!-- NAV -->
   <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="homepage-v8.html" class="nav-logo" aria-label="Listening to Families, home">
-        <span class="nav-logo-eyebrow">Listening to</span>
-        <span class="nav-logo-main">Families</span>
-      </a>
+      <div class="nav-brand">
+        <a href="homepage-v8.html" class="nav-logo" aria-label="Listening to Families, home">
+          <img src="LTF-Logo/SVG/1-Listening-to-families-logo-white.svg" alt="Listening to Families" class="nav-logo-img" />
+        </a>
+        <img src="LTF-Logo/maia-white.svg" alt="Māia Health Foundation" class="nav-partner-img" />
+      </div>
       <ul class="nav-links" role="list">
         <li><a href="topics-v8.html" aria-current="page">Topics</a></li>
         <li><a href="#">Specialists</a></li>
-        <li><a href="#">Resources</a></li>
+        <li><a href="resources-v8.html">Resources</a></li>
         <li><a href="#">Summaries</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="about-v8.html">About</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
       <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu" onclick="toggleNav(this)">
@@ -178,9 +196,9 @@
     <div class="nav-mobile-menu" id="nav-mobile-menu">
       <a href="topics-v8.html" aria-current="page">Topics</a>
       <a href="#">Specialists</a>
-      <a href="#">Resources</a>
+      <a href="resources-v8.html">Resources</a>
       <a href="#">Summaries</a>
-      <a href="#">About</a>
+      <a href="about-v8.html">About</a>
       <a href="#">Contact</a>
     </div>
   </nav>
@@ -193,7 +211,7 @@
         <span class="header-kicker-text">For New Zealand families</span>
       </div>
       <h1>Browse Topics</h1>
-      <p class="page-header-sub">Free, specialist-backed videos and resources covering 31 health and development topics, organised by what your family is facing.</p>
+      <p class="page-header-sub">Free, specialist-backed videos &amp; podcasts covering 31 health and development topics, organised by what your family is facing.</p>
       <div class="header-search" role="search">
         <input type="search" id="topic-search" placeholder="Search topics&hellip;" aria-label="Search topics" />
         <button type="button">Search</button>
@@ -802,11 +820,14 @@
     <div class="footer-inner">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="footer-logo"><span class="footer-logo-eyebrow">Listening to</span><span class="footer-logo-main">Families</span></div>
+          <div class="footer-logo">
+            <img src="LTF-Logo/SVG/1-Listening-to-families-logo-white.svg" alt="Listening to Families" class="footer-logo-img" />
+            <img src="LTF-Logo/maia-white.svg" alt="Māia Health Foundation" class="footer-partner-img" />
+          </div>
           <p class="footer-desc">Free specialist-led resources for New Zealand families. Covering 31 topics in child and adolescent health and development.</p>
         </div>
         <div class="footer-col"><h4>Explore</h4><ul><li><a href="topics-v8.html">Topics</a></li><li><a href="#">Specialists</a></li><li><a href="#">Resources</a></li><li><a href="#">Summaries</a></li></ul></div>
-        <div class="footer-col"><h4>About</h4><ul><li><a href="#">About</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+        <div class="footer-col"><h4>About</h4><ul><li><a href="about-v8.html">About</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
       </div>
     </div>
     <div class="footer-bar"><span>&copy; 2026 Listening to Families</span><span>listeningtofamilies.co.nz</span></div>

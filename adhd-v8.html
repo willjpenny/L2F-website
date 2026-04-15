@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ADHD | Listening to Families</title>
+  <link rel="icon" type="image/svg+xml" href="LTF-Logo/People%20Icon/Dark%20Blue_People.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -19,20 +20,13 @@
       line-height: 1.6;
     }
 
-    /* Highlight utility */
-    .hl {
-      background: linear-gradient(transparent 60%, #f5c842 60%);
-    }
-    .hl-header {
-      background: linear-gradient(transparent 55%, rgba(245,200,66,0.55) 55%);
-    }
-
     /* ===================== NAVIGATION ===================== */
     .nav { background: #0c525e; height: 64px; position: sticky; top: 0; z-index: 200; display: flex; align-items: center; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
     .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
-    .nav-logo { text-decoration: none; display: flex; flex-direction: column; line-height: 1; flex-shrink: 0; }
-    .nav-logo-top { font-family: 'Lora', serif; font-style: italic; font-size: 13px; color: rgba(255,255,255,0.65); font-weight: 400; margin-bottom: 2px; }
-    .nav-logo-bottom { font-family: 'Lora', serif; font-size: 26px; font-weight: 700; color: #fff; }
+    .nav-brand { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo-img { height: 46px; width: auto; display: block; }
+    .nav-partner-img { height: 34px; width: auto; display: block; opacity: 0.95; }
     .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; justify-content: center; }
     .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
     .nav-links a:hover, .nav-links a[aria-current="page"] { color: #fff; background: rgba(255,255,255,0.12); }
@@ -775,24 +769,13 @@
 
     .footer-logo {
       display: inline-flex;
-      flex-direction: column;
-      margin-bottom: 16px;
+      align-items: center;
       text-decoration: none;
     }
 
-    .footer-logo-top {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 10.5px;
-      color: rgba(255,255,255,0.55);
-    }
-
-    .footer-logo-bottom {
-      font-family: 'Inter', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-    }
+    .footer-brand-row { display: flex; align-items: center; gap: 22px; margin-bottom: 16px; }
+    .footer-logo-img { height: 56px; width: auto; display: block; }
+    .footer-partner-img { height: 42px; width: auto; display: block; opacity: 0.95; }
 
     .footer-desc {
       font-size: 14px;
@@ -859,6 +842,21 @@
         gap: 32px;
       }
     }
+
+    /* Mobile tap targets — WCAG / Apple HIG 44×44 minimum */
+    @media (max-width: 900px) {
+      .nav-hamburger { width: 44px; height: 44px; }
+    }
+    @media (max-width: 768px) {
+      .btn-podcast-inline { padding: 11px 16px; min-height: 44px; font-size: 12.5px; }
+      .btn-download-inline { padding: 11px 16px; min-height: 44px; font-size: 12.5px; }
+      .btn-view-all { padding: 12px 22px; min-height: 44px; }
+      .breadcrumb a { padding: 12px 6px; display: inline-block; }
+      .breadcrumb { margin-left: -6px; }
+      .footer-links { gap: 2px; }
+      .footer-links a { padding: 14px 0; display: block; line-height: 1.2; }
+      .footer-bar a { padding: 14px 0; display: inline-block; }
+    }
   </style>
 </head>
 <body>
@@ -866,17 +864,19 @@
   <!-- ===================== NAVIGATION ===================== -->
   <nav class="nav" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="homepage-v8.html" class="nav-logo" aria-label="Listening to Families home">
-        <span class="nav-logo-top">Listening to</span>
-        <span class="nav-logo-bottom">Families</span>
-      </a>
+      <div class="nav-brand">
+        <a href="homepage-v8.html" class="nav-logo" aria-label="Listening to Families home">
+          <img src="LTF-Logo/SVG/1-Listening-to-families-logo-white.svg" alt="Listening to Families" class="nav-logo-img" />
+        </a>
+        <img src="LTF-Logo/maia-white.svg" alt="Māia Health Foundation" class="nav-partner-img" />
+      </div>
 
       <ul class="nav-links" role="list">
         <li><a href="topics-v8.html">Topics</a></li>
         <li><a href="#">Specialists</a></li>
         <li><a href="#">Resources</a></li>
         <li><a href="#">Summaries</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="about-v8.html">About</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
 
@@ -912,7 +912,7 @@
 
       <span class="topic-category">How they think &amp; learn</span>
 
-      <h1><span class="hl-header">ADHD</span></h1>
+      <h1>ADHD</h1>
 
       <div class="topic-tags">
         <span class="topic-tag">7 sub-topics</span>
@@ -960,9 +960,9 @@
       <!-- INTRO SECTION -->
       <section class="intro-section" aria-labelledby="intro-heading">
         <h2 id="intro-heading">Understanding ADHD</h2>
-        <p>If your child has recently been diagnosed with ADHD, or you're still waiting for an assessment, you're probably looking for clear, honest answers. What does this diagnosis actually mean? Will it affect how they learn and grow? What can you do to help? These are the questions we hear most, and our specialist videos are designed to answer them properly.</p>
+        <p>If your child has recently been diagnosed with ADHD, or you're still waiting for an assessment, you're probably looking for clear, honest answers. What does this diagnosis actually mean? Will it affect how they learn and grow? What can you do to help? These are the questions we hear most, and our specialist videos &amp; podcasts are designed to answer them properly.</p>
         <p>ADHD, or Attention Deficit Hyperactivity Disorder, affects the way the brain manages attention, impulse control, and activity levels. It looks different in every child. Some children are visibly restless and impulsive; others are quietly distracted and hard to reach. Many are bright and creative, with strengths that a traditional classroom doesn't always recognise.</p>
-        <p>The videos on this page are produced with New Zealand specialists who assess, diagnose, and support children with ADHD every day. They cover everything from first questions at diagnosis through to medication, school strategies, and the experiences of girls and young people who often present differently.</p>
+        <p>The videos &amp; podcasts on this page are produced with New Zealand specialists who assess, diagnose, and support children with ADHD every day. They cover everything from first questions at diagnosis through to medication, school strategies, and the experiences of girls and young people who often present differently.</p>
         <p>You don't need to watch everything at once. Use the sections below to find what's most relevant to where you are right now, whether you're just starting to look into ADHD, preparing for a school meeting, or supporting a teenager who has questions of their own.</p>
       </section>
 
@@ -1800,10 +1800,12 @@
       <div class="footer-grid">
 
         <div>
-          <a href="homepage-v8.html" class="footer-logo" aria-label="Listening to Families home">
-            <span class="footer-logo-top">Listening to</span>
-            <span class="footer-logo-bottom">Families</span>
-          </a>
+          <div class="footer-brand-row">
+            <a href="homepage-v8.html" class="footer-logo" aria-label="Listening to Families home">
+              <img src="LTF-Logo/SVG/1-Listening-to-families-logo-white.svg" alt="Listening to Families" class="footer-logo-img" />
+            </a>
+            <img src="LTF-Logo/maia-white.svg" alt="Māia Health Foundation" class="footer-partner-img" />
+          </div>
           <p class="footer-desc">Free specialist-led resources for New Zealand families.</p>
           <p class="footer-funded">Funded by Te Whatu Ora and supported by leading NZ health organisations.</p>
         </div>
@@ -1821,7 +1823,7 @@
         <div>
           <p class="footer-col-title">About</p>
           <ul class="footer-links">
-            <li><a href="#">About</a></li>
+            <li><a href="about-v8.html">About</a></li>
             <li><a href="#">Contact</a></li>
             <li><a href="#">Privacy Policy</a></li>
           </ul>
