@@ -441,7 +441,7 @@
 
       .hero { grid-template-columns: 1fr; min-height: auto; }
       .hero-left { min-height: auto; padding: 40px 20px 36px; }
-      .hero-right { min-height: 70vw; touch-action: pan-y; }
+      .hero-right { min-height: 420px; touch-action: pan-y; }
       .hero-searchbar button { padding: 15px 14px; font-size: 12px; }
       .benefits-inner { grid-template-columns: 1fr; gap: 16px; }
       .topics-grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
@@ -463,10 +463,12 @@
 
     @media (max-width: 600px) {
       .topics-grid { grid-template-columns: 1fr; }
-      .clip-question { font-size: 16px; }
+      .clip-question { font-size: 15px; margin-bottom: 12px; }
+      .clip-topic { margin-bottom: 10px; }
+      .clip-specialist-role { display: none; }
+      .clip-watch { display: none; }
       .reel-progress { padding: 10px 16px 12px; }
-      .clip-content { padding: 0 20px 60px; }
-      /* Hide redundant "Now playing" badge on small phones — it overlapped the quote */
+      .clip-content { padding: 0 16px 52px; }
       .play-indicator { display: none; }
     }
   </style>
