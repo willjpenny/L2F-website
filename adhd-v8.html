@@ -177,7 +177,7 @@
 
     @media (max-width: 900px) {
       .topic-body {
-        padding-top: 0;
+        padding-top: 24px;
       }
     }
 
@@ -581,6 +581,13 @@
     @media (max-width: 900px) {
       .video-grid {
         grid-template-columns: 1fr;
+      }
+      .video-card {
+        flex-direction: column;
+      }
+      .video-thumb {
+        width: 100%;
+        aspect-ratio: 16/9;
       }
     }
 
