@@ -852,7 +852,7 @@
 
     /* Mobile tap targets — WCAG / Apple HIG 44×44 minimum */
     @media (max-width: 900px) {
-      .nav-hamburger { width: 44px; height: 44px; }
+      .nav-hamburger { width: 44px; height: 44px; grid-column: 3; justify-self: end; }
     }
     @media (max-width: 768px) {
       .btn-podcast-inline { padding: 11px 16px; min-height: 44px; font-size: 12.5px; }
@@ -863,6 +863,10 @@
       .footer-links { gap: 2px; }
       .footer-links a { padding: 14px 0; display: block; line-height: 1.2; }
       .footer-bar a { padding: 14px 0; display: inline-block; }
+      /* Start-here video cards — stack thumbnail above title */
+      .start-item-card { flex-direction: column; }
+      .start-item-thumb { width: 100%; aspect-ratio: 16/9; }
+      .start-item-body { padding: 14px 16px; }
     }
   </style>
 </head>
