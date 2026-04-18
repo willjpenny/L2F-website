@@ -48,17 +48,12 @@
     }
     .hero-scroll-arrow {
       position: absolute;
-      bottom: 18px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 10;
       color: rgba(255,255,255,0.35);
-      animation: bounce-down 2s ease-in-out infinite;
       pointer-events: none;
-    }
-    @keyframes bounce-down {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(7px); }
     }
 
     /* Left panel */
@@ -725,11 +720,16 @@
 
     </div>
 
-    <!-- Scroll arrow — centred across full hero width -->
+    <!-- Scroll indicator — centred across full hero width -->
     <div class="hero-scroll-arrow" aria-hidden="true">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M6 9l8 8 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M6 15l8 8 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+      <svg width="26" height="40" viewBox="0 0 26 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Mouse body -->
+        <rect x="1.5" y="1.5" width="23" height="37" rx="11.5" stroke="currentColor" stroke-width="2"/>
+        <!-- Scroll wheel dot -->
+        <circle cx="13" cy="12" r="3" fill="currentColor">
+          <animate attributeName="cy" values="10;18;10" dur="1.6s" repeatCount="indefinite" calcMode="ease-in-out"/>
+          <animate attributeName="opacity" values="1;0;1" dur="1.6s" repeatCount="indefinite" calcMode="ease-in-out"/>
+        </circle>
       </svg>
     </div>
 
