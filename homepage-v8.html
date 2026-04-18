@@ -89,7 +89,6 @@
       border-left: 14px solid transparent;
     }
     .bubble strong { font-weight: 700; }
-    .bubble-teal strong { text-decoration: underline; text-decoration-color: rgba(12,61,71,0.45); text-underline-offset: 3px; text-decoration-thickness: 2px; }
     .bubble-yellow strong { text-decoration: underline; }
     .hero-sub { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; max-width: 440px; margin-bottom: 16px; text-align: center; }
     .hero-proof { font-size: 12.5px; color: rgba(255,255,255,0.45); margin-bottom: 28px; letter-spacing: 0.1px; text-align: center; }
@@ -420,32 +419,6 @@
     .btn-apple { display: flex; align-items: center; gap: 8px; background: #000; color: #fff; padding: 10px 20px; border-radius: 100px; font-size: 13px; font-weight: 700; transition: opacity 0.15s; }
     .btn-apple:hover { opacity: 0.82; }
 
-    /* Scroll hint */
-    .hero-scroll-hint {
-      margin-top: 24px;
-      color: rgba(255,255,255,0.3);
-    }
-    .hero-scroll-hint svg { animation: bounce-down 2s ease-in-out infinite; }
-    @keyframes bounce-down {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(7px); }
-    }
-
-    /* Footer disclaimer */
-    .footer-disclaimer {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 8px;
-      padding: 14px 18px;
-      margin-top: 28px;
-    }
-    .footer-disclaimer svg { flex-shrink: 0; margin-top: 1px; }
-    .footer-disclaimer p { font-size: 12.5px; color: rgba(255,255,255,0.55); line-height: 1.65; }
-    .footer-disclaimer strong { color: rgba(255,255,255,0.8); font-weight: 600; }
-
     /* ── FOOTER (standardised) ── */
     .footer { background: #0a3d47; padding-top: clamp(40px,5vw,64px); }
     .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,56px); }
@@ -513,8 +486,9 @@
       </div>
       <ul class="nav-links" role="list">
         <li><a href="topics-v8.html">Topics</a></li>
-        <li><a href="#">Summaries</a></li>
+        <li><a href="#">Specialists</a></li>
         <li><a href="resources-v8.html">Resources</a></li>
+        <li><a href="#">Summaries</a></li>
         <li><a href="about-v8.html">About</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
@@ -526,8 +500,9 @@
     </div>
     <div class="nav-mobile-menu" id="nav-mobile-menu">
       <a href="topics-v8.html">Topics</a>
-      <a href="#">Summaries</a>
+      <a href="#">Specialists</a>
       <a href="resources-v8.html">Resources</a>
+      <a href="#">Summaries</a>
       <a href="about-v8.html">About</a>
       <a href="#">Contact</a>
     </div>
@@ -545,15 +520,8 @@
       <p class="hero-sub">Free, specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
       <p class="hero-proof">275 free videos &middot; 17 specialist contributors &middot; Always free</p>
       <div class="hero-searchbar">
-        <input type="search" id="hero-search-input" placeholder="Search Topics&hellip;" aria-label="Search topics">
+        <input type="search" placeholder="Search topics, videos &amp; podcasts&hellip;" aria-label="Search topics">
         <button>Search</button>
-      </div>
-      <!-- Scroll hint -->
-      <div class="hero-scroll-hint" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M5 7l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M5 11l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-        </svg>
       </div>
     </div>
 
@@ -743,6 +711,17 @@
     </div>
   </section>
 
+  <!-- TRUST BAND -->
+  <section class="trust-band" aria-label="Key statistics">
+    <div class="trust-band-inner">
+      <div class="trust-stat"><div class="num">275</div><div class="label">free videos</div></div>
+      <div class="trust-stat"><div class="num">58</div><div class="label">podcast episodes</div></div>
+      <div class="trust-stat"><div class="num">31</div><div class="label">topics</div></div>
+      <div class="trust-stat"><div class="num">17</div><div class="label">NZ specialists</div></div>
+      <div class="trust-stat"><div class="num">100%</div><div class="label">free, always</div></div>
+    </div>
+  </section>
+
   <!-- TOPICS -->
   <section class="topics-section" aria-labelledby="topics-heading">
     <div class="topics-inner">
@@ -751,67 +730,54 @@
         <p>We cover 31 topics across six categories. Pick a category to find what you need.</p>
       </div>
       <div class="topics-grid">
-
-        <!-- 1. Child Development (alphabetical) -->
-        <a href="topics-v8.html#section-cat5" class="topic-card" style="color:#4a7ab5;" aria-label="Child Development">
-          <div class="topic-icon-wrap" style="background:rgba(74,122,181,0.1);">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 14c0-2.8 2.7-5 6-5s6 2.2 6 5" stroke="#4a7ab5" stroke-width="1.8" stroke-linecap="round"/><circle cx="10" cy="6.5" r="2.5" stroke="#4a7ab5" stroke-width="1.8"/></svg>
-          </div>
-          <h3>Child Development</h3>
-          <p>Toileting, school attendance, online safety and bullying.</p>
-          <div class="topic-count">4 topics &rarr;</div>
-        </a>
-
-        <!-- 2. Eating -->
-        <a href="topics-v8.html#section-cat3" class="topic-card" style="color:#3a9080;" aria-label="Eating">
-          <div class="topic-icon-wrap" style="background:rgba(58,144,128,0.1);">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3v14M3 10h14" stroke="#3a9080" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </div>
-          <h3>Eating</h3>
-          <p>Restricted eating, ARFID, eating disorders, coeliac disease and IBD.</p>
-          <div class="topic-count">5 topics &rarr;</div>
-        </a>
-
-        <!-- 3. Health and Medical -->
-        <a href="topics-v8.html#section-cat4" class="topic-card" style="color:#c4722a;" aria-label="Health and Medical">
-          <div class="topic-icon-wrap" style="background:rgba(196,114,42,0.1);">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="1.5" stroke="#c4722a" stroke-width="1.8"/><path d="M7 4V3M13 4V3M6.5 10h7M6.5 13h4.5" stroke="#c4722a" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </div>
-          <h3>Health and Medical</h3>
-          <p>Allergies, eczema, dental health, vision, chronic fatigue and cancer.</p>
-          <div class="topic-count">6 topics &rarr;</div>
-        </a>
-
-        <!-- 4. Mental Health -->
-        <a href="topics-v8.html#section-cat2" class="topic-card" style="color:#7b5ea7;" aria-label="Mental Health">
-          <div class="topic-icon-wrap" style="background:rgba(123,94,167,0.1);">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 16.5S3 12 3 7.5C3 5.6 4.6 4 6.5 4c1.1 0 2 .5 2.7 1.3L10 6.2l.8-.9C11.5 4.5 12.4 4 13.5 4 15.4 4 17 5.6 17 7.5c0 4.5-7 9-7 9Z" stroke="#7b5ea7" stroke-width="1.8" stroke-linejoin="round"/></svg>
-          </div>
-          <h3>Mental Health</h3>
-          <p>Anxiety, trauma, emotion regulation, suicide risk, medication and gender identity.</p>
-          <div class="topic-count">6 topics &rarr;</div>
-        </a>
-
-        <!-- 5. Neurodiversity — no "ADHD and autism" in heading or description -->
-        <a href="topics-v8.html#section-cat1" class="topic-card" style="color:#0c525e;" aria-label="Neurodiversity">
+        <a href="topics-v8.html#section-cat1" class="topic-card" style="color:#0c525e;" aria-label="Neurodiversity (ADHD and Autism)">
           <div class="topic-icon-wrap" style="background:rgba(12,82,94,0.1);">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3C7.2 3 5 5.2 5 8c0 1.8.9 3.4 2.3 4.4V14h5v-1.6C13.8 11.4 15 9.8 15 8c0-2.8-2.2-5-5-5Z" stroke="#0c525e" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.5 14v1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5V14" stroke="#0c525e" stroke-width="1.8" stroke-linejoin="round"/></svg>
           </div>
-          <h3>Neurodiversity</h3>
-          <p>Sensory processing, executive functioning, and how children think and learn.</p>
+          <h3>Neurodiversity (ADHD &amp; Autism)</h3>
+          <p>ADHD, autism, executive functioning and sensory processing.</p>
           <div class="topic-count">4 topics &rarr;</div>
         </a>
-
-        <!-- 6. Services System and Support -->
-        <a href="topics-v8.html#section-cat6" class="topic-card" style="color:#8a4f54;" aria-label="Services System and Support">
+        <a href="topics-v8.html#section-cat2" class="topic-card" style="color:#7b5ea7;" aria-label="Mental Health, Emotional Wellbeing and Identity">
+          <div class="topic-icon-wrap" style="background:rgba(123,94,167,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 16.5S3 12 3 7.5C3 5.6 4.6 4 6.5 4c1.1 0 2 .5 2.7 1.3L10 6.2l.8-.9C11.5 4.5 12.4 4 13.5 4 15.4 4 17 5.6 17 7.5c0 4.5-7 9-7 9Z" stroke="#7b5ea7" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Mental Health, Wellbeing &amp; Identity</h3>
+          <p>Anxiety, trauma, emotion regulation, suicide risk, medication and gender identity.</p>
+          <div class="topic-count">6 topics &rarr;</div>
+        </a>
+        <a href="topics-v8.html#section-cat3" class="topic-card" style="color:#3a9080;" aria-label="Eating Body and Digestive Health">
+          <div class="topic-icon-wrap" style="background:rgba(58,144,128,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3v14M3 10h14" stroke="#3a9080" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Eating, Body &amp; Digestive Health</h3>
+          <p>Restricted eating, ARFID, eating disorders, coeliac disease and IBD.</p>
+          <div class="topic-count">5 topics &rarr;</div>
+        </a>
+        <a href="topics-v8.html#section-cat4" class="topic-card" style="color:#c4722a;" aria-label="Health and Medical Conditions">
+          <div class="topic-icon-wrap" style="background:rgba(196,114,42,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="1.5" stroke="#c4722a" stroke-width="1.8"/><path d="M7 4V3M13 4V3M6.5 10h7M6.5 13h4.5" stroke="#c4722a" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Health &amp; Medical Conditions</h3>
+          <p>Allergies, eczema, dental health, vision, chronic fatigue and cancer.</p>
+          <div class="topic-count">6 topics &rarr;</div>
+        </a>
+        <a href="topics-v8.html#section-cat5" class="topic-card" style="color:#4a7ab5;" aria-label="Child Development and Parenting">
+          <div class="topic-icon-wrap" style="background:rgba(74,122,181,0.1);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 14c0-2.8 2.7-5 6-5s6 2.2 6 5" stroke="#4a7ab5" stroke-width="1.8" stroke-linecap="round"/><circle cx="10" cy="6.5" r="2.5" stroke="#4a7ab5" stroke-width="1.8"/></svg>
+          </div>
+          <h3>Child Development &amp; Parenting</h3>
+          <p>Toileting, school attendance, online safety and bullying.</p>
+          <div class="topic-count">4 topics &rarr;</div>
+        </a>
+        <a href="topics-v8.html#section-cat6" class="topic-card" style="color:#8a4f54;" aria-label="Services Systems and Support">
           <div class="topic-icon-wrap" style="background:rgba(138,79,84,0.1);">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2L3 5v5c0 3.9 2.9 7.4 7 8.5 4.1-1.1 7-4.6 7-8.5V5L10 2Z" stroke="#8a4f54" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 10l2 2 4-4" stroke="#8a4f54" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <h3>Services System and Support</h3>
+          <h3>Services, Systems &amp; Support</h3>
           <p>CAF, GPs, pharmacies, parent education, Yellow Brick Road, Lifelinks and more.</p>
           <div class="topic-count">9 topics &rarr;</div>
         </a>
-
       </div>
       <div class="topics-cta-wrap">
         <a href="topics-v8.html" class="topics-cta">Browse all 31 topics &rarr;</a>
@@ -861,32 +827,14 @@
             <img src="LTF-Logo/maia-white.svg" alt="Māia Health Foundation" class="footer-partner-img" />
           </div>
           <p class="footer-desc">Free specialist-led resources for New Zealand families. Covering 31 topics in child and adolescent health and development.</p>
-          <div class="footer-disclaimer">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <circle cx="8" cy="8" r="7" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-              <path d="M8 5v4M8 11v.5" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-            <p><strong>For educational purposes only.</strong> The information on this website does not constitute medical advice. Always consult a qualified health professional for concerns about your child&rsquo;s health or development.</p>
-          </div>
         </div>
-        <div class="footer-col"><h4>Explore</h4><ul><li><a href="topics-v8.html">Topics</a></li><li><a href="#">Summaries</a></li><li><a href="#">Resources</a></li></ul></div>
+        <div class="footer-col"><h4>Explore</h4><ul><li><a href="topics-v8.html">Topics</a></li><li><a href="#">Specialists</a></li><li><a href="#">Resources</a></li><li><a href="#">Summaries</a></li></ul></div>
         <div class="footer-col"><h4>About</h4><ul><li><a href="about-v8.html">About</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
       </div>
     </div>
   </footer>
 
   <script>
-    // Rotating search placeholder: Topics → Videos → Podcasts
-    const searchHints = ['Topics', 'Videos', 'Podcasts'];
-    let hintIdx = 0;
-    const searchInput = document.getElementById('hero-search-input');
-    if (searchInput) {
-      setInterval(() => {
-        hintIdx = (hintIdx + 1) % searchHints.length;
-        searchInput.setAttribute('placeholder', 'Search ' + searchHints[hintIdx] + '\u2026');
-      }, 2500);
-    }
-
     // Hamburger (v1 style)
     function toggleNav(btn) {
       const menu = document.getElementById('nav-mobile-menu');
