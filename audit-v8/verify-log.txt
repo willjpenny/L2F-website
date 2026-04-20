@@ -1,0 +1,117 @@
+
+━━━ FIX #5: Homepage hero "31 topics" (not 29) ━━━
+✅ hero-sub contains "covering 31 health" — Free, specialist-backed videos and resources for New Zealand families, covering 31 health and develo
+✅ hero-sub does NOT contain "29 health"
+
+━━━ FIX #4: "Now playing" badge hidden on small mobile ━━━
+✅ badge at mobile-lg (414px) hidden? — display=none, rect=0×0
+✅ no badge/quote overlap at mobile-lg
+✅ badge at mobile-md (390px) hidden? — display=none, rect=0×0
+✅ no badge/quote overlap at mobile-md
+✅ badge at mobile-sm (375px) hidden? — display=none, rect=0×0
+✅ no badge/quote overlap at mobile-sm
+✅ badge still visible on desktop-xl
+✅ badge still visible on desktop-lg
+✅ badge still visible on desktop-md
+
+━━━ FIX #3: Topics category-count never orphans digit from "topics" ━━━
+✅ [mobile-lg] all .category-count spans have white-space:nowrap — sample: "4 topics" w=46
+✅ [mobile-md] all .category-count spans have white-space:nowrap — sample: "4 topics" w=46
+✅ [mobile-sm] all .category-count spans have white-space:nowrap — sample: "4 topics" w=46
+✅ [tablet] all .category-count spans have white-space:nowrap — sample: "4 topics" w=46
+
+━━━ FIX #2: Topics cat-nav fade indicator ━━━
+✅ [tablet] fade shown — content="" display=block
+✅ [tablet] cat-nav-inner actually has overflow — scroll=977 client=768
+✅ [mobile-lg] fade shown — content="" display=block
+✅ [mobile-lg] cat-nav-inner actually has overflow — scroll=956 client=414
+✅ [mobile-md] fade shown — content="" display=block
+✅ [mobile-md] cat-nav-inner actually has overflow — scroll=956 client=390
+✅ [mobile-sm] fade shown — content="" display=block
+✅ [mobile-sm] cat-nav-inner actually has overflow — scroll=956 client=375
+✅ [desktop-md] fade hidden — content="" display=none
+✅ [desktop-md] cat-nav-inner actually has overflow — scroll=1100 client=1100
+
+━━━ FIX #1: Mobile tap targets ≥44×44 on key elements ━━━
+✅ homepage @ mobile-lg: hamburger 44×44 (min 44)
+✅ homepage @ mobile-lg: reel prev 44×44 (min 44)
+✅ homepage @ mobile-lg: reel next 44×44 (min 44)
+✅ homepage @ mobile-lg: reel pause 40×40 (min 40)
+✅ homepage @ mobile-lg: clip watch 156×46 (min 44)
+✅ homepage @ mobile-lg: Spotify CTA 110×44 (min 44)
+✅ homepage @ mobile-lg: Apple CTA 163×44 (min 44)
+   [homepage @ mobile-lg] elements still under 40×40: 0
+✅ homepage @ mobile-md: hamburger 44×44 (min 44)
+✅ homepage @ mobile-md: reel prev 44×44 (min 44)
+✅ homepage @ mobile-md: reel next 44×44 (min 44)
+✅ homepage @ mobile-md: reel pause 40×40 (min 40)
+✅ homepage @ mobile-md: clip watch 156×46 (min 44)
+✅ homepage @ mobile-md: Spotify CTA 110×44 (min 44)
+✅ homepage @ mobile-md: Apple CTA 163×44 (min 44)
+   [homepage @ mobile-md] elements still under 40×40: 0
+✅ homepage @ mobile-sm: hamburger 44×44 (min 44)
+✅ homepage @ mobile-sm: reel prev 44×44 (min 44)
+✅ homepage @ mobile-sm: reel next 44×44 (min 44)
+✅ homepage @ mobile-sm: reel pause 40×40 (min 40)
+✅ homepage @ mobile-sm: clip watch 156×46 (min 44)
+✅ homepage @ mobile-sm: Spotify CTA 110×44 (min 44)
+✅ homepage @ mobile-sm: Apple CTA 163×44 (min 44)
+   [homepage @ mobile-sm] elements still under 40×40: 0
+✅ topics @ mobile-lg: hamburger 44×44 (min 44)
+✅ topics @ mobile-lg: By category toggle 114×44 (min 44)
+✅ topics @ mobile-lg: A-Z toggle 62×44 (min 44)
+   [topics @ mobile-lg] elements still under 40×40: 0
+✅ topics @ mobile-md: hamburger 44×44 (min 44)
+✅ topics @ mobile-md: By category toggle 114×44 (min 44)
+✅ topics @ mobile-md: A-Z toggle 62×44 (min 44)
+   [topics @ mobile-md] elements still under 40×40: 0
+✅ topics @ mobile-sm: hamburger 44×44 (min 44)
+✅ topics @ mobile-sm: By category toggle 114×44 (min 44)
+✅ topics @ mobile-sm: A-Z toggle 62×44 (min 44)
+   [topics @ mobile-sm] elements still under 40×40: 0
+✅ adhd @ mobile-lg: hamburger 44×44 (min 44)
+✅ adhd @ mobile-lg: inline Spotify pill 93×44 (min 44)
+✅ adhd @ mobile-lg: inline Apple pill 85×44 (min 44)
+✅ adhd @ mobile-lg: Summary PDF pill 135×44 (min 44)
+✅ adhd @ mobile-lg: View all videos 153×44 (min 44)
+   [adhd @ mobile-lg] elements still under 40×40: 0
+✅ adhd @ mobile-md: hamburger 44×44 (min 44)
+✅ adhd @ mobile-md: inline Spotify pill 93×44 (min 44)
+✅ adhd @ mobile-md: inline Apple pill 85×44 (min 44)
+✅ adhd @ mobile-md: Summary PDF pill 135×44 (min 44)
+✅ adhd @ mobile-md: View all videos 153×44 (min 44)
+   [adhd @ mobile-md] elements still under 40×40: 0
+✅ adhd @ mobile-sm: hamburger 44×44 (min 44)
+✅ adhd @ mobile-sm: inline Spotify pill 93×44 (min 44)
+✅ adhd @ mobile-sm: inline Apple pill 85×44 (min 44)
+✅ adhd @ mobile-sm: Summary PDF pill 135×44 (min 44)
+✅ adhd @ mobile-sm: View all videos 153×44 (min 44)
+   [adhd @ mobile-sm] elements still under 40×40: 0
+
+━━━ REGRESSION: no new horizontal overflow, no new console errors ━━━
+✅ [homepage @ desktop-xl] no horizontal overflow — sw=1920 cw=1920
+✅ [homepage @ desktop-xl] no JS errors
+✅ [homepage @ desktop-md] no horizontal overflow — sw=1366 cw=1366
+✅ [homepage @ desktop-md] no JS errors
+✅ [homepage @ tablet] no horizontal overflow — sw=768 cw=768
+✅ [homepage @ tablet] no JS errors
+✅ [homepage @ mobile-md] no horizontal overflow — sw=390 cw=390
+✅ [homepage @ mobile-md] no JS errors
+✅ [topics @ desktop-xl] no horizontal overflow — sw=1920 cw=1920
+✅ [topics @ desktop-xl] no JS errors
+✅ [topics @ desktop-md] no horizontal overflow — sw=1366 cw=1366
+✅ [topics @ desktop-md] no JS errors
+✅ [topics @ tablet] no horizontal overflow — sw=768 cw=768
+✅ [topics @ tablet] no JS errors
+✅ [topics @ mobile-md] no horizontal overflow — sw=390 cw=390
+✅ [topics @ mobile-md] no JS errors
+✅ [adhd @ desktop-xl] no horizontal overflow — sw=1920 cw=1920
+✅ [adhd @ desktop-xl] no JS errors
+✅ [adhd @ desktop-md] no horizontal overflow — sw=1366 cw=1366
+✅ [adhd @ desktop-md] no JS errors
+✅ [adhd @ tablet] no horizontal overflow — sw=768 cw=768
+✅ [adhd @ tablet] no JS errors
+✅ [adhd @ mobile-md] no horizontal overflow — sw=390 cw=390
+✅ [adhd @ mobile-md] no JS errors
+
+Verification complete.

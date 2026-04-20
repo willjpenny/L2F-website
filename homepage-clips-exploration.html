@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clip Design Exploration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f0f4f5; }
+
+    /* ── Layout ── */
+    .page-header {
+      background: #0c525e;
+      color: #fff;
+      padding: 28px 48px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .page-header h1 { font-size: 18px; font-weight: 700; }
+    .page-header span { opacity: 0.5; }
+
+    .variant-section {
+      padding: 48px;
+      border-bottom: 2px solid #d8e8ea;
+    }
+    .variant-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #0c525e;
+      margin-bottom: 8px;
+    }
+    .variant-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0c3d47;
+      margin-bottom: 6px;
+    }
+    .variant-desc {
+      font-size: 14px;
+      color: #5a7a82;
+      margin-bottom: 32px;
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    /* ── Shared hero shell ── */
+    .hero-shell {
+      background: #0c525e;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 520px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    }
+    .hero-left-stub {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 48px 40px;
+      gap: 24px;
+    }
+    .stub-bubble-1 {
+      font-family: 'Lora', serif;
+      font-size: 22px;
+      background: #82d4e0;
+      color: #0c3d47;
+      padding: 18px 24px;
+      border-radius: 28px 28px 28px 6px;
+      position: relative;
+    }
+    .stub-bubble-1::after {
+      content: '';
+      position: absolute;
+      bottom: -18px;
+      left: 16px;
+      width: 0; height: 0;
+      border-top: 20px solid #82d4e0;
+      border-right: 12px solid transparent;
+    }
+    .stub-bubble-2 {
+      font-family: 'Lora', serif;
+      font-size: 22px;
+      background: #f5c842;
+      color: #2a1f00;
+      padding: 18px 32px;
+      border-radius: 100px;
+      position: relative;
+    }
+    .stub-bubble-2::after {
+      content: '';
+      position: absolute;
+      bottom: -18px;
+      right: 32px;
+      width: 0; height: 0;
+      border-top: 20px solid #f5c842;
+      border-left: 12px solid transparent;
+    }
+    .stub-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+    .stub-search {
+      display: flex;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 340px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    .stub-search input {
+      flex: 1;
+      padding: 12px 16px;
+      font-size: 13px;
+      border: none;
+      outline: none;
+      color: #1a2c2e;
+      font-family: 'Inter', sans-serif;
+    }
+    .stub-search input::placeholder { color: #aaa; }
+    .stub-search button {
+      background: #0c525e;
+      border: none;
+      padding: 12px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ════════════════════════════════════════
+       VARIANT A — Framed card, not full-bleed
+       Centre of right panel, rounded card with shadow,
+       decorative teal border accent.
+    ════════════════════════════════════════ */
+    .va-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      background: #071f24;
+      position: relative;
+    }
+    .va-card {
+      width: 100%;
+      max-width: 360px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(130,212,224,0.25), 0 20px 60px rgba(0,0,0,0.5);
+      position: relative;
+      aspect-ratio: 16/11;
+      background: #051519;
+    }
+    .va-thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .va-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(7,31,36,0.5);
+    }
+    .va-gradient {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 65%;
+      background: linear-gradient(to top, rgba(5,21,25,0.97) 0%, rgba(5,21,25,0.55) 50%, transparent 100%);
+    }
+    .va-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 18px 22px;
+      z-index: 2;
+    }
+    .va-topic {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(245,200,66,0.15);
+      border: 1px solid rgba(245,200,66,0.4);
+      color: #f5c842;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+      letter-spacing: 0.2px;
+    }
+    .va-question {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 17px;
+      line-height: 1.4;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .va-watch {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+    }
+    .va-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      padding: 5px 12px 5px 8px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 10px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 600;
+      z-index: 3;
+    }
+    .va-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #f5c842;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    .va-bars {
+      display: flex;
+      gap: 3px;
+      margin-top: 10px;
+    }
+    .va-bar {
+      flex: 1;
+      height: 2px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+    }
+    .va-bar.active {
+      background: #f5c842;
+    }
+    .va-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+    }
+    .va-nav-btn {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .va-caption {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      margin-top: 2px;
+    }
+    .va-footer {
+      position: relative;
+      padding: 12px 0 0;
+    }
+
+    /* ════════════════════════════════════════
+       VARIANT B — Stacked mini cards / film-strip
+       Three small cards offset vertically, suggesting
+       a browsable collection.
+    ════════════════════════════════════════ */
+    .vb-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 32px;
+      background: linear-gradient(145deg, #0a3d47 0%, #051519 100%);
+      position: relative;
+    }
+    .vb-stack {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .vb-card {
+      display: flex;
+      gap: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 12px 14px;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .vb-card.featured {
+      background: rgba(130,212,224,0.1);
+      border-color: rgba(130,212,224,0.3);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+    .vb-thumb-wrap {
+      width: 84px;
+      height: 60px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .vb-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .vb-play-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .vb-play-icon {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: rgba(245,200,66,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .vb-meta { flex: 1; min-width: 0; }
+    .vb-topic {
+      font-size: 10px;
+      font-weight: 700;
+      color: #f5c842;
+      letter-spacing: 0.3px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .vb-q {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: #fff;
+      line-height: 1.35;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .vb-specialist {
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 5px;
+    }
+    .vb-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .vb-header-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .vb-all-link {
+      font-size: 11px;
+      font-weight: 600;
+      color: #82d4e0;
+      text-decoration: none;
+    }
+    .vb-card.dimmed {
+      opacity: 0.55;
+    }
+
+    /* ════════════════════════════════════════
+       VARIANT C — Polaroid / photo-frame aesthetic
+       Large single clip in a white-bordered "photo"
+       frame tilted slightly, on a textured dark bg.
+    ════════════════════════════════════════ */
+    .vc-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 36px;
+      background: #071f24;
+      position: relative;
+    }
+    .vc-frame-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+    }
+    /* Background card — tilted */
+    .vc-bg-card {
+      position: absolute;
+      inset: -8px;
+      background: rgba(130,212,224,0.08);
+      border: 1px solid rgba(130,212,224,0.2);
+      border-radius: 18px;
+      transform: rotate(3deg);
+    }
+    .vc-bg-card-2 {
+      position: absolute;
+      inset: -4px;
+      background: rgba(245,200,66,0.06);
+      border: 1px solid rgba(245,200,66,0.15);
+      border-radius: 16px;
+      transform: rotate(-1.5deg);
+    }
+    .vc-polaroid {
+      position: relative;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 16px 60px rgba(0,0,0,0.5);
+    }
+    .vc-img-area {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background: #051519;
+    }
+    .vc-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .vc-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(7,31,36,0.42);
+    }
+    .vc-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(245,200,66,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      z-index: 2;
+    }
+    .vc-topic-chip {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(245,200,66,0.15);
+      border: 1px solid rgba(245,200,66,0.5);
+      color: #f5c842;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.3px;
+      z-index: 2;
+    }
+    .vc-caption-area {
+      background: #fff;
+      padding: 16px 20px;
+    }
+    .vc-q {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: #0c3d47;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .vc-specialist-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #5a7a82;
+    }
+    .vc-dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 14px;
+      padding-bottom: 4px;
+    }
+    .vc-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #d0dfe2;
+    }
+    .vc-dot.active {
+      background: #0c525e;
+      width: 18px;
+      border-radius: 3px;
+    }
+
+    /* ════════════════════════════════════════
+       VARIANT D — Side-by-side thumbnail row
+       Below the main clip, a horizontal strip
+       of other clips as small thumbnails, giving
+       a "browse" feel. Right panel has a teal-to-dark
+       gradient with a subtle grid pattern.
+    ════════════════════════════════════════ */
+    .vd-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 36px 36px;
+      background: #071f24;
+      position: relative;
+      gap: 20px;
+    }
+    .vd-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(130,212,224,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(130,212,224,0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+    .vd-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      position: relative;
+      z-index: 1;
+    }
+    .vd-main-card {
+      position: relative;
+      z-index: 1;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .vd-main-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .vd-main-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(7,31,36,0.45);
+    }
+    .vd-main-gradient {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60%;
+      background: linear-gradient(to top, rgba(5,21,25,0.95), transparent);
+    }
+    .vd-main-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 16px 18px;
+      z-index: 2;
+    }
+    .vd-main-topic {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(245,200,66,0.15);
+      border: 1px solid rgba(245,200,66,0.4);
+      color: #f5c842;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-bottom: 7px;
+      letter-spacing: 0.2px;
+    }
+    .vd-main-q {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 16px;
+      color: #fff;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+    .vd-main-watch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 13px;
+      border-radius: 999px;
+      text-decoration: none;
+    }
+    .vd-strip {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .vd-strip-item {
+      flex: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      position: relative;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .vd-strip-item.active-strip {
+      border-color: rgba(130,212,224,0.5);
+      box-shadow: 0 0 0 1px rgba(130,212,224,0.3);
+    }
+    .vd-strip-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: brightness(0.55);
+    }
+    .vd-strip-item.active-strip .vd-strip-img {
+      filter: brightness(0.75);
+    }
+    .vd-strip-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 6px 8px;
+      background: linear-gradient(to top, rgba(5,21,25,0.9), transparent);
+      font-size: 9px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* Shared animation */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Preview Clip — Design Exploration</h1>
+  <span>|</span>
+  <span>homepage-v8.html right panel — 4 variants, no changes to live file</span>
+</div>
+
+<!-- ══════════════════════════════════
+     VARIANT A: Framed card (centred)
+══════════════════════════════════ -->
+<div class="variant-section">
+  <div class="variant-label">Variant A</div>
+  <div class="variant-title">Framed card — centred, not full-bleed</div>
+  <div class="variant-desc">
+    The clip lives inside a rounded card that floats in the centre of the dark right panel.
+    Dark background surrounds it, giving breathing room. A teal-glowing border accent and bottom nav bars
+    sit below the card. Feels polished, like a product screenshot.
+  </div>
+
+  <div class="hero-shell">
+    <!-- Left stub -->
+    <div class="hero-left-stub">
+      <div class="stub-bubble-1">Families have <strong>questions.</strong></div>
+      <div class="stub-bubble-2">We have <strong>real answers.</strong></div>
+      <p class="stub-sub">Free, specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
+      <div class="stub-search">
+        <input type="search" placeholder="Search topics, videos &amp; podcasts&hellip;" readonly>
+        <button>Search</button>
+      </div>
+    </div>
+
+    <!-- Right: Variant A -->
+    <div class="va-right">
+      <div>
+        <div class="va-card">
+          <img class="va-thumb" src="https://img.youtube.com/vi/T2THRA7nvrA/hqdefault.jpg" alt="">
+          <div class="va-overlay"></div>
+          <div class="va-gradient"></div>
+          <div class="va-content">
+            <div class="va-topic">
+              <svg width="8" height="8" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
+              ADHD
+            </div>
+            <p class="va-question">What it is and causes</p>
+            <a href="#" class="va-watch">
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg>
+              Watch this clip
+            </a>
+          </div>
+          <div class="va-badge">
+            <span class="va-dot"></span>
+            Now playing
+          </div>
+        </div>
+        <div class="va-footer">
+          <div class="va-bars">
+            <div class="va-bar active"></div>
+            <div class="va-bar"></div>
+            <div class="va-bar"></div>
+            <div class="va-bar"></div>
+          </div>
+          <div class="va-nav">
+            <button class="va-nav-btn">&#8592;</button>
+            <span class="va-caption">1 of 4 clips</span>
+            <button class="va-nav-btn">&#8594;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     VARIANT B: Stacked mini cards
+══════════════════════════════════ -->
+<div class="variant-section">
+  <div class="variant-label">Variant B</div>
+  <div class="variant-title">Stacked mini cards — browsable list feel</div>
+  <div class="variant-desc">
+    Instead of one cycling clip, show three cards stacked vertically. The top card is highlighted as "featured",
+    the others are dimmed. Communicates that there are many videos to browse, not just one. Feels more like a content library.
+  </div>
+
+  <div class="hero-shell">
+    <div class="hero-left-stub">
+      <div class="stub-bubble-1">Families have <strong>questions.</strong></div>
+      <div class="stub-bubble-2">We have <strong>real answers.</strong></div>
+      <p class="stub-sub">Free, specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
+      <div class="stub-search">
+        <input type="search" placeholder="Search topics, videos &amp; podcasts&hellip;" readonly>
+        <button>Search</button>
+      </div>
+    </div>
+
+    <div class="vb-right">
+      <div class="vb-stack">
+        <div class="vb-header">
+          <span class="vb-header-label">Featured clips</span>
+          <a href="#" class="vb-all-link">See all videos &#8594;</a>
+        </div>
+
+        <!-- Featured card -->
+        <div class="vb-card featured">
+          <div class="vb-thumb-wrap">
+            <img class="vb-thumb" src="https://img.youtube.com/vi/T2THRA7nvrA/hqdefault.jpg" alt="">
+            <div class="vb-play-overlay">
+              <div class="vb-play-icon">
+                <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
+                  <path d="M1 1l8 5-8 5V1Z" fill="#2a1f00"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="vb-meta">
+            <div class="vb-topic">ADHD</div>
+            <p class="vb-q">What it is and causes</p>
+            <p class="vb-specialist">Dr. Rosemary Marks</p>
+          </div>
+        </div>
+
+        <!-- Dimmed card 2 -->
+        <div class="vb-card dimmed">
+          <div class="vb-thumb-wrap">
+            <img class="vb-thumb" src="https://img.youtube.com/vi/QfAhG87aHik/hqdefault.jpg" alt="">
+            <div class="vb-play-overlay">
+              <div class="vb-play-icon">
+                <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
+                  <path d="M1 1l8 5-8 5V1Z" fill="#2a1f00"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="vb-meta">
+            <div class="vb-topic">Eczema</div>
+            <p class="vb-q">What is Eczema?</p>
+            <p class="vb-specialist">Dr. Sarah Chen</p>
+          </div>
+        </div>
+
+        <!-- Dimmed card 3 -->
+        <div class="vb-card dimmed">
+          <div class="vb-thumb-wrap">
+            <img class="vb-thumb" src="https://img.youtube.com/vi/VZ4NhhIQ880/hqdefault.jpg" alt="">
+            <div class="vb-play-overlay">
+              <div class="vb-play-icon">
+                <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
+                  <path d="M1 1l8 5-8 5V1Z" fill="#2a1f00"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="vb-meta">
+            <div class="vb-topic">Autism</div>
+            <p class="vb-q">The process to get a diagnosis</p>
+            <p class="vb-specialist">Dr. James Liu</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     VARIANT C: Polaroid frame
+══════════════════════════════════ -->
+<div class="variant-section">
+  <div class="variant-label">Variant C</div>
+  <div class="variant-title">Polaroid / photo frame — warm, human feel</div>
+  <div class="variant-desc">
+    The clip is presented like a photograph: white border, white caption strip below the image, stacked
+    decorative cards behind it (teal + yellow) suggesting depth. The white caption area uses dark text on white,
+    making it feel personal and accessible rather than tech-y. Dot indicators below cycle the clip.
+  </div>
+
+  <div class="hero-shell">
+    <div class="hero-left-stub">
+      <div class="stub-bubble-1">Families have <strong>questions.</strong></div>
+      <div class="stub-bubble-2">We have <strong>real answers.</strong></div>
+      <p class="stub-sub">Free, specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
+      <div class="stub-search">
+        <input type="search" placeholder="Search topics, videos &amp; podcasts&hellip;" readonly>
+        <button>Search</button>
+      </div>
+    </div>
+
+    <div class="vc-right">
+      <div class="vc-frame-wrap">
+        <!-- Decorative bg cards -->
+        <div class="vc-bg-card"></div>
+        <div class="vc-bg-card-2"></div>
+
+        <!-- The polaroid -->
+        <div class="vc-polaroid">
+          <div class="vc-img-area">
+            <img class="vc-thumb" src="https://img.youtube.com/vi/T2THRA7nvrA/hqdefault.jpg" alt="">
+            <div class="vc-img-overlay"></div>
+            <div class="vc-topic-chip">ADHD</div>
+            <div class="vc-play-btn">
+              <svg width="16" height="18" viewBox="0 0 16 18" fill="none">
+                <path d="M2 1l12 8L2 17V1Z" fill="#2a1f00"/>
+              </svg>
+            </div>
+          </div>
+          <div class="vc-caption-area">
+            <p class="vc-q">What it is and causes</p>
+            <p class="vc-specialist-name">Dr. Rosemary Marks &middot; Paediatrician</p>
+          </div>
+        </div>
+
+        <!-- Dot indicators -->
+        <div class="vc-dots">
+          <div class="vc-dot active"></div>
+          <div class="vc-dot"></div>
+          <div class="vc-dot"></div>
+          <div class="vc-dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     VARIANT D: Main clip + thumbnail strip
+══════════════════════════════════ -->
+<div class="variant-section">
+  <div class="variant-label">Variant D</div>
+  <div class="variant-title">Main clip + thumbnail strip — editorial / streaming feel</div>
+  <div class="variant-desc">
+    A 16:9 main clip card sits above a horizontal row of three smaller thumbnail clips — like a streaming platform
+    or a video editorial. The active thumbnail is highlighted in teal. Subtle grid pattern on the dark background
+    adds texture. This design most clearly communicates "there is a lot of content here."
+  </div>
+
+  <div class="hero-shell">
+    <div class="hero-left-stub">
+      <div class="stub-bubble-1">Families have <strong>questions.</strong></div>
+      <div class="stub-bubble-2">We have <strong>real answers.</strong></div>
+      <p class="stub-sub">Free, specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
+      <div class="stub-search">
+        <input type="search" placeholder="Search topics, videos &amp; podcasts&hellip;" readonly>
+        <button>Search</button>
+      </div>
+    </div>
+
+    <div class="vd-right">
+      <div class="vd-grid-bg"></div>
+      <div class="vd-label">Featured clips</div>
+
+      <!-- Main clip -->
+      <div class="vd-main-card">
+        <img class="vd-main-thumb" src="https://img.youtube.com/vi/T2THRA7nvrA/hqdefault.jpg" alt="">
+        <div class="vd-main-overlay"></div>
+        <div class="vd-main-gradient"></div>
+        <div class="vd-main-content">
+          <div class="vd-main-topic">
+            <svg width="8" height="8" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
+            ADHD
+          </div>
+          <p class="vd-main-q">What it is and causes</p>
+          <a href="#" class="vd-main-watch">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg>
+            Watch this clip
+          </a>
+        </div>
+      </div>
+
+      <!-- Thumbnail strip -->
+      <div class="vd-strip">
+        <div class="vd-strip-item active-strip">
+          <img class="vd-strip-img" src="https://img.youtube.com/vi/T2THRA7nvrA/hqdefault.jpg" alt="">
+          <div class="vd-strip-label">ADHD</div>
+        </div>
+        <div class="vd-strip-item">
+          <img class="vd-strip-img" src="https://img.youtube.com/vi/QfAhG87aHik/hqdefault.jpg" alt="">
+          <div class="vd-strip-label">Eczema</div>
+        </div>
+        <div class="vd-strip-item">
+          <img class="vd-strip-img" src="https://img.youtube.com/vi/VZ4NhhIQ880/hqdefault.jpg" alt="">
+          <div class="vd-strip-label">Autism</div>
+        </div>
+        <div class="vd-strip-item">
+          <img class="vd-strip-img" src="https://img.youtube.com/vi/Z8D1lWYnWFw/hqdefault.jpg" alt="">
+          <div class="vd-strip-label">Fussy Eaters</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clip Frame Exploration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #e8eff0; }
+    a { text-decoration: none; }
+
+    /* ── Page chrome ── */
+    .page-header {
+      background: #0c525e;
+      color: #fff;
+      padding: 22px 48px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .page-header h1 { font-size: 17px; font-weight: 700; }
+    .page-header span { opacity: 0.4; font-size: 13px; }
+
+    .variant-section { padding: 48px; border-bottom: 2px solid #c8dde0; }
+    .variant-label { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #0c525e; margin-bottom: 6px; }
+    .variant-title { font-size: 20px; font-weight: 700; color: #0c3d47; margin-bottom: 5px; }
+    .variant-desc { font-size: 13.5px; color: #4a6a72; margin-bottom: 28px; max-width: 680px; line-height: 1.6; }
+
+    /* ══ Shared hero shell ══ */
+    .hero {
+      background: #0c525e;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 500px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+
+    /* Left panel — same across all variants */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 48px 40px;
+      gap: 22px;
+    }
+    .bubbles { display: flex; flex-direction: column; gap: 28px; align-items: center; }
+    .bubble { display: inline-flex; align-items: center; justify-content: center; font-family: 'Lora', serif; font-size: 21px; line-height: 1.3; position: relative; text-align: center; }
+    .bubble-teal { background: #82d4e0; color: #0c3d47; padding: 18px 24px; border-radius: 28px 28px 28px 6px; }
+    .bubble-teal::after { content: ''; position: absolute; bottom: -18px; left: 16px; width: 0; height: 0; border-top: 20px solid #82d4e0; border-right: 12px solid transparent; }
+    .bubble-yellow { background: #f5c842; color: #2a1f00; padding: 18px 32px; border-radius: 100px; }
+    .bubble-yellow::after { content: ''; position: absolute; bottom: -18px; right: 32px; width: 0; height: 0; border-top: 20px solid #f5c842; border-left: 12px solid transparent; }
+    .bubble strong { font-weight: 700; }
+    .hero-sub { font-size: 13px; color: rgba(255,255,255,0.55); text-align: center; line-height: 1.65; max-width: 300px; }
+    .hero-searchbar { display: flex; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.2); max-width: 340px; width: 100%; }
+    .hero-searchbar input { flex: 1; padding: 12px 16px; font-size: 13px; border: none; outline: none; font-family: 'Inter', sans-serif; color: #1a2c2e; }
+    .hero-searchbar input::placeholder { color: #aaa; }
+    .hero-searchbar button { background: #0c525e; border: none; padding: 12px 18px; font-size: 12px; font-weight: 600; color: #fff; cursor: pointer; font-family: 'Inter', sans-serif; }
+
+    /* ══ Shared clip internals ══ */
+    .clip { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; opacity: 0; transition: opacity 0.8s ease; pointer-events: none; }
+    .clip.active { opacity: 1; pointer-events: auto; }
+    .clip-frame { position: absolute; inset: 0; }
+    .clip-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .clip-frame::after { content: ''; position: absolute; inset: 0; background: rgba(7,31,36,0.48); }
+    .clip-gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 70%; background: linear-gradient(to top, rgba(5,21,25,0.97) 0%, rgba(5,21,25,0.55) 50%, transparent 100%); }
+    .clip-content { position: relative; z-index: 2; padding: 0 28px 22px; }
+    .clip-topic { display: inline-flex; align-items: center; gap: 5px; background: rgba(245,200,66,0.15); border: 1px solid rgba(245,200,66,0.4); color: #f5c842; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 10px; letter-spacing: 0.2px; }
+    .clip-question { font-family: 'Lora', serif; font-style: italic; font-size: 19px; line-height: 1.4; color: #fff; margin-bottom: 16px; }
+    .clip-watch { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 12px; font-weight: 600; padding: 8px 16px; border-radius: 999px; transition: background 0.15s; }
+    .clip-watch:hover { background: rgba(255,255,255,0.18); }
+
+    .play-indicator { position: absolute; top: 22px; right: 22px; z-index: 10; display: flex; align-items: center; gap: 7px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.15); border-radius: 999px; padding: 5px 12px 5px 7px; }
+    .play-dot { width: 7px; height: 7px; border-radius: 50%; background: #f5c842; animation: pulse 1.8s ease-in-out infinite; }
+    .play-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.8); letter-spacing: 0.3px; }
+
+    .reel-progress { position: relative; z-index: 30; display: flex; gap: 4px; padding: 10px 28px 12px; flex-shrink: 0; }
+    .reel-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.25); border-radius: 2px; overflow: hidden; cursor: pointer; }
+    .reel-bar-fill { height: 100%; background: #f5c842; border-radius: 2px; width: 0%; transition: width 0.1s linear; }
+    .reel-bar.done .reel-bar-fill { width: 100%; background: rgba(255,255,255,0.5); }
+    .reel-bar.active .reel-bar-fill { background: #f5c842; }
+
+    .reel-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s; }
+    .reel-nav:hover { background: rgba(255,255,255,0.18); color: #fff; }
+    .reel-nav.prev { left: 12px; }
+    .reel-nav.next { right: 12px; }
+
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+    /* ════════════════════════════════════
+       VARIANT A — Inset floating card
+       The right panel stays teal/dark, and the
+       video sits inset with padding + rounded corners.
+       The panel background shows through around it.
+    ════════════════════════════════════ */
+    .va-right {
+      position: relative;
+      background: #071f24;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 28px 28px 0;
+      isolation: isolate;
+    }
+    .va-reel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 16px 48px rgba(0,0,0,0.45);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .va-reel .clip { border-radius: 18px; overflow: hidden; }
+
+    /* ════════════════════════════════════
+       VARIANT B — Diagonal left edge
+       The right panel is clipped with a diagonal
+       left edge, so the boundary between left/right
+       is a sharp angle rather than a straight line.
+    ════════════════════════════════════ */
+    .vb-right {
+      position: relative;
+      background: #071f24;
+      clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      isolation: isolate;
+    }
+    .vb-right .play-indicator { right: 22px; }
+
+    /* ════════════════════════════════════
+       VARIANT C — Teal border frame
+       Full-bleed like current, but with a vivid
+       teal left-edge border and a decorative
+       corner accent in yellow at top-left.
+    ════════════════════════════════════ */
+    .vc-right {
+      position: relative;
+      background: #071f24;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      isolation: isolate;
+      border-left: 3px solid #82d4e0;
+    }
+    .vc-corner-accent {
+      position: absolute;
+      top: 0;
+      left: -3px;
+      z-index: 10;
+      width: 72px;
+      height: 72px;
+      pointer-events: none;
+    }
+    .vc-corner-accent::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 72px;
+      height: 72px;
+      background: #f5c842;
+      clip-path: polygon(0 0, 72px 0, 0 72px);
+    }
+    .vc-corner-text {
+      position: absolute;
+      top: 10px;
+      left: 7px;
+      font-size: 9px;
+      font-weight: 700;
+      color: #0c3d47;
+      letter-spacing: 0.2px;
+      line-height: 1.2;
+      z-index: 11;
+      transform: rotate(-45deg);
+      transform-origin: center;
+      width: 40px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* ════════════════════════════════════
+       VARIANT D — Rounded top arch
+       The video panel has heavily rounded top
+       corners, like an arched window or card.
+       Panel bg is visible at the top corners,
+       giving a contained, framed feel.
+    ════════════════════════════════════ */
+    .vd-right {
+      position: relative;
+      background: #0c525e;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0 24px 0 12px;
+      isolation: isolate;
+    }
+    .vd-reel-wrap {
+      position: relative;
+      width: 100%;
+      height: calc(100% - 32px);
+      border-radius: 120px 120px 0 0;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 3px rgba(130,212,224,0.25);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .vd-reel-wrap .clip { border-radius: 120px 120px 0 0; overflow: hidden; }
+  </style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Clip Frame Exploration</h1>
+  <span>|</span>
+  <span>Same auto-cycling reel — 4 different visual frames. Nothing pushed.</span>
+</div>
+
+<!-- Shared clip HTML macro — repeated per variant with unique IDs -->
+
+<!-- ══════════════════════════════
+     VARIANT A: Inset floating card
+══════════════════════════════ -->
+<div class="variant-section">
+  <div class="variant-label">Variant A</div>
+  <div class="variant-title">Inset floating card</div>
+  <div class="variant-desc">
+    The video doesn't fill edge-to-edge. It sits inside the dark right panel with padding, so it floats
+    as a rounded card. The dark panel background shows around all four sides (except the left, which abuts
+    the hero). Feels more contained and product-like.
+  </div>
+
+  <div class="hero">
+    <div class="hero-left">
+      <div class="bubbles">
+        <div class="bubble bubble-teal">Families have&nbsp;<strong>questions.</strong></div>
+        <div class="bubble bubble-yellow">We have&nbsp;<strong>real answers.</strong></div>
+      </div>
+      <p class="hero-sub">Free, specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
+      <div class="hero-searchbar">
+        <input type="search" placeholder="Search topics, videos &amp; podcasts&hellip;" readonly>
+        <button>Search</button>
+      </div>
+    </div>
+
+    <div class="va-right">
+      <div class="va-reel" id="va-reel">
+        <div class="play-indicator" aria-hidden="true">
+          <span class="play-dot"></span><span class="play-label">Now playing</span>
+        </div>
+        <button class="reel-nav prev" id="va-prev" aria-label="Previous clip">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="reel-nav next" id="va-next" aria-label="Next clip">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="clip active" data-clip="0">
+          <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/T2THRA7nvrA/hqdefault.jpg" alt=""></div>
+          <div class="clip-gradient"></div>
+          <div class="clip-content">
+            <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> ADHD</div>
+            <p class="clip-question">What it is and causes</p>
+            <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+          </div>
+        </div>
+        <div class="clip" data-clip="1">
+          <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/QfAhG87aHik/hqdefault.jpg" alt=""></div>
+          <div class="clip-gradient"></div>
+          <div class="clip-content">
+            <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Eczema</div>
+            <p class="clip-question">What is Eczema?</p>
+            <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+          </div>
+        </div>
+        <div class="clip" data-clip="2">
+          <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/VZ4NhhIQ880/hqdefault.jpg" alt=""></div>
+          <div class="clip-gradient"></div>
+          <div class="clip-content">
+            <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Autism</div>
+            <p class="clip-question">The process to get a diagnosis</p>
+            <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+          </div>
+        </div>
+        <div class="clip" data-clip="3">
+          <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/Z8D1lWYnWFw/hqdefault.jpg" alt=""></div>
+          <div class="clip-gradient"></div>
+          <div class="clip-content">
+            <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Restricted and Fussy Eaters</div>
+            <p class="clip-question">Why is my child a fussy eater?</p>
+            <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+          </div>
+        </div>
+
+        <div class="reel-progress" aria-hidden="true" id="va-progress">
+          <div class="reel-bar active"><div class="reel-bar-fill" id="va-bar-0"></div></div>
+          <div class="reel-bar"><div class="reel-bar-fill" id="va-bar-1"></div></div>
+          <div class="reel-bar"><div class="reel-bar-fill" id="va-bar-2"></div></div>
+          <div class="reel-bar"><div class="reel-bar-fill" id="va-bar-3"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     VARIANT B: Diagonal left edge
+══════════════════════════════ -->
+<div class="variant-section">
+  <div class="variant-label">Variant B</div>
+  <div class="variant-title">Diagonal left edge</div>
+  <div class="variant-desc">
+    The right video panel is clipped at an angle on its left side — instead of a straight vertical divider,
+    the video wedges in from the bottom-left to the top-right. More dynamic and energetic feeling.
+    The left panel shows through in the corner triangle.
+  </div>
+
+  <div class="hero">
+    <div class="hero-left">
+      <div class="bubbles">
+        <div class="bubble bubble-teal">Families have&nbsp;<strong>questions.</strong></div>
+        <div class="bubble bubble-yellow">We have&nbsp;<strong>real answers.</strong></div>
+      </div>
+      <p class="hero-sub">Free, specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
+      <div class="hero-searchbar">
+        <input type="search" placeholder="Search topics, videos &amp; podcasts&hellip;" readonly>
+        <button>Search</button>
+      </div>
+    </div>
+
+    <div class="vb-right" id="vb-reel">
+      <div class="play-indicator" aria-hidden="true">
+        <span class="play-dot"></span><span class="play-label">Now playing</span>
+      </div>
+      <button class="reel-nav prev" id="vb-prev" aria-label="Previous clip">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="reel-nav next" id="vb-next" aria-label="Next clip">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="clip active" data-clip="0">
+        <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/T2THRA7nvrA/hqdefault.jpg" alt=""></div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> ADHD</div>
+          <p class="clip-question">What it is and causes</p>
+          <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+        </div>
+      </div>
+      <div class="clip" data-clip="1">
+        <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/QfAhG87aHik/hqdefault.jpg" alt=""></div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Eczema</div>
+          <p class="clip-question">What is Eczema?</p>
+          <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+        </div>
+      </div>
+      <div class="clip" data-clip="2">
+        <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/VZ4NhhIQ880/hqdefault.jpg" alt=""></div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Autism</div>
+          <p class="clip-question">The process to get a diagnosis</p>
+          <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+        </div>
+      </div>
+      <div class="clip" data-clip="3">
+        <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/Z8D1lWYnWFw/hqdefault.jpg" alt=""></div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Restricted and Fussy Eaters</div>
+          <p class="clip-question">Why is my child a fussy eater?</p>
+          <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+        </div>
+      </div>
+
+      <div class="reel-progress" aria-hidden="true" id="vb-progress">
+        <div class="reel-bar active"><div class="reel-bar-fill" id="vb-bar-0"></div></div>
+        <div class="reel-bar"><div class="reel-bar-fill" id="vb-bar-1"></div></div>
+        <div class="reel-bar"><div class="reel-bar-fill" id="vb-bar-2"></div></div>
+        <div class="reel-bar"><div class="reel-bar-fill" id="vb-bar-3"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     VARIANT C: Teal border + corner accent
+══════════════════════════════ -->
+<div class="variant-section">
+  <div class="variant-label">Variant C</div>
+  <div class="variant-title">Teal border + yellow corner accent</div>
+  <div class="variant-desc">
+    Full-bleed video like the current design, but the panel boundary is a bold teal vertical stripe.
+    A yellow triangle corner accent at top-left labels the section "Free clips". Subtle but adds brand
+    colour and definition to the separation between panels.
+  </div>
+
+  <div class="hero">
+    <div class="hero-left">
+      <div class="bubbles">
+        <div class="bubble bubble-teal">Families have&nbsp;<strong>questions.</strong></div>
+        <div class="bubble bubble-yellow">We have&nbsp;<strong>real answers.</strong></div>
+      </div>
+      <p class="hero-sub">Free, specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
+      <div class="hero-searchbar">
+        <input type="search" placeholder="Search topics, videos &amp; podcasts&hellip;" readonly>
+        <button>Search</button>
+      </div>
+    </div>
+
+    <div class="vc-right" id="vc-reel">
+      <!-- Corner accent -->
+      <div class="vc-corner-accent" aria-hidden="true">
+        <span class="vc-corner-text">Free clips</span>
+      </div>
+
+      <div class="play-indicator" style="top:22px; right:22px;" aria-hidden="true">
+        <span class="play-dot"></span><span class="play-label">Now playing</span>
+      </div>
+      <button class="reel-nav prev" id="vc-prev" aria-label="Previous clip">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="reel-nav next" id="vc-next" aria-label="Next clip">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="clip active" data-clip="0">
+        <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/T2THRA7nvrA/hqdefault.jpg" alt=""></div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> ADHD</div>
+          <p class="clip-question">What it is and causes</p>
+          <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+        </div>
+      </div>
+      <div class="clip" data-clip="1">
+        <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/QfAhG87aHik/hqdefault.jpg" alt=""></div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Eczema</div>
+          <p class="clip-question">What is Eczema?</p>
+          <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+        </div>
+      </div>
+      <div class="clip" data-clip="2">
+        <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/VZ4NhhIQ880/hqdefault.jpg" alt=""></div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Autism</div>
+          <p class="clip-question">The process to get a diagnosis</p>
+          <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+        </div>
+      </div>
+      <div class="clip" data-clip="3">
+        <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/Z8D1lWYnWFw/hqdefault.jpg" alt=""></div>
+        <div class="clip-gradient"></div>
+        <div class="clip-content">
+          <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Restricted and Fussy Eaters</div>
+          <p class="clip-question">Why is my child a fussy eater?</p>
+          <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+        </div>
+      </div>
+
+      <div class="reel-progress" aria-hidden="true" id="vc-progress">
+        <div class="reel-bar active"><div class="reel-bar-fill" id="vc-bar-0"></div></div>
+        <div class="reel-bar"><div class="reel-bar-fill" id="vc-bar-1"></div></div>
+        <div class="reel-bar"><div class="reel-bar-fill" id="vc-bar-2"></div></div>
+        <div class="reel-bar"><div class="reel-bar-fill" id="vc-bar-3"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     VARIANT D: Arched top card
+══════════════════════════════ -->
+<div class="variant-section">
+  <div class="variant-label">Variant D</div>
+  <div class="variant-title">Arched top — framed window feel</div>
+  <div class="variant-desc">
+    The video is contained inside a tall card with heavily rounded top corners (like an arched window or door).
+    The teal hero background shows above and to the side of the arch. A faint teal inset ring traces the arch shape.
+    Feels architectural and elegant — like you're peering through a frame.
+  </div>
+
+  <div class="hero">
+    <div class="hero-left">
+      <div class="bubbles">
+        <div class="bubble bubble-teal">Families have&nbsp;<strong>questions.</strong></div>
+        <div class="bubble bubble-yellow">We have&nbsp;<strong>real answers.</strong></div>
+      </div>
+      <p class="hero-sub">Free, specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
+      <div class="hero-searchbar">
+        <input type="search" placeholder="Search topics, videos &amp; podcasts&hellip;" readonly>
+        <button>Search</button>
+      </div>
+    </div>
+
+    <div class="vd-right">
+      <div class="vd-reel-wrap" id="vd-reel">
+        <div class="play-indicator" style="top:22px; right:22px;" aria-hidden="true">
+          <span class="play-dot"></span><span class="play-label">Now playing</span>
+        </div>
+        <button class="reel-nav prev" id="vd-prev" aria-label="Previous clip" style="left:16px;">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="reel-nav next" id="vd-next" aria-label="Next clip" style="right:16px;">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="clip active" data-clip="0">
+          <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/T2THRA7nvrA/hqdefault.jpg" alt=""></div>
+          <div class="clip-gradient"></div>
+          <div class="clip-content">
+            <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> ADHD</div>
+            <p class="clip-question">What it is and causes</p>
+            <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+          </div>
+        </div>
+        <div class="clip" data-clip="1">
+          <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/QfAhG87aHik/hqdefault.jpg" alt=""></div>
+          <div class="clip-gradient"></div>
+          <div class="clip-content">
+            <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Eczema</div>
+            <p class="clip-question">What is Eczema?</p>
+            <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+          </div>
+        </div>
+        <div class="clip" data-clip="2">
+          <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/VZ4NhhIQ880/hqdefault.jpg" alt=""></div>
+          <div class="clip-gradient"></div>
+          <div class="clip-content">
+            <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Autism</div>
+            <p class="clip-question">The process to get a diagnosis</p>
+            <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+          </div>
+        </div>
+        <div class="clip" data-clip="3">
+          <div class="clip-frame"><img class="clip-thumb" src="https://img.youtube.com/vi/Z8D1lWYnWFw/hqdefault.jpg" alt=""></div>
+          <div class="clip-gradient"></div>
+          <div class="clip-content">
+            <div class="clip-topic"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/></svg> Restricted and Fussy Eaters</div>
+            <p class="clip-question">Why is my child a fussy eater?</p>
+            <a href="#" class="clip-watch"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/></svg> Watch this clip</a>
+          </div>
+        </div>
+
+        <div class="reel-progress" aria-hidden="true" id="vd-progress">
+          <div class="reel-bar active"><div class="reel-bar-fill" id="vd-bar-0"></div></div>
+          <div class="reel-bar"><div class="reel-bar-fill" id="vd-bar-1"></div></div>
+          <div class="reel-bar"><div class="reel-bar-fill" id="vd-bar-2"></div></div>
+          <div class="reel-bar"><div class="reel-bar-fill" id="vd-bar-3"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* Auto-cycling reel factory — takes prefix string, wires up independent reel */
+  function makeReel(prefix) {
+    const CLIP_DURATION = 5000;
+    const TICK = 50;
+    const container = document.getElementById(prefix + '-reel') || document.querySelector('.' + prefix + '-reel') || document.getElementById('v' + prefix.slice(1) + '-reel');
+
+    // Find clips and bars scoped to this reel's parent
+    const reel = document.getElementById(prefix + '-reel')
+      || document.getElementById('v' + prefix + '-reel');
+    if (!reel) return;
+
+    const clips  = Array.from(reel.querySelectorAll('.clip'));
+    const bars   = [0,1,2,3].map(i => document.getElementById(prefix + '-bar-' + i)).filter(Boolean);
+    const fills  = bars.map(b => b.querySelector('.reel-bar-fill'));
+
+    let current = 0;
+    let elapsed = 0;
+    let timer = null;
+
+    function goTo(index) {
+      clips[current].classList.remove('active');
+      bars[current].classList.remove('active');
+      bars[current].classList.add('done');
+      fills[current].style.width = '100%';
+      current = index;
+      elapsed = 0;
+      if (current === 0) {
+        bars.forEach(b => { b.classList.remove('done', 'active'); });
+        fills.forEach(f => { f.style.width = '0%'; });
+      }
+      clips[current].classList.add('active');
+      bars[current].classList.remove('done');
+      bars[current].classList.add('active');
+      fills[current].style.width = '0%';
+    }
+
+    function tick() {
+      elapsed += TICK;
+      const pct = Math.min((elapsed / CLIP_DURATION) * 100, 100);
+      fills[current].style.width = pct + '%';
+      if (elapsed >= CLIP_DURATION) goTo((current + 1) % clips.length);
+    }
+
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(tick, TICK);
+    }
+
+    const prevBtn = document.getElementById(prefix + '-prev');
+    const nextBtn = document.getElementById(prefix + '-next');
+
+    if (prevBtn) prevBtn.addEventListener('click', () => {
+      const prev = (current - 1 + clips.length) % clips.length;
+      for (let i = prev; i < clips.length; i++) {
+        bars[i].classList.remove('done', 'active');
+        fills[i].style.width = '0%';
+      }
+      goTo(prev);
+      startTimer();
+    });
+
+    if (nextBtn) nextBtn.addEventListener('click', () => {
+      goTo((current + 1) % clips.length);
+      startTimer();
+    });
+
+    bars.forEach((bar, i) => {
+      bar.addEventListener('click', () => {
+        for (let j = i; j < clips.length; j++) {
+          bars[j].classList.remove('done', 'active');
+          fills[j].style.width = '0%';
+        }
+        goTo(i);
+        startTimer();
+      });
+    });
+
+    let paused = false;
+    reel.addEventListener('mouseenter', () => { if (!paused) clearInterval(timer); });
+    reel.addEventListener('mouseleave', () => { if (!paused) startTimer(); });
+
+    startTimer();
+  }
+
+  makeReel('va');
+  makeReel('vb');
+  makeReel('vc');
+  makeReel('vd');
+</script>
+</body>
+</html>

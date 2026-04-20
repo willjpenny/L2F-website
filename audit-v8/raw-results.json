@@ -1,0 +1,564 @@
+[
+  {
+    "page": "homepage",
+    "file": "homepage-v8.html",
+    "viewport": "desktop-xl",
+    "width": 1920,
+    "height": 1080,
+    "loadError": null,
+    "issues": [],
+    "passes": [
+      "reel next advances 0→1",
+      "reel pause toggles icon"
+    ],
+    "info": {
+      "scrollWidth": 1920,
+      "clientWidth": 1920,
+      "totalHeight": 2426,
+      "imageCount": 5,
+      "anchorCount": 18,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 2426
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "homepage",
+    "file": "homepage-v8.html",
+    "viewport": "desktop-lg",
+    "width": 1440,
+    "height": 900,
+    "loadError": null,
+    "issues": [],
+    "passes": [
+      "reel next advances 0→1",
+      "reel pause toggles icon"
+    ],
+    "info": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "totalHeight": 2282,
+      "imageCount": 5,
+      "anchorCount": 18,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 2282
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "homepage",
+    "file": "homepage-v8.html",
+    "viewport": "desktop-md",
+    "width": 1366,
+    "height": 768,
+    "loadError": null,
+    "issues": [],
+    "passes": [
+      "reel next advances 0→1",
+      "reel pause toggles icon"
+    ],
+    "info": {
+      "scrollWidth": 1366,
+      "clientWidth": 1366,
+      "totalHeight": 2194,
+      "imageCount": 5,
+      "anchorCount": 18,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 2194
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "homepage",
+    "file": "homepage-v8.html",
+    "viewport": "tablet",
+    "width": 768,
+    "height": 1024,
+    "loadError": null,
+    "issues": [],
+    "passes": [
+      "hamburger opens mobile menu"
+    ],
+    "info": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "totalHeight": 2980,
+      "imageCount": 5,
+      "anchorCount": 18,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 2980
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "homepage",
+    "file": "homepage-v8.html",
+    "viewport": "mobile-lg",
+    "width": 414,
+    "height": 896,
+    "loadError": null,
+    "issues": [
+      {
+        "type": "small-tap-targets",
+        "severity": "medium",
+        "message": "18 tap target(s) under 40×40px. Unique: <button.nav-hamburger> 36×36 \"Open menu\" | <button.reel-nav> 36×36 \"Previous clip\" | <button.reel-nav> 36×36 \"Next clip\" | <a.clip-watch> 152×40 \"Watch this clip\" | <button.reel-pause> 32×32 \"Play video reel\" | <a.btn-spotify> 110×40 \"Spotify\" | <a.btn-apple> 163×40 \"Apple Podcasts\" | <a.> 44×17 \"Topics\""
+      }
+    ],
+    "passes": [
+      "hamburger opens mobile menu"
+    ],
+    "info": {
+      "scrollWidth": 414,
+      "clientWidth": 414,
+      "totalHeight": 3517,
+      "imageCount": 5,
+      "anchorCount": 18,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 3517
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "homepage",
+    "file": "homepage-v8.html",
+    "viewport": "mobile-md",
+    "width": 390,
+    "height": 844,
+    "loadError": null,
+    "issues": [
+      {
+        "type": "small-tap-targets",
+        "severity": "medium",
+        "message": "18 tap target(s) under 40×40px. Unique: <button.nav-hamburger> 36×36 \"Open menu\" | <button.reel-nav> 36×36 \"Previous clip\" | <button.reel-nav> 36×36 \"Next clip\" | <a.clip-watch> 152×40 \"Watch this clip\" | <button.reel-pause> 32×32 \"Play video reel\" | <a.btn-spotify> 110×40 \"Spotify\" | <a.btn-apple> 163×40 \"Apple Podcasts\" | <a.> 44×17 \"Topics\""
+      }
+    ],
+    "passes": [
+      "hamburger opens mobile menu"
+    ],
+    "info": {
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "totalHeight": 3519,
+      "imageCount": 5,
+      "anchorCount": 18,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 3519
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "homepage",
+    "file": "homepage-v8.html",
+    "viewport": "mobile-sm",
+    "width": 375,
+    "height": 667,
+    "loadError": null,
+    "issues": [
+      {
+        "type": "small-tap-targets",
+        "severity": "medium",
+        "message": "18 tap target(s) under 40×40px. Unique: <button.nav-hamburger> 36×36 \"Open menu\" | <button.reel-nav> 36×36 \"Previous clip\" | <button.reel-nav> 36×36 \"Next clip\" | <a.clip-watch> 152×40 \"Watch this clip\" | <button.reel-pause> 32×32 \"Play video reel\" | <a.btn-spotify> 110×40 \"Spotify\" | <a.btn-apple> 163×40 \"Apple Podcasts\" | <a.> 44×17 \"Topics\""
+      }
+    ],
+    "passes": [
+      "hamburger opens mobile menu"
+    ],
+    "info": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "totalHeight": 3509,
+      "imageCount": 5,
+      "anchorCount": 18,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 3509
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "topics",
+    "file": "topics-v8.html",
+    "viewport": "desktop-xl",
+    "width": 1920,
+    "height": 1080,
+    "loadError": null,
+    "issues": [],
+    "passes": [
+      "A-Z toggle button found: \"A–Z\"",
+      "#section-cat1 jump scrolled to y=466"
+    ],
+    "info": {
+      "scrollWidth": 1920,
+      "clientWidth": 1920,
+      "totalHeight": 3886,
+      "imageCount": 0,
+      "anchorCount": 82,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 3886
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "topics",
+    "file": "topics-v8.html",
+    "viewport": "desktop-lg",
+    "width": 1440,
+    "height": 900,
+    "loadError": null,
+    "issues": [],
+    "passes": [
+      "A-Z toggle button found: \"A–Z\"",
+      "#section-cat1 jump scrolled to y=466"
+    ],
+    "info": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "totalHeight": 3886,
+      "imageCount": 0,
+      "anchorCount": 82,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 3886
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "topics",
+    "file": "topics-v8.html",
+    "viewport": "desktop-md",
+    "width": 1366,
+    "height": 768,
+    "loadError": null,
+    "issues": [],
+    "passes": [
+      "A-Z toggle button found: \"A–Z\"",
+      "#section-cat1 jump scrolled to y=466"
+    ],
+    "info": {
+      "scrollWidth": 1366,
+      "clientWidth": 1366,
+      "totalHeight": 3886,
+      "imageCount": 0,
+      "anchorCount": 82,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 3886
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "topics",
+    "file": "topics-v8.html",
+    "viewport": "tablet",
+    "width": 768,
+    "height": 1024,
+    "loadError": null,
+    "issues": [],
+    "passes": [
+      "A-Z toggle button found: \"A–Z\"",
+      "#section-cat1 jump scrolled to y=406"
+    ],
+    "info": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "totalHeight": 5608,
+      "imageCount": 0,
+      "anchorCount": 82,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 5608
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "topics",
+    "file": "topics-v8.html",
+    "viewport": "mobile-lg",
+    "width": 414,
+    "height": 896,
+    "loadError": null,
+    "issues": [
+      {
+        "type": "small-tap-targets",
+        "severity": "medium",
+        "message": "10 tap target(s) under 40×40px. Unique: <button.nav-hamburger> 36×36 \"Open menu\" | <button.active> 110×32 \"By category\" | <button.> 58×32 \"A–Z\" | <a.> 44×17 \"Topics\""
+      }
+    ],
+    "passes": [
+      "A-Z toggle button found: \"A–Z\"",
+      "#section-cat1 jump scrolled to y=413"
+    ],
+    "info": {
+      "scrollWidth": 414,
+      "clientWidth": 414,
+      "totalHeight": 8496,
+      "imageCount": 0,
+      "anchorCount": 82,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 8496
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "topics",
+    "file": "topics-v8.html",
+    "viewport": "mobile-md",
+    "width": 390,
+    "height": 844,
+    "loadError": null,
+    "issues": [
+      {
+        "type": "small-tap-targets",
+        "severity": "medium",
+        "message": "10 tap target(s) under 40×40px. Unique: <button.nav-hamburger> 36×36 \"Open menu\" | <button.active> 110×32 \"By category\" | <button.> 58×32 \"A–Z\" | <a.> 44×17 \"Topics\""
+      }
+    ],
+    "passes": [
+      "A-Z toggle button found: \"A–Z\"",
+      "#section-cat1 jump scrolled to y=440"
+    ],
+    "info": {
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "totalHeight": 8645,
+      "imageCount": 0,
+      "anchorCount": 82,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 8645
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "topics",
+    "file": "topics-v8.html",
+    "viewport": "mobile-sm",
+    "width": 375,
+    "height": 667,
+    "loadError": null,
+    "issues": [
+      {
+        "type": "small-tap-targets",
+        "severity": "medium",
+        "message": "10 tap target(s) under 40×40px. Unique: <button.nav-hamburger> 36×36 \"Open menu\" | <button.active> 110×32 \"By category\" | <button.> 58×32 \"A–Z\" | <a.> 44×17 \"Topics\""
+      }
+    ],
+    "passes": [
+      "A-Z toggle button found: \"A–Z\"",
+      "#section-cat1 jump scrolled to y=440"
+    ],
+    "info": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "totalHeight": 8861,
+      "imageCount": 0,
+      "anchorCount": 82,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 8861
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "adhd",
+    "file": "adhd-v8.html",
+    "viewport": "desktop-xl",
+    "width": 1920,
+    "height": 1080,
+    "loadError": null,
+    "issues": [],
+    "passes": [],
+    "info": {
+      "scrollWidth": 1920,
+      "clientWidth": 1920,
+      "totalHeight": 5265,
+      "imageCount": 0,
+      "anchorCount": 112,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 5265
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "adhd",
+    "file": "adhd-v8.html",
+    "viewport": "desktop-lg",
+    "width": 1440,
+    "height": 900,
+    "loadError": null,
+    "issues": [],
+    "passes": [],
+    "info": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "totalHeight": 5265,
+      "imageCount": 0,
+      "anchorCount": 112,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 5265
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "adhd",
+    "file": "adhd-v8.html",
+    "viewport": "desktop-md",
+    "width": 1366,
+    "height": 768,
+    "loadError": null,
+    "issues": [],
+    "passes": [],
+    "info": {
+      "scrollWidth": 1366,
+      "clientWidth": 1366,
+      "totalHeight": 5239,
+      "imageCount": 0,
+      "anchorCount": 112,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 5239
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "adhd",
+    "file": "adhd-v8.html",
+    "viewport": "tablet",
+    "width": 768,
+    "height": 1024,
+    "loadError": null,
+    "issues": [],
+    "passes": [
+      "adhd section jumps: 7/7 land near viewport top"
+    ],
+    "info": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "totalHeight": 6721,
+      "imageCount": 0,
+      "anchorCount": 112,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 6721
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "adhd",
+    "file": "adhd-v8.html",
+    "viewport": "mobile-lg",
+    "width": 414,
+    "height": 896,
+    "loadError": null,
+    "issues": [
+      {
+        "type": "small-tap-targets",
+        "severity": "medium",
+        "message": "38 tap target(s) under 40×40px. Unique: <button.nav-hamburger> 36×36 \"Open menu\" | <a.> 36×21 \"Home\" | <a.btn-podcast-inline> 82×28 \"Spotify\" | <a.btn-podcast-inline> 74×28 \"Apple\" | <a.btn-download-inline> 120×28 \"Summary PDF\" | <button.btn-view-all> 145×32 \"View all videos ↓\""
+      }
+    ],
+    "passes": [
+      "adhd section jumps: 7/7 land near viewport top"
+    ],
+    "info": {
+      "scrollWidth": 414,
+      "clientWidth": 414,
+      "totalHeight": 7977,
+      "imageCount": 0,
+      "anchorCount": 112,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 7977
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "adhd",
+    "file": "adhd-v8.html",
+    "viewport": "mobile-md",
+    "width": 390,
+    "height": 844,
+    "loadError": null,
+    "issues": [
+      {
+        "type": "small-tap-targets",
+        "severity": "medium",
+        "message": "38 tap target(s) under 40×40px. Unique: <button.nav-hamburger> 36×36 \"Open menu\" | <a.> 36×21 \"Home\" | <a.btn-podcast-inline> 82×28 \"Spotify\" | <a.btn-podcast-inline> 74×28 \"Apple\" | <a.btn-download-inline> 120×28 \"Summary PDF\" | <button.btn-view-all> 145×32 \"View all videos ↓\""
+      }
+    ],
+    "passes": [
+      "adhd section jumps: 7/7 land near viewport top"
+    ],
+    "info": {
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "totalHeight": 8258,
+      "imageCount": 0,
+      "anchorCount": 112,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 8258
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  },
+  {
+    "page": "adhd",
+    "file": "adhd-v8.html",
+    "viewport": "mobile-sm",
+    "width": 375,
+    "height": 667,
+    "loadError": null,
+    "issues": [
+      {
+        "type": "small-tap-targets",
+        "severity": "medium",
+        "message": "38 tap target(s) under 40×40px. Unique: <button.nav-hamburger> 36×36 \"Open menu\" | <a.> 36×21 \"Home\" | <a.btn-podcast-inline> 82×28 \"Spotify\" | <a.btn-podcast-inline> 74×28 \"Apple\" | <a.btn-download-inline> 120×28 \"Summary PDF\" | <button.btn-view-all> 145×32 \"View all videos ↓\""
+      }
+    ],
+    "passes": [
+      "adhd section jumps: 7/7 land near viewport top"
+    ],
+    "info": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "totalHeight": 8662,
+      "imageCount": 0,
+      "anchorCount": 112,
+      "navHeight": 64,
+      "navTop": 0,
+      "totalScrollHeight": 8662
+    },
+    "consoleMsgs": [],
+    "pageErrors": []
+  }
+]

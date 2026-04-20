@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Listening to Families | Free specialist-led resources for NZ families (v8)</title>
+  <title>Logo Option B — LTF branding in hero | Listening to Families</title>
   <link rel="icon" type="image/svg+xml" href="LTF-Logo/People%20Icon/Dark%20Blue_People.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,7 +19,7 @@
 
     /* ── NAV (standardised — inner container, ul semantics) ── */
     .nav {
-      background: #0c525e; height: 124px;
+      background: #0c525e; height: 96px;
       display: flex; align-items: center;
       position: sticky; top: 0; z-index: 100;
       box-shadow: 0 1px 4px rgba(0,0,0,0.15);
@@ -27,16 +27,16 @@
     .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
     .nav-brand { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
     .nav-logo { display: flex; align-items: center; text-decoration: none; }
-    .nav-logo-img { height: 112px; width: auto; display: block; }
-    .nav-partner-img { height: 30px; width: auto; display: block; opacity: 0.95; }
+    .nav-logo-img { height: 81px; width: auto; display: block; }
+    .nav-partner-img { height: 34px; width: auto; display: block; opacity: 0.95; }
     .nav-partner-right { display: flex; align-items: center; justify-content: flex-end; }
-    .nav-partner-right img { height: 30px; width: auto; display: block; opacity: 0.95; }
+    .nav-partner-right img { height: 34px; width: auto; display: block; opacity: 0.95; }
     @media (min-width: 901px) { .nav-brand .nav-partner-img { display: none; } }
     .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; justify-content: center; }
     .nav-links a { color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
     .nav-links a:hover, .nav-links a[aria-current="page"] { color: #fff; background: rgba(255,255,255,0.12); }
     .nav-hamburger { display: none; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 6px; color: rgba(255,255,255,0.8); background: none; border: none; cursor: pointer; margin-left: auto; }
-    .nav-mobile-menu { display: none; position: absolute; top: 124px; left: 0; right: 0; background: #0c525e; border-top: 1px solid rgba(255,255,255,0.12); padding: 12px 0 16px; z-index: 99; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .nav-mobile-menu { display: none; position: absolute; top: 96px; left: 0; right: 0; background: #0c525e; border-top: 1px solid rgba(255,255,255,0.12); padding: 12px 0 16px; z-index: 99; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     .nav-mobile-menu.open { display: block; }
     .nav-mobile-menu a { display: block; padding: 11px clamp(20px,4vw,56px); font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.8); transition: background 0.15s; }
     .nav-mobile-menu a:hover { color: #fff; background: rgba(255,255,255,0.08); }
@@ -70,8 +70,9 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: clamp(48px, 7vw, 96px) clamp(32px, 5vw, 72px);
+      padding: clamp(32px, 5vw, 64px) clamp(32px, 5vw, 72px);
     }
+    .hero-brand-logo { height: clamp(80px, 10vw, 130px); width: auto; display: block; margin-bottom: 32px; }
 
     /* Speech bubbles */
     .bubbles { display: flex; flex-direction: column; gap: 32px; margin-bottom: 36px; align-items: center; }
@@ -495,6 +496,11 @@
 </head>
 <body>
 
+  <!-- OPTION LABEL -->
+  <div style="background:#f5c842;color:#0a3d47;text-align:center;padding:10px 16px;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.3px;position:sticky;top:0;z-index:200;">
+    Option B &mdash; Listening to Families logo prominent in hero
+  </div>
+
   <!-- NAV -->
   <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
@@ -534,13 +540,14 @@
 
     <!-- Left: messaging + search -->
     <div class="hero-left">
+      <img src="LTF-Logo/SVG/1-Listening-to-families-logo-white.svg" alt="Listening to Families" class="hero-brand-logo" />
       <div class="bubbles">
         <div class="bubble bubble-teal">Families have&nbsp;<br><strong>questions.</strong></div>
         <div class="bubble bubble-yellow">We have&nbsp;<strong>real answers.</strong></div>
       </div>
       <p class="hero-sub">Free, specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
       <div class="hero-searchbar">
-        <input type="search" id="hero-search-input" placeholder="Search by keyword&hellip;" aria-label="Search topics, videos and podcasts">
+        <input type="search" id="hero-search-input" placeholder="Search topics, videos &amp; podcasts&hellip;" aria-label="Search topics, videos and podcasts">
         <button>Search</button>
       </div>
     </div>
@@ -710,9 +717,7 @@
     <div class="trust-band-inner">
       <div class="trust-stat"><div class="num">31</div><div class="label">topics</div></div>
       <div class="trust-stat"><div class="num">275</div><div class="label">free videos</div></div>
-      <div class="trust-stat"><div class="num">58</div><div class="label">podcast episodes</div></div>
-      <div class="trust-stat"><div class="num">Community</div><div class="label">initiative</div></div>
-    </div>
+      <div class="trust-stat"><div class="num">58</div><div class="label">podcast episodes</div></div>    </div>
   </section>
 
   <!-- TOPICS -->
