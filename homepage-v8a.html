@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Listening to Families | Hero Version B — Questions only</title>
+  <title>Listening to Families | Hero Version A</title>
   <link rel="icon" type="image/svg+xml" href="LTF-Logo/People%20Icon/Dark%20Blue_People.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -50,21 +50,18 @@
       position: relative;
     }
     .hero-scroll-arrow {
-      position: fixed;
-      bottom: 24px;
+      position: absolute;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 200;
-      color: rgba(255,255,255,0.8);
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
-      animation: bounce-down 2s ease-in-out infinite;
-      transition: opacity 0.4s ease;
+      z-index: 10;
+      color: rgba(255,255,255,0.35);
       pointer-events: none;
+      animation: bounce-down 2s ease-in-out infinite;
     }
-    .hero-scroll-arrow.hidden { opacity: 0; }
     @keyframes bounce-down {
       0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(8px); }
+      50% { transform: translateX(-50%) translateY(6px); }
     }
 
     /* Left panel */
@@ -112,94 +109,154 @@
     .bubble-yellow strong { text-decoration: underline; }
     .hero-sub { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; max-width: 440px; margin-bottom: 16px; text-align: center; }
 
-    /* ── RIGHT PANEL — Version B: arriving question bubbles ── */
+    /* ── RIGHT PANEL — Version A: 3-box layout ── */
     .hero-right {
       position: relative;
       background: #071f24;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
       isolation: isolate;
     }
 
-    .hero-right-tagline {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 64px;
+    /* Top half: rotating questions */
+    .hv-top {
+      flex: 0 0 50%;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Bottom half: two face columns */
+    .hv-bottom {
+      flex: 0 0 50%;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #82d4e0;
+      overflow: hidden;
+    }
+
+    /* Panel label — sits over each section */
+    .hv-label {
+      position: absolute;
+      top: 14px;
+      left: 0;
+      right: 0;
       text-align: center;
-      font-family: 'Lora', serif;
-      font-size: clamp(16px, 1.5vw, 20px);
-      font-style: italic;
-      color: #0c3d47;
-      letter-spacing: 0.02em;
-      z-index: 10;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      z-index: 5;
       pointer-events: none;
     }
 
-    /* Bubble field: default 3×3 for 901–1400px */
-    .bubble-field {
+    /* Questions stage — scattered bubbles like poster */
+    .hv-questions {
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 64px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 1fr 1fr 1fr;
-      padding: 12px 10px;
+      inset: 0;
     }
 
-    /* Each slot is a flex cell; bubble pushed to a different corner so layout looks scattered */
-    .bslot { display: flex; padding: 8px 6px; }
-    .bslot:nth-child(1)  { justify-content: flex-start; align-items: flex-start; }
-    .bslot:nth-child(2)  { justify-content: flex-end;   align-items: flex-end;   }
-    .bslot:nth-child(3)  { justify-content: flex-end;   align-items: flex-start; }
-    .bslot:nth-child(4)  { justify-content: flex-end;   align-items: flex-start; }
-    .bslot:nth-child(5)  { justify-content: flex-start; align-items: flex-end;   }
-    .bslot:nth-child(6)  { justify-content: flex-start; align-items: flex-start; }
-    .bslot:nth-child(7)  { justify-content: flex-start; align-items: flex-end;   }
-    .bslot:nth-child(8)  { justify-content: flex-end;   align-items: flex-start; }
-    .bslot:nth-child(9)  { justify-content: flex-end;   align-items: flex-end;   }
-    .bslot:nth-child(10) { justify-content: flex-start; align-items: flex-start; }
-    .bslot:nth-child(11) { justify-content: flex-end;   align-items: flex-end;   }
-    .bslot:nth-child(12) { justify-content: flex-start; align-items: flex-end;   }
+    @keyframes bubblePop {
+      0%, 100%  { opacity: 0; transform: scale(0.88); }
+      10%        { opacity: 1; transform: scale(1); }
+      38%        { opacity: 1; transform: scale(1); }
+      46%        { opacity: 0; transform: scale(0.88); }
+    }
 
-    /* The bubble rendered in each slot */
-    .bslot .bub {
-      display: inline-block;
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(11.5px, 1.1vw, 13.5px);
-      font-weight: 700;
-      line-height: 1.4;
-      padding: 9px 16px;
-      max-width: 180px;
-      text-align: center;
+    .hv-q {
+      position: absolute;
       opacity: 0;
-      will-change: opacity, transform;
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(11px, 1.15vw, 14px);
+      line-height: 1.3;
+      color: #fff;
+      text-align: center;
+      padding: 10px 18px;
+      pointer-events: none;
+      animation: bubblePop 11s ease-in-out infinite;
     }
 
-    /* Colour variants */
-    .bub-y { background: #f5c842; color: #2a1f00; }
-    .bub-t { background: #82d4e0; color: #0c3d47; }
-    .bub-w { background: rgba(255,255,255,0.9); color: #0c3d47; }
-
-    /* Shape variants */
-    .bub-pill { border-radius: 999px; }
-    .bub-sbl  { border-radius: 20px 20px 20px 5px; }
-    .bub-sbr  { border-radius: 20px 20px 5px 20px; }
-    .bub-round { border-radius: 16px; }
-
-    /* Arrival and departure */
-    @keyframes bubArrive {
-      from { opacity: 0; transform: translateY(10px) scale(0.88); }
-      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    /* Each bubble: unique position, color, shape, staggered delay */
+    .hv-q:nth-child(1) {
+      background: #e87a8f; border-radius: 999px;
+      top: 13%; left: 5%;
+      animation-delay: 0s;
     }
-    @keyframes bubDepart {
-      from { opacity: 1; transform: translateY(0) scale(1); }
-      to   { opacity: 0; transform: translateY(-8px) scale(0.93); }
+    .hv-q:nth-child(2) {
+      background: #e8643c; border-radius: 18px;
+      top: 7%; left: 38%;
+      animation-delay: 1.37s;
     }
-    .bub.arriving { animation: bubArrive 0.5s cubic-bezier(0.34,1.25,0.64,1) forwards; }
-    .bub.visible  { opacity: 1; }
-    .bub.departing { animation: bubDepart 0.4s ease-in forwards; }
+    .hv-q:nth-child(3) {
+      background: #82d4e0; color: #0c3d47; border-radius: 20px 20px 20px 5px;
+      top: 16%; right: 5%;
+      animation-delay: 2.75s;
+    }
+    .hv-q:nth-child(4) {
+      background: #f5c842; color: #2a1f00; border-radius: 999px;
+      top: 47%; left: 4%;
+      animation-delay: 4.12s;
+    }
+    .hv-q:nth-child(5) {
+      background: #7bc67a; border-radius: 22px;
+      top: 43%; left: 34%;
+      animation-delay: 5.5s;
+    }
+    .hv-q:nth-child(6) {
+      background: #f0a05a; border-radius: 999px;
+      top: 68%; left: 8%;
+      animation-delay: 6.87s;
+    }
+    .hv-q:nth-child(7) {
+      background: #4ab8c5; border-radius: 24px 24px 5px 24px;
+      top: 62%; right: 6%;
+      animation-delay: 8.25s;
+    }
+    .hv-q:nth-child(8) {
+      background: #b87ab5; border-radius: 999px;
+      top: 30%; left: 52%;
+      animation-delay: 9.62s;
+    }
+
+    /* Face columns */
+    .hv-col {
+      flex: 0 0 50%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hv-col + .hv-col {
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hv-faces {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hv-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .hv-face.active { opacity: 1; }
+
+    /* Subtle dark overlay on face columns */
+    .hv-col::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(7,31,36,0.28);
+      pointer-events: none;
+      z-index: 2;
+    }
 
     /* ── BENEFITS SECTION ── */
     .benefits { background: #f5f0e8; padding: clamp(40px,5vw,64px) 0; border-bottom: 1px solid rgba(12,82,94,0.08); }
@@ -284,39 +341,10 @@
       .nav-partner-right { display: none; }
       .nav-hamburger { display: flex; width: 44px; height: 44px; grid-column: 3; justify-self: end; }
     }
-    /* Large desktop (>1400px): switch to 4-column grid showing 12 bubbles */
-    @media (min-width: 1401px) {
-      .bubble-field { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
-      /* Re-map corners for 4×3: each row alternates TL/BR/TL/BR so bubbles fill the panel */
-      .bslot:nth-child(1)  { justify-content: flex-start; align-items: flex-start; }
-      .bslot:nth-child(2)  { justify-content: flex-end;   align-items: flex-end;   }
-      .bslot:nth-child(3)  { justify-content: flex-start; align-items: flex-start; }
-      .bslot:nth-child(4)  { justify-content: flex-end;   align-items: flex-end;   }
-      .bslot:nth-child(5)  { justify-content: flex-end;   align-items: flex-start; }
-      .bslot:nth-child(6)  { justify-content: flex-start; align-items: flex-end;   }
-      .bslot:nth-child(7)  { justify-content: flex-end;   align-items: flex-start; }
-      .bslot:nth-child(8)  { justify-content: flex-start; align-items: flex-end;   }
-      .bslot:nth-child(9)  { justify-content: flex-start; align-items: flex-end;   }
-      .bslot:nth-child(10) { justify-content: flex-end;   align-items: flex-start; }
-      .bslot:nth-child(11) { justify-content: flex-start; align-items: flex-end;   }
-      .bslot:nth-child(12) { justify-content: flex-end;   align-items: flex-end;   }
-    }
-    /* Default desktop (901–1400px): 9 bubbles already set, just hide extras */
-    @media (max-width: 1400px) {
-      .bslot:nth-child(n+10) { display: none; }
-    }
-    @media (max-width: 900px) {
-      /* Small laptop: 6 bubbles, 3×2 */
-      .bubble-field { grid-template-rows: 1fr 1fr; }
-      .bslot:nth-child(n+7) { display: none; }
-    }
     @media (max-width: 768px) {
       .hero { grid-template-columns: 1fr; min-height: auto; }
       .hero-left { min-height: auto; padding: 40px 20px 36px; }
       .hero-right { min-height: 420px; }
-      .bubble-field { grid-template-rows: 1fr 1fr; padding: 8px 6px; }
-      .bslot .bub { padding: 7px 11px; font-size: 11px; }
-      .bslot:nth-child(n+7) { display: none; }
       .benefits-inner { grid-template-columns: 1fr; gap: 16px; }
       .topics-grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
       .topic-card h3 { font-size: 14px; }
@@ -379,23 +407,58 @@
       <p class="hero-sub">Free, specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
     </div>
 
-    <!-- Right: Version B — scattered arriving questions -->
-    <div class="hero-right" aria-label="Questions families are asking">
-      <div class="hero-right-tagline">We have the answers.</div>
-      <div class="bubble-field" aria-hidden="true">
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
+    <!-- Right: Version A — 3-box layout -->
+    <div class="hero-right" aria-label="What we cover">
+
+      <!-- Top half: rotating questions -->
+      <div class="hv-top">
+        <span class="hv-label">Families have questions</span>
+        <div class="hv-questions" aria-hidden="true">
+          <p class="hv-q">What is ADHD?</p>
+          <p class="hv-q">What is eczema?</p>
+          <p class="hv-q">Why do children<br>have to go to school?</p>
+          <p class="hv-q">Why won't<br>my child eat?</p>
+          <p class="hv-q">How do we get<br>an autism diagnosis?</p>
+          <p class="hv-q">What are the<br>signs of anxiety?</p>
+          <p class="hv-q">What is sensory<br>processing?</p>
+          <p class="hv-q">How does<br>medication help?</p>
+        </div>
       </div>
+
+      <!-- Bottom half: families (left) + experts (right) -->
+      <div class="hv-bottom">
+
+        <!-- Family column -->
+        <div class="hv-col">
+          <span class="hv-label">Families ask</span>
+          <div class="hv-faces" aria-hidden="true">
+            <img class="hv-face active"
+              src="https://img.youtube.com/vi/V16QVuJkNOU/hqdefault.jpg"
+              alt="" />
+            <img class="hv-face"
+              src="https://img.youtube.com/vi/Z8D1lWYnWFw/hqdefault.jpg"
+              alt="" />
+            <img class="hv-face"
+              src="https://img.youtube.com/vi/QfAhG87aHik/hqdefault.jpg"
+              alt="" />
+          </div>
+        </div>
+
+        <!-- Expert column -->
+        <div class="hv-col">
+          <span class="hv-label">Experts answer</span>
+          <div class="hv-faces" aria-hidden="true">
+            <img class="hv-face active"
+              src="https://img.youtube.com/vi/T2THRA7nvrA/hqdefault.jpg"
+              alt="" />
+            <img class="hv-face"
+              src="https://img.youtube.com/vi/VZ4NhhIQ880/hqdefault.jpg"
+              alt="" />
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
     <!-- Scroll indicator -->
@@ -563,51 +626,24 @@
       }
     });
 
-    // ── VERSION B: arriving question bubbles ──
+    // ── VERSION A ANIMATIONS ──
 
-    const QUESTIONS = [
-      { text: "What is ADHD?",                          c: "bub-y", s: "bub-pill" },
-      { text: "Why won't my child eat?",                c: "bub-t", s: "bub-sbl"  },
-      { text: "Is my child on the autism spectrum?",    c: "bub-w", s: "bub-round"},
-      { text: "Her eczema keeps flaring up.",           c: "bub-y", s: "bub-sbr"  },
-      { text: "What are signs of anxiety?",             c: "bub-t", s: "bub-pill" },
-      { text: "He won't go to school.",                 c: "bub-w", s: "bub-sbl"  },
-      { text: "How does ADHD medication work?",         c: "bub-y", s: "bub-round"},
-      { text: "What is sensory processing disorder?",   c: "bub-t", s: "bub-sbr"  },
-      { text: "How do I get an autism diagnosis?",      c: "bub-w", s: "bub-pill" },
-      { text: "My toddler barely eats anything.",       c: "bub-y", s: "bub-sbl"  },
-      { text: "Could it be dyslexia?",                  c: "bub-t", s: "bub-round"},
-      { text: "She's struggling with her mental health.",c: "bub-w", s: "bub-sbr" },
-      { text: "What is executive functioning?",         c: "bub-y", s: "bub-pill" },
-      { text: "How do I talk to her teacher?",          c: "bub-t", s: "bub-sbl"  },
-      { text: "My son is terrified of needles.",        c: "bub-w", s: "bub-round"},
-      { text: "What is ARFID?",                         c: "bub-y", s: "bub-sbr"  },
-      { text: "Is school refusal common?",              c: "bub-t", s: "bub-pill" },
-      { text: "How do I know if it's just a phase?",   c: "bub-w", s: "bub-sbl"  },
-      { text: "Can anxiety cause stomach aches?",       c: "bub-y", s: "bub-round"},
-      { text: "How can I help with his sleep?",         c: "bub-t", s: "bub-sbr"  },
-    ];
+    // Face columns: cycle together
+    // Both face columns cycle together every 3s
+    const FACE_INTERVAL = 3000;
+    const familyFaces = document.querySelectorAll('.hv-col:first-child .hv-face');
+    const expertFaces = document.querySelectorAll('.hv-col:last-child .hv-face');
+    let familyCurrent = 0;
+    let expertCurrent = 0;
+    setInterval(() => {
+      familyFaces[familyCurrent].classList.remove('active');
+      familyCurrent = (familyCurrent + 1) % familyFaces.length;
+      familyFaces[familyCurrent].classList.add('active');
 
-    const COLORS = ['bub-y', 'bub-t', 'bub-w'];
-    const SHAPES = ['bub-pill', 'bub-sbl', 'bub-sbr', 'bub-round'];
-    const shuffled = [...QUESTIONS].sort(() => Math.random() - 0.5);
-
-    // Assign one question per slot, stagger fade-in, stay permanently
-    document.querySelectorAll('.bslot').forEach((slot, i) => {
-      const bub = slot.querySelector('.bub');
-      const q   = shuffled[i % shuffled.length];
-      const c   = COLORS[Math.floor(Math.random() * COLORS.length)];
-      const s   = SHAPES[Math.floor(Math.random() * SHAPES.length)];
-      bub.textContent          = q.text;
-      bub.className            = `bub ${c} ${s} arriving`;
-      bub.style.animationDelay = `${i * 0.35}s`;
-    });
-
-    // Hide scroll arrow once user starts scrolling; show again at very top
-    const scrollArrow = document.querySelector('.hero-scroll-arrow');
-    window.addEventListener('scroll', () => {
-      scrollArrow.classList.toggle('hidden', window.scrollY > 40);
-    }, { passive: true });
+      expertFaces[expertCurrent].classList.remove('active');
+      expertCurrent = (expertCurrent + 1) % expertFaces.length;
+      expertFaces[expertCurrent].classList.add('active');
+    }, FACE_INTERVAL);
   </script>
 
 </body>

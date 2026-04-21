@@ -50,21 +50,18 @@
       position: relative;
     }
     .hero-scroll-arrow {
-      position: fixed;
-      bottom: 24px;
+      position: absolute;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 200;
-      color: rgba(255,255,255,0.8);
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
-      animation: bounce-down 2s ease-in-out infinite;
-      transition: opacity 0.4s ease;
+      z-index: 10;
+      color: rgba(255,255,255,0.35);
       pointer-events: none;
+      animation: bounce-down 2s ease-in-out infinite;
     }
-    .hero-scroll-arrow.hidden { opacity: 0; }
     @keyframes bounce-down {
       0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(8px); }
+      50% { transform: translateX(-50%) translateY(6px); }
     }
 
     /* Left panel */
@@ -120,48 +117,8 @@
       isolation: isolate;
     }
 
-    .hero-right-tagline {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #82d4e0;
-      text-align: center;
-      font-family: 'Lora', serif;
-      font-size: clamp(16px, 1.5vw, 20px);
-      font-style: italic;
-      color: #0c3d47;
-      letter-spacing: 0.02em;
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    /* Bubble field: default 3×3 for 901–1400px */
-    .bubble-field {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 64px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 1fr 1fr 1fr;
-      padding: 12px 10px;
-    }
-
-    /* Each slot is a flex cell; bubble pushed to a different corner so layout looks scattered */
-    .bslot { display: flex; padding: 8px 6px; }
-    .bslot:nth-child(1)  { justify-content: flex-start; align-items: flex-start; }
-    .bslot:nth-child(2)  { justify-content: flex-end;   align-items: flex-end;   }
-    .bslot:nth-child(3)  { justify-content: flex-end;   align-items: flex-start; }
-    .bslot:nth-child(4)  { justify-content: flex-end;   align-items: flex-start; }
-    .bslot:nth-child(5)  { justify-content: flex-start; align-items: flex-end;   }
-    .bslot:nth-child(6)  { justify-content: flex-start; align-items: flex-start; }
-    .bslot:nth-child(7)  { justify-content: flex-start; align-items: flex-end;   }
-    .bslot:nth-child(8)  { justify-content: flex-end;   align-items: flex-start; }
-    .bslot:nth-child(9)  { justify-content: flex-end;   align-items: flex-end;   }
-    .bslot:nth-child(10) { justify-content: flex-start; align-items: flex-start; }
-    .bslot:nth-child(11) { justify-content: flex-end;   align-items: flex-end;   }
-    .bslot:nth-child(12) { justify-content: flex-start; align-items: flex-end;   }
+    /* Bubble slots — absolutely positioned anchors */
+    .bslot { position: absolute; }
 
     /* The bubble rendered in each slot */
     .bslot .bub {
@@ -171,7 +128,7 @@
       font-weight: 700;
       line-height: 1.4;
       padding: 9px 16px;
-      max-width: 180px;
+      max-width: 195px;
       text-align: center;
       opacity: 0;
       will-change: opacity, transform;
@@ -284,39 +241,16 @@
       .nav-partner-right { display: none; }
       .nav-hamburger { display: flex; width: 44px; height: 44px; grid-column: 3; justify-self: end; }
     }
-    /* Large desktop (>1400px): switch to 4-column grid showing 12 bubbles */
-    @media (min-width: 1401px) {
-      .bubble-field { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
-      /* Re-map corners for 4×3: each row alternates TL/BR/TL/BR so bubbles fill the panel */
-      .bslot:nth-child(1)  { justify-content: flex-start; align-items: flex-start; }
-      .bslot:nth-child(2)  { justify-content: flex-end;   align-items: flex-end;   }
-      .bslot:nth-child(3)  { justify-content: flex-start; align-items: flex-start; }
-      .bslot:nth-child(4)  { justify-content: flex-end;   align-items: flex-end;   }
-      .bslot:nth-child(5)  { justify-content: flex-end;   align-items: flex-start; }
-      .bslot:nth-child(6)  { justify-content: flex-start; align-items: flex-end;   }
-      .bslot:nth-child(7)  { justify-content: flex-end;   align-items: flex-start; }
-      .bslot:nth-child(8)  { justify-content: flex-start; align-items: flex-end;   }
-      .bslot:nth-child(9)  { justify-content: flex-start; align-items: flex-end;   }
-      .bslot:nth-child(10) { justify-content: flex-end;   align-items: flex-start; }
-      .bslot:nth-child(11) { justify-content: flex-start; align-items: flex-end;   }
-      .bslot:nth-child(12) { justify-content: flex-end;   align-items: flex-end;   }
-    }
-    /* Default desktop (901–1400px): 9 bubbles already set, just hide extras */
-    @media (max-width: 1400px) {
-      .bslot:nth-child(n+10) { display: none; }
-    }
-    @media (max-width: 900px) {
-      /* Small laptop: 6 bubbles, 3×2 */
-      .bubble-field { grid-template-rows: 1fr 1fr; }
-      .bslot:nth-child(n+7) { display: none; }
+    @media (max-width: 1100px) {
+      .bslot .bub { max-width: 150px; }
+      .bslot:nth-child(n+9) { display: none; }
     }
     @media (max-width: 768px) {
       .hero { grid-template-columns: 1fr; min-height: auto; }
       .hero-left { min-height: auto; padding: 40px 20px 36px; }
-      .hero-right { min-height: 420px; }
-      .bubble-field { grid-template-rows: 1fr 1fr; padding: 8px 6px; }
-      .bslot .bub { padding: 7px 11px; font-size: 11px; }
-      .bslot:nth-child(n+7) { display: none; }
+      .hero-right { min-height: 480px; }
+      .bslot .bub { max-width: 120px; padding: 7px 11px; font-size: 11px; }
+      .bslot:nth-child(n+6) { display: none; }
       .benefits-inner { grid-template-columns: 1fr; gap: 16px; }
       .topics-grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
       .topic-card h3 { font-size: 14px; }
@@ -381,20 +315,19 @@
 
     <!-- Right: Version B — scattered arriving questions -->
     <div class="hero-right" aria-label="Questions families are asking">
-      <div class="hero-right-tagline">We have the answers.</div>
       <div class="bubble-field" aria-hidden="true">
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
-        <div class="bslot"><div class="bub"></div></div>
+        <!-- Deliberately asymmetric positions — no columns, no rows -->
+        <div class="bslot" style="top:6%;  left:5%">   <div class="bub"></div></div>
+        <div class="bslot" style="top:4%;  right:6%">  <div class="bub"></div></div>
+        <div class="bslot" style="top:14%; right:4%">  <div class="bub"></div></div>
+        <div class="bslot" style="top:28%; left:20%">  <div class="bub"></div></div>
+        <div class="bslot" style="top:24%; right:11%"> <div class="bub"></div></div>
+        <div class="bslot" style="top:44%; left:3%">   <div class="bub"></div></div>
+        <div class="bslot" style="top:40%; right:18%">  <div class="bub"></div></div>
+        <div class="bslot" style="top:50%; right:5%">  <div class="bub"></div></div>
+        <div class="bslot" style="top:63%; left:28%">  <div class="bub"></div></div>
+        <div class="bslot" style="top:60%; right:18%"> <div class="bub"></div></div>
+        <div class="bslot" style="top:78%; left:10%">  <div class="bub"></div></div>
       </div>
     </div>
 
@@ -584,30 +517,53 @@
       { text: "What is ARFID?",                         c: "bub-y", s: "bub-sbr"  },
       { text: "Is school refusal common?",              c: "bub-t", s: "bub-pill" },
       { text: "How do I know if it's just a phase?",   c: "bub-w", s: "bub-sbl"  },
-      { text: "Can anxiety cause stomach aches?",       c: "bub-y", s: "bub-round"},
-      { text: "How can I help with his sleep?",         c: "bub-t", s: "bub-sbr"  },
     ];
 
     const COLORS = ['bub-y', 'bub-t', 'bub-w'];
     const SHAPES = ['bub-pill', 'bub-sbl', 'bub-sbr', 'bub-round'];
     const shuffled = [...QUESTIONS].sort(() => Math.random() - 0.5);
+    let poolIdx = 0;
 
-    // Assign one question per slot, stagger fade-in, stay permanently
-    document.querySelectorAll('.bslot').forEach((slot, i) => {
+    function nextQ() {
+      if (poolIdx >= shuffled.length) {
+        poolIdx = 0;
+        shuffled.sort(() => Math.random() - 0.5);
+      }
+      return {
+        text: shuffled[poolIdx++].text,
+        c: COLORS[Math.floor(Math.random() * COLORS.length)],
+        s: SHAPES[Math.floor(Math.random() * SHAPES.length)],
+      };
+    }
+
+    function showBub(slot) {
       const bub = slot.querySelector('.bub');
-      const q   = shuffled[i % shuffled.length];
-      const c   = COLORS[Math.floor(Math.random() * COLORS.length)];
-      const s   = SHAPES[Math.floor(Math.random() * SHAPES.length)];
-      bub.textContent          = q.text;
-      bub.className            = `bub ${c} ${s} arriving`;
-      bub.style.animationDelay = `${i * 0.35}s`;
-    });
+      const q   = nextQ();
+      bub.textContent = q.text;
+      bub.className   = `bub ${q.c} ${q.s} arriving`;
+      bub.addEventListener('animationend', () => {
+        bub.classList.remove('arriving');
+        bub.classList.add('visible');
+      }, { once: true });
+      // dwell 5–9s then depart
+      const dwell = 7000 + Math.random() * 4000;
+      setTimeout(() => departBub(slot), dwell);
+    }
 
-    // Hide scroll arrow once user starts scrolling; show again at very top
-    const scrollArrow = document.querySelector('.hero-scroll-arrow');
-    window.addEventListener('scroll', () => {
-      scrollArrow.classList.toggle('hidden', window.scrollY > 40);
-    }, { passive: true });
+    function departBub(slot) {
+      const bub = slot.querySelector('.bub');
+      bub.classList.remove('visible');
+      bub.classList.add('departing');
+      bub.addEventListener('animationend', () => {
+        bub.classList.remove('departing');
+        setTimeout(() => showBub(slot), 300 + Math.random() * 700);
+      }, { once: true });
+    }
+
+    // Stagger initial arrivals so they don't all pop in at once
+    document.querySelectorAll('.bslot').forEach((slot, i) => {
+      setTimeout(() => showBub(slot), i * 500);
+    });
   </script>
 
 </body>

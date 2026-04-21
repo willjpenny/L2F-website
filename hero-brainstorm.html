@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Right Panel — Brainstorm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,700;1,400;1,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0f1f22;
+    color: #fff;
+    padding: 48px 32px 80px;
+  }
+
+  .page-title {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .page-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 56px;
+    line-height: 1.6;
+    max-width: 700px;
+  }
+
+  /* Each approach */
+  .approach {
+    margin-bottom: 72px;
+  }
+  .approach-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .approach-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: #82d4e0;
+  }
+  .approach-title {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .approach-body {
+    display: grid;
+    grid-template-columns: 480px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* Panel frame */
+  .panel {
+    width: 480px;
+    height: 400px;
+    background: #071f24;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  }
+
+  .approach-notes {
+    padding-top: 4px;
+  }
+  .approach-notes p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 20px;
+  }
+  .note-row {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.4);
+    padding-left: 12px;
+    border-left: 2px solid rgba(130,212,224,0.3);
+    margin-bottom: 10px;
+  }
+  .note-row strong { color: rgba(130,212,224,0.9); font-weight: 600; }
+
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+    margin: 56px 0;
+  }
+
+  /* ═══════════════════════════════════
+     APPROACH A — Animated Poster
+  ═══════════════════════════════════ */
+
+  .bub {
+    position: absolute;
+    border-radius: 16px;
+    padding: 8px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .bub-y { background: #f5c842; color: #0c525e; }
+  .bub-t { background: #82d4e0; color: #0c525e; }
+  .bub-w { background: rgba(255,255,255,0.92); color: #0c525e; }
+  .bub-round { border-radius: 999px; }
+
+  /* speech tail pointing bottom-left */
+  .tail::after {
+    content: '';
+    position: absolute;
+    bottom: -8px; left: 16px;
+    width: 0; height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+  }
+  .bub-y.tail::after { border-top: 8px solid #f5c842; }
+  .bub-t.tail::after { border-top: 8px solid #82d4e0; }
+  .bub-w.tail::after { border-top: 8px solid rgba(255,255,255,0.92); }
+
+  @keyframes bubble {
+    0%        { opacity: 0; transform: translateY(6px) scale(0.94); }
+    12%, 42%  { opacity: 1; transform: translateY(0)   scale(1); }
+    58%       { opacity: 0; transform: translateY(-5px) scale(0.96); }
+    100%      { opacity: 0; }
+  }
+
+  /* each bubble gets a unique duration+delay so they feel organic */
+  .b1  { animation: bubble 9s  infinite 0s;    top: 28px;  left: 24px; }
+  .b2  { animation: bubble 11s infinite 1.2s;  top: 22px;  right: 22px; }
+  .b3  { animation: bubble 8s  infinite 2.8s;  top: 100px; left: 36px; max-width: 150px; }
+  .b4  { animation: bubble 10s infinite 4.1s;  top: 108px; right: 24px; }
+  .b5  { animation: bubble 9s  infinite 5.6s;  top: 188px; left: 22px; max-width: 160px; }
+  .b6  { animation: bubble 11s infinite 7s;    top: 198px; right: 28px; }
+  .b7  { animation: bubble 8s  infinite 8.4s;  bottom: 40px; left: 40%; transform: translateX(-50%); white-space: nowrap; }
+  .b8  { animation: bubble 10s infinite 3.3s;  bottom: 28px; left: 24px; max-width: 130px; }
+  .b9  { animation: bubble 9s  infinite 6.5s;  bottom: 24px; right: 20px; }
+
+  /* ═══════════════════════════════════
+     APPROACH B — Portrait Exchange
+  ═══════════════════════════════════ */
+
+  .portrait-stage {
+    position: absolute;
+    inset: 0;
+  }
+  .portrait-frame {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+  .portrait-frame.active { opacity: 1; }
+
+  .portrait-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center top;
+  }
+  /* dark gradient over photo so text is legible */
+  .portrait-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(7,31,36,0.92) 0%, rgba(7,31,36,0.35) 55%, rgba(7,31,36,0.15) 100%);
+  }
+
+  /* silhouette placeholder (replaces photo) */
+  .portrait-sil {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 80px;
+  }
+
+  .portrait-role {
+    position: absolute;
+    top: 16px;
+    left: 18px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    z-index: 2;
+  }
+
+  .portrait-bubble {
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+    z-index: 2;
+  }
+  .portrait-bubble-inner {
+    border-radius: 14px 14px 14px 4px;
+    padding: 12px 16px;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.5;
+    color: #0c525e;
+  }
+  .bubble-y .portrait-bubble-inner { background: #f5c842; }
+  .bubble-t .portrait-bubble-inner { background: #82d4e0; }
+
+  /* specialist frame: no speech bubble, topic pill instead */
+  .topic-pill {
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+    z-index: 2;
+  }
+  .topic-pill-inner {
+    display: inline-block;
+    background: rgba(130,212,224,0.18);
+    border: 1px solid rgba(130,212,224,0.4);
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #82d4e0;
+    letter-spacing: 0.3px;
+  }
+
+  /* ═══════════════════════════════════
+     APPROACH C — Constellation
+  ═══════════════════════════════════ */
+
+  .const-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .const-top {
+    flex: 0 0 44%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 12px 20px;
+  }
+  .const-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+  .const-bottom {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .const-col {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+  }
+  .const-col + .const-col {
+    border-left: 1px solid rgba(255,255,255,0.07);
+  }
+  .const-col-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* central question bubble */
+  .const-q {
+    background: #f5c842;
+    border-radius: 14px;
+    padding: 10px 18px;
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 700;
+    color: #0c525e;
+    text-align: center;
+    line-height: 1.45;
+    max-width: 240px;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .const-q.active { opacity: 1; }
+
+  /* orbiting topic pills */
+  .orbit-pill {
+    position: absolute;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .op-tl { top: 12px; left: 12px; background: rgba(130,212,224,0.15); border: 1px solid rgba(130,212,224,0.3); color: rgba(130,212,224,0.85); }
+  .op-tr { top: 12px; right: 12px; background: rgba(245,200,66,0.12); border: 1px solid rgba(245,200,66,0.28); color: rgba(245,200,66,0.85); }
+  .op-bl { bottom: 10px; left: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.4); }
+  .op-br { bottom: 10px; right: 12px; background: rgba(130,212,224,0.08); border: 1px solid rgba(130,212,224,0.18); color: rgba(255,255,255,0.38); }
+
+  /* portrait fill in const-col */
+  .const-face {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center top;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .const-face.active { opacity: 1; }
+  .const-face::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(7,31,36,0.3);
+  }
+  /* label sits above the photo overlay */
+  .const-col-label { position: relative; z-index: 2; }
+
+  /* silhouette for placeholder */
+  .sil-wrap { position: relative; z-index: 2; opacity: 0.45; }
+</style>
+</head>
+<body>
+
+<div class="page-title">Hero right panel — three directions</div>
+<p class="page-sub">
+  Each approach solves the same brief: communicate within 10–15 seconds that (1) LTF covers a wide range of topics,
+  (2) families are asking the questions, (3) specialists are answering them.
+  The left panel (speech bubbles, dark teal) stays unchanged.
+</p>
+
+
+<!-- ══════════════════════════════════════
+     APPROACH A — Animated Poster
+══════════════════════════════════════ -->
+<div class="approach">
+  <div class="approach-header">
+    <span class="approach-label">Option A</span>
+    <span class="approach-title">Animated Poster</span>
+  </div>
+  <div class="approach-body">
+
+    <div class="panel" id="panel-a">
+      <!-- Bubbles -->
+      <div class="bub bub-y tail b1 tail">What is ADHD?</div>
+      <div class="bub bub-t bub-round b2">School support?</div>
+      <div class="bub bub-w tail b3">Why won't my child eat?</div>
+      <div class="bub bub-y b4">Eczema?</div>
+      <div class="bub bub-t tail b5">Is my child on the spectrum?</div>
+      <div class="bub bub-w bub-round b6">Signs of anxiety?</div>
+      <div class="bub bub-y tail b7">How do I get a diagnosis?</div>
+      <div class="bub bub-t b8">Should I try medication?</div>
+      <div class="bub bub-w tail b9">How can I help at school?</div>
+    </div>
+
+    <div class="approach-notes">
+      <p>
+        Dark teal field. Colourful speech and thought bubbles — yellow, light teal, off-white — appear and fade
+        independently, each carrying a real family question. The panel becomes a living version of the LTF brand poster.
+      </p>
+      <p>
+        The visual material runs through the whole panel without interruption. No dividers, no zones. Every bubble
+        is the same design language as the left panel — the hero feels like one continuous surface.
+      </p>
+      <div class="note-row"><strong>Strength:</strong> brand-native, always coherent, zero dependency on photo quality</div>
+      <div class="note-row"><strong>Gap:</strong> doesn't explicitly show faces — families and specialists are implied, not visible</div>
+      <div class="note-row"><strong>Best if:</strong> the question variety itself is enough to suggest a wide community of askers</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+
+<!-- ══════════════════════════════════════
+     APPROACH B — Portrait Exchange
+══════════════════════════════════════ -->
+<div class="approach">
+  <div class="approach-header">
+    <span class="approach-label">Option B</span>
+    <span class="approach-title">Portrait Exchange</span>
+  </div>
+  <div class="approach-body">
+
+    <div class="panel" id="panel-b">
+      <div class="portrait-stage">
+
+        <!-- Frame 1: Family member + question -->
+        <div class="portrait-frame active bubble-y" id="pf1">
+          <div style="position:absolute;inset:0;background:linear-gradient(145deg,#1c4d56 0%,#071f24 65%);">
+            <div class="portrait-sil">
+              <svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="opacity:0.35">
+                <circle cx="60" cy="38" r="30" fill="#82d4e0"/>
+                <ellipse cx="60" cy="108" rx="46" ry="30" fill="#82d4e0"/>
+              </svg>
+            </div>
+          </div>
+          <div class="portrait-role">Family member</div>
+          <div class="portrait-bubble bubble-y">
+            <div class="portrait-bubble-inner">"Why won't my child eat?"</div>
+          </div>
+        </div>
+
+        <!-- Frame 2: Specialist -->
+        <div class="portrait-frame bubble-t" id="pf2">
+          <div style="position:absolute;inset:0;background:linear-gradient(145deg,#1a3d30 0%,#071f24 65%);">
+            <div class="portrait-sil">
+              <svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="opacity:0.35">
+                <circle cx="60" cy="38" r="30" fill="#f5c842"/>
+                <ellipse cx="60" cy="108" rx="46" ry="30" fill="#f5c842"/>
+              </svg>
+            </div>
+          </div>
+          <div class="portrait-role">Paediatric dietitian</div>
+          <div class="topic-pill">
+            <span class="topic-pill-inner">Eating &amp; feeding challenges</span>
+          </div>
+        </div>
+
+        <!-- Frame 3: Family member + different question -->
+        <div class="portrait-frame bubble-y" id="pf3">
+          <div style="position:absolute;inset:0;background:linear-gradient(145deg,#1c4d56 0%,#071f24 65%);">
+            <div class="portrait-sil">
+              <svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="opacity:0.35">
+                <circle cx="60" cy="38" r="30" fill="#82d4e0"/>
+                <ellipse cx="60" cy="108" rx="46" ry="30" fill="#82d4e0"/>
+              </svg>
+            </div>
+          </div>
+          <div class="portrait-role">Family member</div>
+          <div class="portrait-bubble bubble-t">
+            <div class="portrait-bubble-inner">"Is my child on the spectrum?"</div>
+          </div>
+        </div>
+
+        <!-- Frame 4: Specialist 2 -->
+        <div class="portrait-frame" id="pf4">
+          <div style="position:absolute;inset:0;background:linear-gradient(145deg,#2a3020 0%,#071f24 65%);">
+            <div class="portrait-sil">
+              <svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="opacity:0.35">
+                <circle cx="60" cy="38" r="30" fill="#f5c842"/>
+                <ellipse cx="60" cy="108" rx="46" ry="30" fill="#f5c842"/>
+              </svg>
+            </div>
+          </div>
+          <div class="portrait-role">Child psychologist</div>
+          <div class="topic-pill">
+            <span class="topic-pill-inner">Autism &amp; neurodevelopment</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="approach-notes">
+      <p>
+        One portrait fills the panel at a time. The cycle alternates: a family member appears with their question in a
+        speech bubble — then a specialist appears with their area of expertise. One clear story per moment.
+      </p>
+      <p>
+        When real curated stills replace the silhouettes, this becomes the highest-impact option. The full-bleed face
+        creates an immediate human connection. The left panel's speech bubbles are mirrored here — the format rhymes.
+      </p>
+      <div class="note-row"><strong>Strength:</strong> premium feel, emotionally direct, no competing elements</div>
+      <div class="note-row"><strong>Gap:</strong> one message at a time — visitor needs to wait through 2–3 frames for the full picture</div>
+      <div class="note-row"><strong>Best if:</strong> you can supply 4–6 strong portrait stills (close crop, clear expression)</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+
+<!-- ══════════════════════════════════════
+     APPROACH C — Constellation
+══════════════════════════════════════ -->
+<div class="approach">
+  <div class="approach-header">
+    <span class="approach-label">Option C</span>
+    <span class="approach-title">Constellation</span>
+  </div>
+  <div class="approach-body">
+
+    <div class="panel" id="panel-c">
+      <div class="const-panel">
+
+        <!-- Top zone: central question + orbiting topic pills -->
+        <div class="const-top">
+          <div class="orbit-pill op-tl">ADHD</div>
+          <div class="orbit-pill op-tr">Eczema</div>
+          <div class="orbit-pill op-bl">Anxiety</div>
+          <div class="orbit-pill op-br">Autism</div>
+          <div class="const-q active" id="cq">Why won't my child eat?</div>
+        </div>
+
+        <div class="const-divider"></div>
+
+        <!-- Bottom zone: two portrait columns -->
+        <div class="const-bottom">
+          <div class="const-col">
+            <div class="const-face" id="cf-family" style="background:linear-gradient(160deg,#1c4d56 0%,#071f24 100%);opacity:1;">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-bottom:20px;">
+                <svg width="70" height="70" viewBox="0 0 70 70" fill="none" style="opacity:0.35">
+                  <circle cx="35" cy="22" r="18" fill="#82d4e0"/>
+                  <ellipse cx="35" cy="64" rx="28" ry="18" fill="#82d4e0"/>
+                </svg>
+              </div>
+            </div>
+            <div class="const-col-label">Family</div>
+          </div>
+          <div class="const-col">
+            <div class="const-face" style="background:linear-gradient(160deg,#1a3d30 0%,#071f24 100%);opacity:1;">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-bottom:20px;">
+                <svg width="70" height="70" viewBox="0 0 70 70" fill="none" style="opacity:0.35">
+                  <circle cx="35" cy="22" r="18" fill="#f5c842"/>
+                  <ellipse cx="35" cy="64" rx="28" ry="18" fill="#f5c842"/>
+                </svg>
+              </div>
+            </div>
+            <div class="const-col-label">Specialist</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="approach-notes">
+      <p>
+        The panel is split into two zones — but this time the central question bubble is the visual anchor that
+        connects them. Top half: a large question with satellite topic pills orbiting it. Bottom half: family member
+        (left) and specialist (right) side by side.
+      </p>
+      <p>
+        All three messages are legible at a glance. The question changes on a fast cycle; the faces change more slowly.
+        The spatial logic — "family asks → expert answers" — is readable without labels.
+      </p>
+      <div class="note-row"><strong>Strength:</strong> simultaneous communication of all three messages</div>
+      <div class="note-row"><strong>Gap:</strong> still two zones — needs strong execution to not feel like Version A</div>
+      <div class="note-row"><strong>Best if:</strong> communicating all three messages simultaneously is the top priority</div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // ── Approach B: Portrait Exchange ──
+  const frames = document.querySelectorAll('.portrait-frame');
+  let bIdx = 0;
+  function nextFrame() {
+    frames[bIdx].classList.remove('active');
+    bIdx = (bIdx + 1) % frames.length;
+    frames[bIdx].classList.add('active');
+  }
+  setInterval(nextFrame, 3500);
+
+  // ── Approach C: Cycling question ──
+  const questions = [
+    "Why won't my child eat?",
+    "What is ADHD?",
+    "Is my child on the spectrum?",
+    "What are signs of anxiety?",
+    "How do I get a diagnosis?",
+    "Should I try medication?",
+  ];
+  const cq = document.getElementById('cq');
+  let qIdx = 0;
+  function nextQ() {
+    cq.classList.remove('active');
+    setTimeout(() => {
+      qIdx = (qIdx + 1) % questions.length;
+      cq.textContent = questions[qIdx];
+      cq.classList.add('active');
+    }, 600);
+  }
+  setInterval(nextQ, 3000);
+</script>
+
+</body>
+</html>
