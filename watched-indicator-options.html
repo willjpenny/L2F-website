@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watched Indicator: Options B and D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f5;
+    color: #1a2c2e;
+  }
+
+  /* ── Page header ── */
+  .page-header {
+    background: #0c525e;
+    padding: 52px 64px 44px;
+  }
+
+  .page-header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 10px;
+  }
+
+  .page-header h1 {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  .page-header p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    max-width: 560px;
+    line-height: 1.6;
+  }
+
+  /* ── Section ── */
+  .section {
+    padding: 56px 64px;
+    border-bottom: 1px solid #dce8ea;
+    background: #f0f4f5;
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .section-header {
+    margin-bottom: 32px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #0c525e;
+    background: #d6f0f4;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+
+  .section-header h2 {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #1a2c2e;
+    margin-bottom: 8px;
+  }
+
+  .section-header p {
+    font-size: 14px;
+    color: #5a7a7e;
+    line-height: 1.6;
+    max-width: 600px;
+  }
+
+  /* ── Card grid ── */
+  .card-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 680px;
+  }
+
+  /* ── Video card base ── */
+  .video-card {
+    display: flex;
+    flex-direction: row;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s;
+  }
+
+  .video-card:hover {
+    box-shadow: 0 4px 18px rgba(12,82,94,0.13);
+  }
+
+  .video-thumb {
+    width: 180px;
+    flex-shrink: 0;
+    aspect-ratio: 16/9;
+    background: #c8dfe2;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(12,82,94,0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .duration-badge {
+    position: absolute;
+    bottom: 5px;
+    right: 7px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .card-content {
+    flex: 1;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .card-title {
+    font-family: 'Lora', serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: #1a2c2e;
+    line-height: 1.4;
+  }
+
+  .card-specialist {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #e0eff1;
+    font-size: 8px;
+    font-weight: 700;
+    color: #0c525e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .specialist-name {
+    font-size: 12px;
+    color: #5a7a7e;
+  }
+
+  .card-duration {
+    font-size: 11px;
+    color: #9ab8bb;
+  }
+
+  /* ── Option A — progress bar ── */
+  .progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: #82d4e0;
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* ── Option B — watched label ── */
+  .watched-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #82d4e0;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ── State labels ── */
+  .state-row {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  .state-col {
+    flex: 1;
+    max-width: 680px;
+  }
+
+  .state-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #9ab8bb;
+    margin-bottom: 12px;
+  }
+
+  /* ── Pros note ── */
+  .note {
+    margin-top: 28px;
+    padding: 16px 20px;
+    background: #e8f4f5;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #3d6b71;
+    line-height: 1.6;
+    max-width: 680px;
+  }
+
+  .note strong { font-weight: 600; color: #0c525e; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <p class="page-header-eyebrow">Listening to Families: Design options</p>
+  <h1>Video watched indicator</h1>
+  <p>Two options for showing users which videos they've already watched. Shown in context as a list of video cards, with a mix of watched and unwatched states.</p>
+</div>
+
+<!-- OPTION B -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-tag">Option A</span>
+    <h2>Progress bar</h2>
+    <p>A thin coloured bar runs along the bottom edge of the thumbnail. Full bar = fully watched. This approach also supports showing partial progress (e.g. a half-watched video).</p>
+  </div>
+
+  <div class="state-row">
+    <div class="state-col">
+      <p class="state-label">Unwatched</p>
+      <div class="card-grid">
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">8:45</span>
+          </div>
+          <div class="card-content">
+            <p class="card-title">What can parents do to support their child?</p>
+            <div class="card-specialist"><div class="avatar">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+            <span class="card-duration">8:45</span>
+          </div>
+        </a>
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">6:12</span>
+          </div>
+          <div class="card-content">
+            <p class="card-title">SNAP forms: differences at home and school</p>
+            <div class="card-specialist"><div class="avatar">SP</div><span class="specialist-name">Sarah Parder</span></div>
+            <span class="card-duration">6:12</span>
+          </div>
+        </a>
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">9:33</span>
+          </div>
+          <div class="card-content">
+            <p class="card-title">Communicating with the school and transitions</p>
+            <div class="card-specialist"><div class="avatar">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+            <span class="card-duration">9:33</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="state-col">
+      <p class="state-label">Watched</p>
+      <div class="card-grid">
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">8:45</span>
+            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+          </div>
+          <div class="card-content">
+            <p class="card-title">What can parents do to support their child?</p>
+            <div class="card-specialist"><div class="avatar">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+            <span class="card-duration">8:45</span>
+          </div>
+        </a>
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">6:12</span>
+            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+          </div>
+          <div class="card-content">
+            <p class="card-title">SNAP forms: differences at home and school</p>
+            <div class="card-specialist"><div class="avatar">SP</div><span class="specialist-name">Sarah Parder</span></div>
+            <span class="card-duration">6:12</span>
+          </div>
+        </a>
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">9:33</span>
+            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+          </div>
+          <div class="card-content">
+            <p class="card-title">Communicating with the school and transitions</p>
+            <div class="card-specialist"><div class="avatar">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+            <span class="card-duration">9:33</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Note:</strong> The progress bar could also show partial progress for half-watched videos, which may be useful further down the track.
+  </div>
+</div>
+
+<!-- OPTION D -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-tag">Option B</span>
+    <h2>Watched text label</h2>
+    <p>A small "Watched" label with a tick appears in the card content area. Low visual noise and keeps the thumbnail area clean. Relies on text rather than iconography alone.</p>
+  </div>
+
+  <div class="state-row">
+    <div class="state-col">
+      <p class="state-label">Unwatched</p>
+      <div class="card-grid">
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">8:45</span>
+          </div>
+          <div class="card-content">
+            <p class="card-title">What can parents do to support their child?</p>
+            <div class="card-specialist"><div class="avatar">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+            <span class="card-duration">8:45</span>
+          </div>
+        </a>
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">6:12</span>
+          </div>
+          <div class="card-content">
+            <p class="card-title">SNAP forms: differences at home and school</p>
+            <div class="card-specialist"><div class="avatar">SP</div><span class="specialist-name">Sarah Parder</span></div>
+            <span class="card-duration">6:12</span>
+          </div>
+        </a>
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">9:33</span>
+          </div>
+          <div class="card-content">
+            <p class="card-title">Communicating with the school and transitions</p>
+            <div class="card-specialist"><div class="avatar">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+            <span class="card-duration">9:33</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="state-col">
+      <p class="state-label">Watched</p>
+      <div class="card-grid">
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">8:45</span>
+          </div>
+          <div class="card-content">
+            <p class="card-title">What can parents do to support their child?</p>
+            <div class="card-specialist"><div class="avatar">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+            <span class="watched-label">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#82d4e0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Watched
+            </span>
+          </div>
+        </a>
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">6:12</span>
+          </div>
+          <div class="card-content">
+            <p class="card-title">SNAP forms: differences at home and school</p>
+            <div class="card-specialist"><div class="avatar">SP</div><span class="specialist-name">Sarah Parder</span></div>
+            <span class="watched-label">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#82d4e0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Watched
+            </span>
+          </div>
+        </a>
+        <a href="#" class="video-card">
+          <div class="video-thumb">
+            <div class="play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="duration-badge">9:33</span>
+          </div>
+          <div class="card-content">
+            <p class="card-title">Communicating with the school and transitions</p>
+            <div class="card-specialist"><div class="avatar">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+            <span class="watched-label">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#82d4e0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Watched
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

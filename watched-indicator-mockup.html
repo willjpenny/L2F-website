@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watched Indicator Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f5;
+    padding: 40px 32px;
+    color: #1a2c2e;
+  }
+
+  h1 {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #82d4e0;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: #5a7a7e;
+    margin-bottom: 48px;
+  }
+
+  .option {
+    margin-bottom: 52px;
+  }
+
+  .option-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #5a7a7e;
+    margin-bottom: 14px;
+  }
+
+  .option-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a2c2e;
+    margin-bottom: 4px;
+  }
+
+  .option-desc {
+    font-size: 13px;
+    color: #5a7a7e;
+    margin-bottom: 18px;
+  }
+
+  .pair {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .pair-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .pair-state {
+    font-size: 11px;
+    font-weight: 500;
+    color: #8aabaf;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* Base video card */
+  .video-card {
+    display: flex;
+    flex-direction: row;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    text-decoration: none;
+    color: inherit;
+    width: 360px;
+  }
+
+  .video-thumb {
+    width: 140px;
+    flex-shrink: 0;
+    aspect-ratio: 16/9;
+    background: #c8dfe2;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .play-btn-small {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(12,82,94,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .duration-badge {
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 3px;
+  }
+
+  .video-card-content {
+    flex: 1;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .video-card-title {
+    font-family: 'Lora', serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: #1a2c2e;
+    line-height: 1.4;
+  }
+
+  .video-card-specialist {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .avatar-small {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e0eff1;
+    font-size: 8px;
+    font-weight: 600;
+    color: #82d4e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .specialist-name {
+    font-size: 11px;
+    color: #5a7a7e;
+  }
+
+  .video-card-duration {
+    font-size: 11px;
+    color: #8aabaf;
+  }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid #d8e8ea;
+    margin: 48px 0;
+  }
+
+  /* ─── Option A: Checkmark badge ─── */
+  .check-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #82d4e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  /* ─── Option B: Progress bar ─── */
+  .progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: #82d4e0;
+  }
+
+  /* ─── Option C: Dim + badge ─── */
+  .thumb-dim {
+    background: #b0cdd1;
+  }
+
+  .thumb-dim::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.18);
+  }
+
+  .check-badge-dim {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #82d4e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  /* ─── Option D: "Watched" text label ─── */
+  .watched-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #82d4e0;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Watched indicator options</h1>
+<p class="subtitle">Small mockup — four approaches. Each shows an unwatched card (left) and a watched card (right).</p>
+
+<!-- OPTION A -->
+<div class="option">
+  <p class="option-label">Option A</p>
+  <p class="option-name">Checkmark badge on thumbnail</p>
+  <p class="option-desc">A small green tick appears in the top-right corner of the thumbnail once watched. Simple, familiar, unobtrusive.</p>
+  <div class="pair">
+    <div class="pair-col">
+      <span class="pair-state">Unwatched</span>
+      <a href="#" class="video-card">
+        <div class="video-thumb">
+          <div class="play-btn-small"><svg width="9" height="9" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <span class="duration-badge">8:45</span>
+        </div>
+        <div class="video-card-content">
+          <p class="video-card-title">What can parents do to support their child</p>
+          <div class="video-card-specialist"><div class="avatar-small">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+          <span class="video-card-duration">8:45</span>
+        </div>
+      </a>
+    </div>
+    <div class="pair-col">
+      <span class="pair-state">Watched</span>
+      <a href="#" class="video-card">
+        <div class="video-thumb">
+          <div class="play-btn-small"><svg width="9" height="9" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <span class="duration-badge">8:45</span>
+          <div class="check-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="video-card-content">
+          <p class="video-card-title">What can parents do to support their child</p>
+          <div class="video-card-specialist"><div class="avatar-small">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+          <span class="video-card-duration">8:45</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- OPTION B -->
+<div class="option">
+  <p class="option-label">Option B</p>
+  <p class="option-name">Progress bar on thumbnail</p>
+  <p class="option-desc">A thin green bar fills the bottom edge of the thumbnail. Full bar = fully watched. Could also show partial progress (half-watched).</p>
+  <div class="pair">
+    <div class="pair-col">
+      <span class="pair-state">Unwatched</span>
+      <a href="#" class="video-card">
+        <div class="video-thumb">
+          <div class="play-btn-small"><svg width="9" height="9" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <span class="duration-badge">8:45</span>
+        </div>
+        <div class="video-card-content">
+          <p class="video-card-title">What can parents do to support their child</p>
+          <div class="video-card-specialist"><div class="avatar-small">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+          <span class="video-card-duration">8:45</span>
+        </div>
+      </a>
+    </div>
+    <div class="pair-col">
+      <span class="pair-state">Watched</span>
+      <a href="#" class="video-card">
+        <div class="video-thumb">
+          <div class="play-btn-small"><svg width="9" height="9" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <span class="duration-badge">8:45</span>
+          <div class="progress-bar"><div class="progress-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="video-card-content">
+          <p class="video-card-title">What can parents do to support their child</p>
+          <div class="video-card-specialist"><div class="avatar-small">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+          <span class="video-card-duration">8:45</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- OPTION C -->
+<div class="option">
+  <p class="option-label">Option C</p>
+  <p class="option-name">Dimmed thumbnail + checkmark</p>
+  <p class="option-desc">Watched thumbnails are slightly darkened and desaturated, with a green tick badge. Makes unwatched content feel more prominent and "fresh".</p>
+  <div class="pair">
+    <div class="pair-col">
+      <span class="pair-state">Unwatched</span>
+      <a href="#" class="video-card">
+        <div class="video-thumb">
+          <div class="play-btn-small"><svg width="9" height="9" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <span class="duration-badge">8:45</span>
+        </div>
+        <div class="video-card-content">
+          <p class="video-card-title">What can parents do to support their child</p>
+          <div class="video-card-specialist"><div class="avatar-small">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+          <span class="video-card-duration">8:45</span>
+        </div>
+      </a>
+    </div>
+    <div class="pair-col">
+      <span class="pair-state">Watched</span>
+      <a href="#" class="video-card">
+        <div class="video-thumb thumb-dim">
+          <div class="play-btn-small" style="z-index:1"><svg width="9" height="9" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <span class="duration-badge" style="z-index:1">8:45</span>
+          <div class="check-badge-dim">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="video-card-content">
+          <p class="video-card-title" style="color:#5a7a7e">What can parents do to support their child</p>
+          <div class="video-card-specialist"><div class="avatar-small">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+          <span class="video-card-duration">8:45</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- OPTION D -->
+<div class="option">
+  <p class="option-label">Option D</p>
+  <p class="option-name">"Watched" text label in card</p>
+  <p class="option-desc">A small "Watched" label with a tick appears in the card content area, below the specialist name. Low visual noise — relies on text rather than iconography.</p>
+  <div class="pair">
+    <div class="pair-col">
+      <span class="pair-state">Unwatched</span>
+      <a href="#" class="video-card">
+        <div class="video-thumb">
+          <div class="play-btn-small"><svg width="9" height="9" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <span class="duration-badge">8:45</span>
+        </div>
+        <div class="video-card-content">
+          <p class="video-card-title">What can parents do to support their child</p>
+          <div class="video-card-specialist"><div class="avatar-small">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+          <span class="video-card-duration">8:45</span>
+        </div>
+      </a>
+    </div>
+    <div class="pair-col">
+      <span class="pair-state">Watched</span>
+      <a href="#" class="video-card">
+        <div class="video-thumb">
+          <div class="play-btn-small"><svg width="9" height="9" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <span class="duration-badge">8:45</span>
+        </div>
+        <div class="video-card-content">
+          <p class="video-card-title">What can parents do to support their child</p>
+          <div class="video-card-specialist"><div class="avatar-small">ME</div><span class="specialist-name">Dr. Matt Eggleston</span></div>
+          <span class="watched-label">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#82d4e0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Watched
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
