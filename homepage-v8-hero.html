@@ -53,9 +53,11 @@
     .hero {
       background: #0c525e;
       min-height: calc(80vh - 64px);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
+      overflow: hidden;
     }
     .hero-scroll-arrow {
       position: fixed;
@@ -75,202 +77,106 @@
       50% { transform: translateX(-50%) translateY(8px); }
     }
 
-    /* Left panel */
-    .hero-left {
+    /* Centred content */
+    .hero-content {
+      position: relative;
+      z-index: 2;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: clamp(48px, 7vw, 96px) clamp(32px, 5vw, 72px);
+      padding: clamp(56px, 8vw, 112px) clamp(24px, 5vw, 72px);
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
     }
 
-    /* Speech bubbles */
-    .bubbles { display: flex; flex-direction: column; gap: 44px; margin-bottom: 48px; align-items: center; }
+    /* Speech bubbles — main headline */
+    .bubbles { display: flex; flex-direction: column; gap: 56px; margin-bottom: 56px; align-items: center; }
     .bubble {
       display: inline-flex; align-items: center; justify-content: center;
       font-family: 'Lora', serif;
-      font-size: clamp(20px, 2.8vw, 34px);
-      line-height: 1.3; position: relative; text-align: center;
+      font-size: clamp(28px, 3.8vw, 46px);
+      line-height: 1.25; position: relative; text-align: center;
     }
     .bubble-teal {
       background: #82d4e0; color: #0c3d47;
-      padding: 24px 38px;
-      border-radius: 28px 28px 28px 6px;
+      padding: 30px 50px;
+      border-radius: 32px 32px 32px 8px;
     }
     .bubble-teal::after {
-      content: ''; position: absolute; bottom: -20px; left: 18px;
+      content: ''; position: absolute; bottom: -22px; left: 22px;
       width: 0; height: 0;
-      border-top: 22px solid #82d4e0;
-      border-right: 14px solid transparent;
+      border-top: 24px solid #82d4e0;
+      border-right: 16px solid transparent;
     }
     .bubble-yellow {
       background: #f5c842; color: #2a1f00;
-      padding: 24px 48px;
+      padding: 30px 60px;
       border-radius: 100px;
       margin-left: 0;
     }
     .bubble-yellow::after {
-      content: ''; position: absolute; bottom: -20px; right: 36px;
+      content: ''; position: absolute; bottom: -22px; right: 42px;
       width: 0; height: 0;
-      border-top: 22px solid #f5c842;
-      border-left: 14px solid transparent;
+      border-top: 24px solid #f5c842;
+      border-left: 16px solid transparent;
     }
     .bubble strong { font-weight: 700; }
     .bubble-teal strong { text-decoration: underline; text-underline-offset: 3px; }
     .bubble-yellow strong { text-decoration: underline; }
-    .hero-sub { font-size: 17px; color: rgba(255,255,255,0.65); line-height: 1.7; max-width: 520px; margin-bottom: 16px; text-align: center; }
+    .hero-sub { font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.7; max-width: 580px; margin: 0 auto; text-align: center; }
 
-    /* ── RIGHT PANEL — Version A: 3-box layout ── */
-    .hero-right {
-      position: relative;
-      background: #071f24;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      isolation: isolate;
-    }
-
-    /* Questions panel — fills right side */
-    .hv-top {
-      flex: 1;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Questions stage — scattered absolute positions */
-    .hv-questions {
+    /* ── BACKGROUND QUESTION BUBBLES ── */
+    .hero-bg-bubbles {
       position: absolute;
       inset: 0;
+      z-index: 1;
+      pointer-events: none;
     }
+    .hero-bg-slot { position: absolute; }
+    .hero-bg-slot:nth-child(1) { top: 8%;    left: 4%; }
+    .hero-bg-slot:nth-child(2) { top: 11%;   right: 5%; }
+    .hero-bg-slot:nth-child(3) { top: 46%;   left: 2%; }
+    .hero-bg-slot:nth-child(4) { top: 42%;   right: 3%; }
+    .hero-bg-slot:nth-child(5) { bottom: 10%; left: 6%; }
+    .hero-bg-slot:nth-child(6) { bottom: 13%; right: 7%; }
 
-    @keyframes bubArrive {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
+    @keyframes bgBubArrive {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: var(--bg-bub-opacity, 0.38); transform: translateY(0); }
     }
-    @keyframes bubDepart {
-      from { opacity: 1; transform: translateY(0); }
+    @keyframes bgBubDepart {
+      from { opacity: var(--bg-bub-opacity, 0.38); transform: translateY(0); }
       to   { opacity: 0; transform: translateY(-12px); }
     }
 
-    .hv-slot { position: absolute; }
-    .hv-slot:nth-child(1) { top: 10%;  left: 8%;   }
-    .hv-slot:nth-child(2) { top: 7%;   right: 9%;  }
-    .hv-slot:nth-child(3) { top: 43%;  left: 13%;  }
-    .hv-slot:nth-child(4) { top: 50%;  right: 7%;  }
-    .hv-slot:nth-child(5) { bottom: 11%; left: 26%; }
-
-    .hv-bub {
+    .hero-bg-bub {
       display: inline-block;
       font-family: 'Lora', serif;
       font-weight: 700;
-      font-size: clamp(14px, 1.4vw, 18px);
+      font-size: clamp(15px, 1.6vw, 21px);
       line-height: 1.35;
       text-align: center;
-      padding: 14px 24px;
-      max-width: 210px;
+      padding: 16px 28px;
+      max-width: 280px;
       opacity: 0;
       pointer-events: none;
       will-change: opacity, transform;
+      --bg-bub-opacity: 0.38;
     }
-    .hv-bub.bub-t { background: #82d4e0; color: #0c3d47; }
-    .hv-bub.bub-p { background: #f5a8c8; color: #4d0a2a; }
-    .hv-bub.bub-o { background: #f5a868; color: #4d1f00; }
-    .hv-bub.bub-g { background: #8ed4a8; color: #0a3d1e; }
-    .hv-bub.bub-r { background: #f58080; color: #4d0a0a; }
-    .hv-bub.bub-pill  { border-radius: 999px; }
-    .hv-bub.bub-sbl   { border-radius: 20px 20px 20px 5px; }
-    .hv-bub.bub-sbr   { border-radius: 20px 20px 5px 20px; }
-    .hv-bub.bub-round { border-radius: 16px; }
-    .hv-bub.arriving  { animation: bubArrive 1.2s ease-out forwards; }
-    .hv-bub.visible   { opacity: 1; }
-    .hv-bub.departing { animation: bubDepart 0.8s ease-in forwards; }
-
-    /* Large screens: show more slots */
-    @media (min-width: 1400px) {
-      .hv-questions { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
-      .hv-slot:nth-child(13), .hv-slot:nth-child(14), .hv-slot:nth-child(15) { display: flex; }
-      .hv-slot:nth-child(n+16) { display: none; }
-    }
-    @media (min-width: 1600px) {
-      .hv-questions { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; }
-      .hv-slot:nth-child(n+13) { display: flex; }
-    }
-
-    /* Responsive slot counts */
-    @media (max-width: 1100px) {
-      /* Two-col hero: right panel ~half width — 3 cols × 2 rows = 6 slots */
-      .hv-questions { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
-      .hv-slot:nth-child(n+7) { display: none; }
-    }
-    @media (max-width: 900px) {
-      /* Single-col hero: right panel full width — 4 cols × 2 rows = 8 slots */
-      .hv-questions { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
-      .hv-slot:nth-child(7), .hv-slot:nth-child(8) { display: flex; }
-      .hv-slot:nth-child(n+9) { display: none; }
-    }
-    @media (max-width: 768px) {
-      /* Mobile — 2 cols × 2 rows = 4 slots */
-      .hv-questions { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-      .hv-slot:nth-child(3), .hv-slot:nth-child(4) { display: flex; }
-      .hv-slot:nth-child(n+5) { display: none; }
-    }
-
-    /* Face columns */
-    .hv-col {
-      flex: 0 0 50%;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hv-col + .hv-col {
-      border-left: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .hv-faces {
-      position: absolute;
-      inset: 0;
-    }
-
-    .hv-face {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-    }
-
-    .hv-face.active { opacity: 1; }
-
-    /* Subtle dark overlay on face columns */
-    .hv-col::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(7,31,36,0.28);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    /* Column captions */
-    .hv-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 24px 10px 10px;
-      background: linear-gradient(to top, rgba(7,31,36,0.85) 0%, transparent 100%);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.92);
-      text-align: center;
-      z-index: 3;
-      pointer-events: none;
-    }
+    .hero-bg-bub.bub-t { background: #82d4e0; color: #0c3d47; }
+    .hero-bg-bub.bub-p { background: #f5a8c8; color: #4d0a2a; }
+    .hero-bg-bub.bub-o { background: #f5a868; color: #4d1f00; }
+    .hero-bg-bub.bub-g { background: #8ed4a8; color: #0a3d1e; }
+    .hero-bg-bub.bub-r { background: #f58080; color: #4d0a0a; }
+    .hero-bg-bub.bub-pill  { border-radius: 999px; }
+    .hero-bg-bub.bub-sbl   { border-radius: 22px 22px 22px 6px; }
+    .hero-bg-bub.bub-sbr   { border-radius: 22px 22px 6px 22px; }
+    .hero-bg-bub.bub-round { border-radius: 18px; }
+    .hero-bg-bub.arriving  { animation: bgBubArrive 1.5s ease-out forwards; }
+    .hero-bg-bub.visible   { opacity: var(--bg-bub-opacity, 0.38); }
+    .hero-bg-bub.departing { animation: bgBubDepart 1s ease-in forwards; }
 
     /* ── BOTTOM CTA ── */
     .bottom-cta { background: #0c525e; padding: clamp(48px,6vw,72px) clamp(20px,4vw,56px); text-align: center; }
@@ -343,18 +249,23 @@
     .footer-bar { max-width: 1200px; margin: 0 auto; padding: 18px clamp(20px,4vw,56px); display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: rgba(255,255,255,0.4); flex-wrap: wrap; gap: 8px; }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .hero-bg-slot:nth-child(1) { top: 6%;    left: 3%; }
+      .hero-bg-slot:nth-child(2) { top: 9%;    right: 3%; }
+      .hero-bg-slot:nth-child(3) { top: 48%;   left: 2%; }
+      .hero-bg-slot:nth-child(4) { top: 44%;   right: 2%; }
+      .hero-bg-slot:nth-child(5) { bottom: 8%; left: 3%; }
+      .hero-bg-slot:nth-child(6) { bottom: 11%; right: 4%; }
+    }
     @media (max-width: 900px) {
       .nav-links { display: none; }
       .nav-partner-right { display: none; }
       .nav-hamburger { display: flex; width: 44px; height: 44px; grid-column: 3; justify-self: end; }
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { min-height: auto; padding: 48px 32px 40px; }
-      .hero-right { min-height: 460px; }
+      .hero-content { padding: 48px 24px 56px; }
+      .hero-bg-bub { font-size: 14px; padding: 12px 20px; max-width: 200px; }
+      .hero-bg-slot:nth-child(n+5) { display: none; }
     }
     @media (max-width: 768px) {
-      .hero-left { padding: 40px 20px 36px; }
-      .hero-right { min-height: 400px; }
-      .benefits-inner { grid-template-columns: 1fr; gap: 16px; }
       .topics-grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
       .topic-card h3 { font-size: 14px; }
       .topic-card p { font-size: 12px; }
@@ -365,16 +276,16 @@
     }
     @media (max-width: 600px) {
       .topics-grid { grid-template-columns: 1fr; }
-      .hv-q { font-size: 15px; }
+      .hero-bg-slot { display: none !important; }
     }
     @media (max-width: 400px) {
-      .bubble { font-size: 17px; }
-      .bubble-teal { padding: 14px 22px; border-radius: 22px 22px 22px 5px; }
-      .bubble-yellow { padding: 14px 26px; }
-      .bubble-teal::after { bottom: -16px; border-top: 17px solid #82d4e0; border-right: 11px solid transparent; }
-      .bubble-yellow::after { bottom: -16px; right: 26px; border-top: 17px solid #f5c842; border-left: 11px solid transparent; }
-      .bubbles { gap: 24px; margin-bottom: 28px; }
-      .hero-sub { font-size: 14px; }
+      .bubble { font-size: 22px; }
+      .bubble-teal { padding: 18px 26px; border-radius: 24px 24px 24px 6px; }
+      .bubble-yellow { padding: 18px 32px; }
+      .bubble-teal::after { bottom: -18px; border-top: 19px solid #82d4e0; border-right: 12px solid transparent; }
+      .bubble-yellow::after { bottom: -18px; right: 30px; border-top: 19px solid #f5c842; border-left: 12px solid transparent; }
+      .bubbles { gap: 32px; margin-bottom: 36px; }
+      .hero-sub { font-size: 15px; }
     }
     @media (max-height: 500px) { .hero-scroll-arrow { display: none; } }
   </style>
@@ -416,78 +327,23 @@
   <!-- HERO -->
   <section class="hero" aria-label="Homepage hero">
 
-    <!-- Left: unchanged -->
-    <div class="hero-left">
+    <!-- Background atmosphere bubbles -->
+    <div class="hero-bg-bubbles" aria-hidden="true">
+      <div class="hero-bg-slot"><div class="hero-bg-bub"></div></div>
+      <div class="hero-bg-slot"><div class="hero-bg-bub"></div></div>
+      <div class="hero-bg-slot"><div class="hero-bg-bub"></div></div>
+      <div class="hero-bg-slot"><div class="hero-bg-bub"></div></div>
+      <div class="hero-bg-slot"><div class="hero-bg-bub"></div></div>
+      <div class="hero-bg-slot"><div class="hero-bg-bub"></div></div>
+    </div>
+
+    <!-- Centred main content -->
+    <div class="hero-content">
       <div class="bubbles">
         <div class="bubble bubble-teal">Families have&nbsp;<br><strong>questions.</strong></div>
         <div class="bubble bubble-yellow">We have&nbsp;<strong>real answers.</strong></div>
       </div>
       <p class="hero-sub">Specialist-backed videos &amp; podcasts for New Zealand families, covering 31 health and development topics.</p>
-    </div>
-
-    <!-- Right: Version A — 3-box layout -->
-    <div class="hero-right" aria-label="What we cover">
-
-      <!-- Top half: rotating questions -->
-      <div class="hv-top">
-        <div class="hv-questions" aria-hidden="true">
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-          <div class="hv-slot"><div class="hv-bub"></div></div>
-        </div>
-      </div>
-
-      <!-- Bottom half: families (left) + experts (right) -->
-      <div class="hv-bottom">
-
-        <!-- Family column -->
-        <div class="hv-col">
-          <div class="hv-faces" aria-hidden="true">
-            <img class="hv-face active"
-              src="https://img.youtube.com/vi/V16QVuJkNOU/mqdefault.jpg"
-              alt="" />
-            <img class="hv-face"
-              src="https://img.youtube.com/vi/Z8D1lWYnWFw/mqdefault.jpg"
-              alt="" />
-            <img class="hv-face"
-              src="https://img.youtube.com/vi/QfAhG87aHik/mqdefault.jpg"
-              alt="" />
-          </div>
-          <div class="hv-caption">Families ask</div>
-        </div>
-
-        <!-- Expert column -->
-        <div class="hv-col">
-          <div class="hv-faces" aria-hidden="true">
-            <img class="hv-face active"
-              src="https://img.youtube.com/vi/T2THRA7nvrA/mqdefault.jpg"
-              alt="" />
-            <img class="hv-face"
-              src="https://img.youtube.com/vi/VZ4NhhIQ880/mqdefault.jpg"
-              alt="" />
-          </div>
-          <div class="hv-caption">Experts answer</div>
-        </div>
-
-      </div>
-
     </div>
 
     <!-- Scroll indicator -->
@@ -670,8 +526,8 @@
       }
     });
 
-    // ── VERSION A: cycling question bubbles ──
-    const HV_QUESTIONS = [
+    // ── Background atmosphere bubbles ──
+    const HERO_BG_QUESTIONS = [
       "What is ADHD?",
       "Why won't my child eat?",
       "Is my child on the autism spectrum?",
@@ -685,69 +541,51 @@
       "Could it be dyslexia?",
       "How do I talk to her teacher?",
     ];
-    const HV_COLORS = ['bub-t', 'bub-p', 'bub-o', 'bub-g', 'bub-r'];
-    const HV_SHAPES = ['bub-pill', 'bub-sbl', 'bub-sbr', 'bub-round'];
-    const hvShuffled = [...HV_QUESTIONS].sort(() => Math.random() - 0.5);
-    let hvPoolIdx = 0;
+    const HERO_BG_COLORS = ['bub-t', 'bub-p', 'bub-o', 'bub-g', 'bub-r'];
+    const HERO_BG_SHAPES = ['bub-pill', 'bub-sbl', 'bub-sbr', 'bub-round'];
+    const heroBgShuffled = [...HERO_BG_QUESTIONS].sort(() => Math.random() - 0.5);
+    let heroBgIdx = 0;
 
-    function hvNextQ() {
-      if (hvPoolIdx >= hvShuffled.length) {
-        hvPoolIdx = 0;
-        hvShuffled.sort(() => Math.random() - 0.5);
+    function heroBgNextQ() {
+      if (heroBgIdx >= heroBgShuffled.length) {
+        heroBgIdx = 0;
+        heroBgShuffled.sort(() => Math.random() - 0.5);
       }
       return {
-        text: hvShuffled[hvPoolIdx++],
-        c: HV_COLORS[Math.floor(Math.random() * HV_COLORS.length)],
-        s: HV_SHAPES[Math.floor(Math.random() * HV_SHAPES.length)],
+        text: heroBgShuffled[heroBgIdx++],
+        c: HERO_BG_COLORS[Math.floor(Math.random() * HERO_BG_COLORS.length)],
+        s: HERO_BG_SHAPES[Math.floor(Math.random() * HERO_BG_SHAPES.length)],
       };
     }
 
-    function hvShowBub(slot) {
-      const bub = slot.querySelector('.hv-bub');
-      const q   = hvNextQ();
+    function heroBgShowBub(slot) {
+      const bub = slot.querySelector('.hero-bg-bub');
+      const q   = heroBgNextQ();
       bub.textContent = q.text;
-      bub.className   = `hv-bub ${q.c} ${q.s}`;
+      bub.className   = `hero-bg-bub ${q.c} ${q.s}`;
       void bub.offsetHeight;
       bub.classList.add('arriving');
       bub.addEventListener('animationend', () => {
         bub.classList.remove('arriving');
         bub.classList.add('visible');
       }, { once: true });
-      const dwell = 5000 + Math.random() * 2000;
-      setTimeout(() => hvDepartBub(slot), dwell);
+      const dwell = 10000 + Math.random() * 5000; // 10–15s
+      setTimeout(() => heroBgDepartBub(slot), dwell);
     }
 
-    function hvDepartBub(slot) {
-      const bub = slot.querySelector('.hv-bub');
+    function heroBgDepartBub(slot) {
+      const bub = slot.querySelector('.hero-bg-bub');
       bub.classList.remove('visible');
       bub.classList.add('departing');
       bub.addEventListener('animationend', () => {
         bub.classList.remove('departing');
-        setTimeout(() => hvShowBub(slot), 300 + Math.random() * 700);
+        setTimeout(() => heroBgShowBub(slot), 1500 + Math.random() * 2000); // slow cycling
       }, { once: true });
     }
 
-    document.querySelectorAll('.hv-slot').forEach((slot, i) => {
-      setTimeout(() => hvShowBub(slot), i * 400);
+    document.querySelectorAll('.hero-bg-slot').forEach((slot, i) => {
+      setTimeout(() => heroBgShowBub(slot), i * 900);
     });
-
-    // ── VERSION A: face columns ──
-
-    // Both face columns cycle together every 3s
-    const FACE_INTERVAL = 3000;
-    const familyFaces = document.querySelectorAll('.hv-col:first-child .hv-face');
-    const expertFaces = document.querySelectorAll('.hv-col:last-child .hv-face');
-    let familyCurrent = 0;
-    let expertCurrent = 0;
-    setInterval(() => {
-      familyFaces[familyCurrent].classList.remove('active');
-      familyCurrent = (familyCurrent + 1) % familyFaces.length;
-      familyFaces[familyCurrent].classList.add('active');
-
-      expertFaces[expertCurrent].classList.remove('active');
-      expertCurrent = (expertCurrent + 1) % expertFaces.length;
-      expertFaces[expertCurrent].classList.add('active');
-    }, FACE_INTERVAL);
 
     // Hide scroll arrow once user starts scrolling; show again at very top
     const scrollArrow = document.querySelector('.hero-scroll-arrow');

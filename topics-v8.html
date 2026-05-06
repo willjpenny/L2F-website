@@ -41,7 +41,7 @@
     .nav-partner-img { height: 44px; width: auto; display: block; opacity: 0.95; transition: height 0.3s ease; }
     .nav-partner-right { display: flex; align-items: center; justify-content: flex-end; }
     .nav-partner-right img { height: 44px; width: auto; display: block; opacity: 0.95; transition: height 0.3s ease; }
-    @media (min-width: 901px) { .nav-brand .nav-partner-img { display: none; } }
+    .nav-brand .nav-partner-img { display: none; }
     .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; justify-content: center; }
     .nav-links a { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); padding: 6px 12px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
     .nav-links a:hover, .nav-links a[aria-current="page"] { color: #fff; background: rgba(255,255,255,0.12); }
@@ -98,6 +98,14 @@
       background: linear-gradient(to right, rgba(255,255,255,0), #fff 70%);
     }
     @media (min-width: 1100px) { .cat-nav::after { display: none; } }
+    .cat-nav-hint {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 36px; pointer-events: none; z-index: 3;
+      display: flex; align-items: center; justify-content: center;
+      color: #0c525e; opacity: 1; transition: opacity 0.3s;
+    }
+    .cat-nav-hint.hidden { opacity: 0; }
+    @media (min-width: 1100px) { .cat-nav-hint { display: none; } }
     .cat-nav-tab { display: flex; align-items: center; gap: 7px; padding: 12px 16px; font-size: 13px; font-weight: 500; color: #5a6a6c; white-space: nowrap; text-decoration: none; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; flex-shrink: 0; }
     .cat-nav-tab:hover { color: #1a2c2e; }
     .cat-nav-tab.active { color: #1a2c2e; font-weight: 600; border-bottom-color: var(--tab-color, #0c525e); }
@@ -175,6 +183,7 @@
       .cards-grid { grid-template-columns: 1fr; }
       .az-list { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
+      .footer-partner-col { align-items: flex-start; }
     }
     @media (max-width: 360px) {
       .header-search button { padding: 13px 12px; font-size: 0.8rem; }
@@ -237,9 +246,12 @@
       <a href="#section-cat5" class="cat-nav-tab active" data-cat="cat5" style="--tab-color:var(--cat5)"><span class="cat-nav-dot" style="background:var(--cat5)"></span>Child Development</a>
       <a href="#section-cat3" class="cat-nav-tab" data-cat="cat3" style="--tab-color:var(--cat3)"><span class="cat-nav-dot" style="background:var(--cat3)"></span>Eating &amp; Digestive</a>
       <a href="#section-cat4" class="cat-nav-tab" data-cat="cat4" style="--tab-color:var(--cat4)"><span class="cat-nav-dot" style="background:var(--cat4)"></span>Health &amp; Medical</a>
-      <a href="#section-cat2" class="cat-nav-tab" data-cat="cat2" style="--tab-color:var(--cat2)"><span class="cat-nav-dot" style="background:var(--cat2)"></span>Mental Health</a>
+      <a href="#section-cat2" class="cat-nav-tab" data-cat="cat2" style="--tab-color:var(--cat2)"><span class="cat-nav-dot" style="background:var(--cat2)"></span>Mental Wellbeing &amp; Safety</a>
       <a href="#section-cat1" class="cat-nav-tab" data-cat="cat1" style="--tab-color:var(--cat1)"><span class="cat-nav-dot" style="background:var(--cat1)"></span>Neurodiversity</a>
       <a href="#section-cat6" class="cat-nav-tab" data-cat="cat6" style="--tab-color:var(--cat6)"><span class="cat-nav-dot" style="background:var(--cat6)"></span>Services &amp; Support</a>
+    </div>
+    <div class="cat-nav-hint" id="catNavHint" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
   </nav>
 
@@ -250,23 +262,35 @@
       <!-- VIEW TOGGLE -->
       <div class="view-toggle" role="tablist" aria-label="View topics by">
         <button class="active" data-view="cat" role="tab" aria-selected="true">By category</button>
-        <button data-view="az" role="tab" aria-selected="false">A&ndash;Z</button>
+        <button data-view="az" role="tab" aria-selected="false">By topic A&ndash;Z</button>
       </div>
 
       <!-- CAT 5: CHILD DEVELOPMENT & PARENTING -->
       <section class="category-section" id="section-cat5" data-category="cat5">
         <div class="category-header">
           <div class="category-dot" style="background:var(--cat5);"></div>
-          <h2 class="category-title">Child Development &amp; Parenting <span class="category-count">3 topics</span></h2>
+          <h2 class="category-title">Child Development &amp; Parenting <span class="category-count">5 topics</span></h2>
         </div>
         <p class="category-desc">Practical parenting challenges and everyday child development.</p>
         <div class="cards-grid">
 
           <a href="#" class="topic-card" style="--card-color:var(--cat5);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></div>
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
             <div class="card-body">
-              <div class="card-title">Toileting</div>
-              <div class="card-desc">Bedwetting, soiling and toilet training difficulties in children.</div>
+              <div class="card-title">Online Safety and Wellbeing</div>
+              <div class="card-desc">Screen time, social media and online risks for children and young people.</div>
+            </div>
+            <div class="card-footer">
+              <span class="card-meta">Videos</span>
+              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+
+          <a href="#" class="topic-card" style="--card-color:var(--cat5);">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div class="card-body">
+              <div class="card-title">Parent Education Programs</div>
+              <div class="card-desc">Courses and workshops to support your parenting and your child's development.</div>
             </div>
             <div class="card-footer">
               <span class="card-meta">Videos</span>
@@ -287,10 +311,22 @@
           </a>
 
           <a href="#" class="topic-card" style="--card-color:var(--cat5);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
             <div class="card-body">
-              <div class="card-title">Online Safety and Wellbeing</div>
-              <div class="card-desc">Screen time, social media and online risks for children and young people.</div>
+              <div class="card-title">Supporting Families</div>
+              <div class="card-desc">Mental health and whānau wellbeing support for families navigating a child's mental health challenges.</div>
+            </div>
+            <div class="card-footer">
+              <span class="card-meta">Videos</span>
+              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+
+          <a href="#" class="topic-card" style="--card-color:var(--cat5);">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></div>
+            <div class="card-body">
+              <div class="card-title">Toileting</div>
+              <div class="card-desc">Bedwetting, soiling and toilet training difficulties in children.</div>
             </div>
             <div class="card-footer">
               <span class="card-meta">Videos</span>
@@ -311,18 +347,6 @@
         <div class="cards-grid">
 
           <a href="#" class="topic-card" style="--card-color:var(--cat3);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div>
-            <div class="card-body">
-              <div class="card-title">Eating Challenges</div>
-              <div class="card-desc">ARFID, eating disorders, and restricted or fussy eating — food challenges affecting children and young people.</div>
-            </div>
-            <div class="card-footer">
-              <span class="card-meta">Videos &amp; podcasts</span>
-              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </a>
-
-          <a href="#" class="topic-card" style="--card-color:var(--cat3);">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2l1.5 1.5M7.5 2L9 3.5M12 2l1.5 1.5M3 8h18M5 8v12a1 1 0 001 1h12a1 1 0 001-1V8"/><path d="M10 11v6M14 11v6"/></svg></div>
             <div class="card-body">
               <div class="card-title">Coeliac Disease</div>
@@ -330,6 +354,18 @@
             </div>
             <div class="card-footer">
               <span class="card-meta">Videos</span>
+              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+
+          <a href="#" class="topic-card" style="--card-color:var(--cat3);">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div>
+            <div class="card-body">
+              <div class="card-title">Eating Challenges</div>
+              <div class="card-desc">ARFID, eating disorders, and restricted or fussy eating — food challenges affecting children and young people.</div>
+            </div>
+            <div class="card-footer">
+              <span class="card-meta">Videos &amp; podcasts</span>
               <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </a>
@@ -359,46 +395,22 @@
         <div class="cards-grid">
 
           <a href="#" class="topic-card" style="--card-color:var(--cat4);">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+            <div class="card-body">
+              <div class="card-title">Adolescent and Young Adult (AYA) Cancer</div>
+              <div class="card-desc">Cancer in adolescents and young adults — clinical insight and lived experience from young people.</div>
+            </div>
+            <div class="card-footer">
+              <span class="card-meta">Videos &amp; podcasts</span>
+              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+
+          <a href="#" class="topic-card" style="--card-color:var(--cat4);">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
             <div class="card-body">
               <div class="card-title">Allergies and Anaphylaxis</div>
               <div class="card-desc">Food allergies, triggers and emergency action plans for families.</div>
-            </div>
-            <div class="card-footer">
-              <span class="card-meta">Videos</span>
-              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </a>
-
-          <a href="#" class="topic-card" style="--card-color:var(--cat4);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
-            <div class="card-body">
-              <div class="card-title">Eczema</div>
-              <div class="card-desc">Managing itchy, inflamed skin and breaking the itch-scratch cycle in children.</div>
-            </div>
-            <div class="card-footer">
-              <span class="card-meta">Videos</span>
-              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </a>
-
-          <a href="#" class="topic-card" style="--card-color:var(--cat4);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
-            <div class="card-body">
-              <div class="card-title">Dental and Oral Health – Pasifika Perspectives</div>
-              <div class="card-desc">Oral health for children with a focus on Pasifika family perspectives and services in New Zealand.</div>
-            </div>
-            <div class="card-footer">
-              <span class="card-meta">Videos</span>
-              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </a>
-
-          <a href="#" class="topic-card" style="--card-color:var(--cat4);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-            <div class="card-body">
-              <div class="card-title">Vision</div>
-              <div class="card-desc">Eye health and vision problems in children, what to look for and when to seek help.</div>
             </div>
             <div class="card-footer">
               <span class="card-meta">Videos</span>
@@ -419,13 +431,25 @@
           </a>
 
           <a href="#" class="topic-card" style="--card-color:var(--cat4);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
             <div class="card-body">
-              <div class="card-title">Adolescent and Young Adult (AYA) Cancer</div>
-              <div class="card-desc">Cancer in adolescents and young adults — clinical insight and lived experience from young people.</div>
+              <div class="card-title">Dental and Oral Health – Pasifika Perspectives</div>
+              <div class="card-desc">Oral health for children with a focus on Pasifika family perspectives and services in New Zealand.</div>
             </div>
             <div class="card-footer">
-              <span class="card-meta">Videos &amp; podcasts</span>
+              <span class="card-meta">Videos</span>
+              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+
+          <a href="#" class="topic-card" style="--card-color:var(--cat4);">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+            <div class="card-body">
+              <div class="card-title">Eczema</div>
+              <div class="card-desc">Managing itchy, inflamed skin and breaking the itch-scratch cycle in children.</div>
+            </div>
+            <div class="card-footer">
+              <span class="card-meta">Videos</span>
               <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </a>
@@ -442,6 +466,18 @@
             </div>
           </a>
 
+          <a href="#" class="topic-card" style="--card-color:var(--cat4);">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <div class="card-body">
+              <div class="card-title">Vision</div>
+              <div class="card-desc">Eye health and vision problems in children, what to look for and when to seek help.</div>
+            </div>
+            <div class="card-footer">
+              <span class="card-meta">Videos</span>
+              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+
         </div>
       </section>
 
@@ -449,9 +485,9 @@
       <section class="category-section" id="section-cat2" data-category="cat2">
         <div class="category-header">
           <div class="category-dot" style="background:var(--cat2);"></div>
-          <h2 class="category-title">Mental Health, Emotional Wellbeing &amp; Identity <span class="category-count">7 topics</span></h2>
+          <h2 class="category-title">Mental Wellbeing and Safety <span class="category-count">9 topics</span></h2>
         </div>
-        <p class="category-desc">Emotional health, mental health conditions, identity and coping.</p>
+        <p class="category-desc">Emotional health, mental health conditions, safety and identity.</p>
         <div class="cards-grid">
 
           <a href="#" class="topic-card" style="--card-color:var(--cat2);">
@@ -479,22 +515,22 @@
           </a>
 
           <a href="#" class="topic-card" style="--card-color:var(--cat2);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
             <div class="card-body">
-              <div class="card-title">Trauma</div>
-              <div class="card-desc">Post-traumatic stress and mental injury in children and young people.</div>
+              <div class="card-title">Family Stress and Wellbeing</div>
+              <div class="card-desc">Stress, coping and wellbeing for families, with perspectives from Muslim communities.</div>
             </div>
             <div class="card-footer">
-              <span class="card-meta">Videos</span>
+              <span class="card-meta">Videos &amp; podcasts</span>
               <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </a>
 
           <a href="#" class="topic-card" style="--card-color:var(--cat2);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
             <div class="card-body">
-              <div class="card-title">Suicide</div>
-              <div class="card-desc">Recognising warning signs and supporting young people in suicidal distress.</div>
+              <div class="card-title">Gender Diversity</div>
+              <div class="card-desc">Supporting gender diverse children and young people in your family.</div>
             </div>
             <div class="card-footer">
               <span class="card-meta">Videos</span>
@@ -515,10 +551,10 @@
           </a>
 
           <a href="#" class="topic-card" style="--card-color:var(--cat2);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
             <div class="card-body">
-              <div class="card-title">Gender Diversity</div>
-              <div class="card-desc">Supporting gender diverse children and young people in your family.</div>
+              <div class="card-title">Sexual Abuse</div>
+              <div class="card-desc">Recognising, responding to and recovering from sexual abuse, with specialist guidance for families.</div>
             </div>
             <div class="card-footer">
               <span class="card-meta">Videos</span>
@@ -527,13 +563,37 @@
           </a>
 
           <a href="#" class="topic-card" style="--card-color:var(--cat2);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4M12 16h.01"/></svg></div>
             <div class="card-body">
-              <div class="card-title">Family Stress and Wellbeing</div>
-              <div class="card-desc">Stress, coping and wellbeing for families, with perspectives from Muslim communities.</div>
+              <div class="card-title">Sexualised Behaviour</div>
+              <div class="card-desc">Understanding and responding to concerning or harmful sexual behaviours in children and young people.</div>
             </div>
             <div class="card-footer">
-              <span class="card-meta">Videos &amp; podcasts</span>
+              <span class="card-meta">Videos</span>
+              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+
+          <a href="#" class="topic-card" style="--card-color:var(--cat2);">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <div class="card-body">
+              <div class="card-title">Suicide</div>
+              <div class="card-desc">Recognising warning signs and supporting young people in suicidal distress.</div>
+            </div>
+            <div class="card-footer">
+              <span class="card-meta">Videos</span>
+              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+
+          <a href="#" class="topic-card" style="--card-color:var(--cat2);">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="card-body">
+              <div class="card-title">Trauma</div>
+              <div class="card-desc">Post-traumatic stress and mental injury in children and young people.</div>
+            </div>
+            <div class="card-footer">
+              <span class="card-meta">Videos</span>
               <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </a>
@@ -605,7 +665,7 @@
       <section class="category-section" id="section-cat6" data-category="cat6">
         <div class="category-header">
           <div class="category-dot" style="background:var(--cat6);"></div>
-          <h2 class="category-title">Services, Systems &amp; Support <span class="category-count">7 topics</span></h2>
+          <h2 class="category-title">Services, Systems &amp; Support <span class="category-count">3 topics</span></h2>
         </div>
         <p class="category-desc">How to access services and navigate support systems in New Zealand.</p>
         <div class="cards-grid">
@@ -613,7 +673,7 @@
           <a href="#" class="topic-card" style="--card-color:var(--cat6);">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
             <div class="card-body">
-              <div class="card-title">CAF</div>
+              <div class="card-title">Child Adolescent &amp; Family Services (CAF)</div>
               <div class="card-desc">Child, Adolescent and Family mental health service, including pathways and what to expect.</div>
             </div>
             <div class="card-footer">
@@ -646,54 +706,6 @@
             </div>
           </a>
 
-          <a href="#" class="topic-card" style="--card-color:var(--cat6);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-            <div class="card-body">
-              <div class="card-title">Parent Education Programs</div>
-              <div class="card-desc">Courses and workshops to support your parenting and your child's development.</div>
-            </div>
-            <div class="card-footer">
-              <span class="card-meta">Videos</span>
-              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </a>
-
-          <a href="#" class="topic-card" style="--card-color:var(--cat6);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-            <div class="card-body">
-              <div class="card-title">Supporting Families</div>
-              <div class="card-desc">Mental health and whānau wellbeing support for families navigating a child's mental health challenges.</div>
-            </div>
-            <div class="card-footer">
-              <span class="card-meta">Videos</span>
-              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </a>
-
-          <a href="#" class="topic-card" style="--card-color:var(--cat6);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4M12 16h.01"/></svg></div>
-            <div class="card-body">
-              <div class="card-title">Sexualised Behaviour</div>
-              <div class="card-desc">Understanding and responding to concerning or harmful sexual behaviours in children and young people.</div>
-            </div>
-            <div class="card-footer">
-              <span class="card-meta">Videos</span>
-              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </a>
-
-          <a href="#" class="topic-card" style="--card-color:var(--cat6);">
-            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-            <div class="card-body">
-              <div class="card-title">Sexual Abuse</div>
-              <div class="card-desc">Recognising, responding to and recovering from sexual abuse, with specialist guidance for families.</div>
-            </div>
-            <div class="card-footer">
-              <span class="card-meta">Videos</span>
-              <svg class="card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </a>
-
         </div>
       </section>
 
@@ -716,7 +728,7 @@
         <div class="az-letter-group">
           <div class="az-letter">C</div>
           <div class="az-list">
-            <a href="#" class="az-item"><span class="az-item-name">CAF</span></a>
+            <a href="#" class="az-item"><span class="az-item-name">Child Adolescent &amp; Family Services (CAF)</span></a>
             <a href="#" class="az-item"><span class="az-item-name">Chronic Fatigue Syndrome</span></a>
             <a href="#" class="az-item"><span class="az-item-name">Coeliac Disease</span></a>
           </div>
@@ -869,6 +881,16 @@
       mobileMenu.classList.toggle('open');
     });
 
+    // Scroll hint arrow — hides once user has scrolled cat nav to the end
+    const catNavInner = document.getElementById('catNavInner');
+    const catNavHint = document.getElementById('catNavHint');
+    if (catNavInner && catNavHint) {
+      catNavInner.addEventListener('scroll', () => {
+        const atEnd = catNavInner.scrollLeft + catNavInner.clientWidth >= catNavInner.scrollWidth - 4;
+        catNavHint.classList.toggle('hidden', atEnd);
+      }, { passive: true });
+    }
+
     // View toggle (By category / A-Z)
     const azView = document.getElementById('azView');
     const catNav = document.getElementById('catNav');
@@ -891,7 +913,6 @@
 
     // Scrollspy
     const catNavTabs = document.querySelectorAll('.cat-nav-tab');
-    const catNavInner = document.getElementById('catNavInner');
     function setActiveTab(cat) {
       catNavTabs.forEach(tab => {
         const isActive = tab.dataset.cat === cat;

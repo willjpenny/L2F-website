@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Listening to Families</title>
+  <link rel="icon" type="image/svg+xml" href="LTF-Logo/People%20Icon/Dark%20Blue_People.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *:focus-visible { outline: 3px solid #82d4e0; outline-offset: 2px; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: #1a2c2e; background: #f5f0e8; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+    /* ── NAV ── */
+    body { padding-top: 124px; transition: padding-top 0.3s ease; }
+    body.nav-scrolled { padding-top: 64px; }
+    .nav {
+      background: #0c525e; height: 124px;
+      display: flex; align-items: center;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      transition: height 0.3s ease;
+    }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+    .nav-brand { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo-img { height: 118px; width: auto; display: block; transition: height 0.3s ease; }
+    .nav-partner-img { height: 44px; width: auto; display: block; opacity: 0.95; transition: height 0.3s ease; }
+    .nav-partner-right { display: flex; align-items: center; justify-content: flex-end; }
+    .nav-partner-right img { height: 44px; width: auto; display: block; opacity: 0.95; transition: height 0.3s ease; }
+    .nav-brand .nav-partner-img { display: none; }
+    .nav-links { display: flex; align-items: center; justify-content: center; gap: 4px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+    .nav-links a:hover, .nav-links a[aria-current="page"] { color: #fff; background: rgba(255,255,255,0.12); }
+    .nav-hamburger { display: none; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 6px; color: rgba(255,255,255,0.8); background: none; border: none; cursor: pointer; margin-left: auto; }
+    .nav-mobile-menu { display: none; position: absolute; top: 124px; left: 0; right: 0; background: #0c525e; border-top: 1px solid rgba(255,255,255,0.12); padding: 12px 0 16px; z-index: 99; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    body.nav-scrolled .nav { height: 64px; }
+    body.nav-scrolled .nav-logo-img { height: 50px; }
+    body.nav-scrolled .nav-partner-img,
+    body.nav-scrolled .nav-partner-right img { height: 30px; }
+    body.nav-scrolled .nav-mobile-menu { top: 64px; }
+    .nav-mobile-menu.open { display: block; }
+    .nav-mobile-menu a { display: block; padding: 11px clamp(20px,4vw,56px); font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.8); transition: background 0.15s; }
+    .nav-mobile-menu a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: #0c525e;
+      padding: clamp(40px, 6vw, 72px) 0 clamp(32px, 5vw, 56px);
+    }
+    .page-header-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+    .page-breadcrumb {
+      font-size: 13px; color: rgba(255,255,255,0.5);
+      margin-bottom: 16px; display: flex; align-items: center; gap: 6px;
+    }
+    .page-breadcrumb a { color: rgba(255,255,255,0.5); transition: color 0.15s; }
+    .page-breadcrumb a:hover { color: rgba(255,255,255,0.8); }
+    .page-breadcrumb svg { flex-shrink: 0; }
+    .page-header h1 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(28px, 4vw, 44px); color: #fff; line-height: 1.2; margin-bottom: 12px; }
+    .page-header p { font-size: 16px; color: rgba(255,255,255,0.65); max-width: 560px; line-height: 1.7; }
+
+    /* ── MAIN CONTENT ── */
+    .contact-main {
+      max-width: 680px; margin: 0 auto;
+      padding: clamp(48px, 7vw, 80px) clamp(20px, 4vw, 56px);
+    }
+
+    /* ── CONTACT BLOCK ── */
+    .contact-intro {
+      font-size: 17px; color: #3a5a5e; line-height: 1.8;
+      margin-bottom: clamp(32px, 5vw, 48px);
+    }
+
+    .contact-card {
+      background: #0c525e; border-radius: 14px;
+      padding: clamp(28px, 4vw, 40px);
+      margin-bottom: clamp(24px, 4vw, 36px);
+    }
+    .contact-card h2 {
+      font-family: 'Lora', serif; font-weight: 700;
+      font-size: clamp(20px, 2.5vw, 24px); color: #fff;
+      margin-bottom: 10px;
+    }
+    .contact-card p { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 24px; }
+    .contact-email-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px; padding: 12px 20px;
+      font-size: 16px; font-weight: 500; color: #fff;
+      transition: background 0.15s;
+    }
+    .contact-email-link:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── REASONS LIST ── */
+    .reasons-heading {
+      font-size: 13px; font-weight: 700; color: rgba(12,82,94,0.5);
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 18px;
+    }
+    .reasons-list { display: flex; flex-direction: column; gap: 0; }
+    .reason-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(12,82,94,0.1);
+    }
+    .reason-item:first-child { border-top: 1px solid rgba(12,82,94,0.1); }
+    .reason-icon {
+      flex-shrink: 0; width: 36px; height: 36px;
+      background: rgba(12,82,94,0.08); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #0c525e;
+    }
+    .reason-body { flex: 1; }
+    .reason-title { font-size: 15px; font-weight: 600; color: #1a2c2e; margin-bottom: 3px; }
+    .reason-desc { font-size: 14px; color: #5a7a7e; line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    .footer { background: #0a3d47; padding: clamp(40px,6vw,72px) 0 0; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,56px) clamp(40px,5vw,56px); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: clamp(28px,5vw,56px); padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .footer-partner-col { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; }
+    .footer-logo { display: flex; align-items: center; }
+    .footer-logo-img { height: 140px; width: auto; display: block; }
+    .footer-partner-img { height: 48px; width: auto; display: block; opacity: 0.95; }
+    .footer-col h4 { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 14px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { font-size: 14px; color: rgba(255,255,255,0.7); transition: color 0.15s; }
+    .footer-col ul a:hover { color: #fff; }
+    .footer-bar { max-width: 1200px; margin: 0 auto; padding: 18px clamp(20px,4vw,56px); display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: rgba(255,255,255,0.4); flex-wrap: wrap; gap: 8px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-partner-right { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+    @media (max-width: 700px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-partner-col { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <a href="homepage-v8.html" class="nav-logo" aria-label="Listening to Families, home">
+          <img src="LTF-Logo/SVG/1-Listening-to-families-logo-white.svg" alt="Listening to Families" class="nav-logo-img" />
+        </a>
+        <a href="https://www.maiahealth.org.nz/" target="_blank" rel="noopener"><img src="LTF-Logo/maia-white.svg" alt="Māia Health Foundation" class="nav-partner-img" /></a>
+      </div>
+      <ul class="nav-links" role="list">
+        <li><a href="topics-v8.html">Topics</a></li>
+        <li><a href="resources-v8.html">Resources</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="nav-partner-right">
+        <a href="https://www.maiahealth.org.nz/" target="_blank" rel="noopener"><img src="LTF-Logo/maia-white.svg" alt="Māia Health Foundation" /></a>
+      </div>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu" onclick="toggleNav(this)">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="nav-mobile-menu" id="nav-mobile-menu">
+      <a href="topics-v8.html">Topics</a>
+      <a href="resources-v8.html">Resources</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="page-breadcrumb">
+        <a href="homepage-v8.html">Home</a>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Contact
+      </div>
+      <h1>Contact us</h1>
+      <p>We'd love to hear from you — whether it's a question, a suggestion, or a potential partnership.</p>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="contact-main">
+
+    <p class="contact-intro">Listening to Families is a small team. We do our best to respond to all enquiries promptly — please allow up to two working days to hear back from us.</p>
+
+    <div class="contact-card">
+      <h2>Send us an email</h2>
+      <p>For all enquiries, reach us directly at:</p>
+      <a href="mailto:hello@listeningtofamilies.co.nz" class="contact-email-link">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <rect x="2" y="4" width="14" height="10" rx="1.75" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M2 6l7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        hello@listeningtofamilies.co.nz
+      </a>
+    </div>
+
+    <p class="reasons-heading">What you might contact us about</p>
+    <div class="reasons-list">
+
+      <div class="reason-item">
+        <div class="reason-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M9 6v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="reason-body">
+          <div class="reason-title">Questions about our content</div>
+          <div class="reason-desc">Queries about specific videos, topics or resources on the site.</div>
+        </div>
+      </div>
+
+      <div class="reason-item">
+        <div class="reason-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2l1.8 3.6 4 .6-2.9 2.8.7 4L9 11l-3.6 1.9.7-4L3.2 6.2l4-.6L9 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="reason-body">
+          <div class="reason-title">Suggesting a topic or resource</div>
+          <div class="reason-desc">Know of a specialist, video or organisation we should include? Let us know.</div>
+        </div>
+      </div>
+
+      <div class="reason-item">
+        <div class="reason-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9a6 6 0 1 0 12 0A6 6 0 0 0 3 9z" stroke="currentColor" stroke-width="1.5"/><path d="M9 6v3l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 2.5A7.94 7.94 0 0 1 15.5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="reason-body">
+          <div class="reason-title">Partnerships and collaboration</div>
+          <div class="reason-desc">Interested in working with us or contributing expertise to the platform.</div>
+        </div>
+      </div>
+
+      <div class="reason-item">
+        <div class="reason-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2" y="2" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 9h6M9 6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="reason-body">
+          <div class="reason-title">Media enquiries</div>
+          <div class="reason-desc">Press, research or other media requests relating to Listening to Families.</div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="LTF-Logo/SVG/1-Listening-to-families-logo-white.svg" alt="Listening to Families" class="footer-logo-img" />
+          </div>
+        </div>
+        <div class="footer-col"><h4>Explore</h4><ul><li><a href="topics-v8.html">Topics</a></li><li><a href="resources-v8.html">Resources</a></li></ul></div>
+        <div class="footer-col"><h4>About</h4><ul><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul></div>
+        <div class="footer-partner-col">
+          <a href="https://www.maiahealth.org.nz/" target="_blank" rel="noopener"><img src="LTF-Logo/maia-white.svg" alt="Māia Health Foundation" class="footer-partner-img" /></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bar"><span>2026 Listening to Families</span><span>listeningtofamilies.co.nz</span></div>
+  </footer>
+
+  <script>
+    let navCompact = false;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (!navCompact && y > 80) {
+        navCompact = true;
+        document.body.classList.add('nav-scrolled');
+      } else if (navCompact && y < 20) {
+        navCompact = false;
+        document.body.classList.remove('nav-scrolled');
+      }
+    }, { passive: true });
+
+    function toggleNav(btn) {
+      const menu = document.getElementById('nav-mobile-menu');
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    }
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('nav-mobile-menu');
+      const btn = document.getElementById('nav-hamburger');
+      if (menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  </script>
+</body>
+</html>
